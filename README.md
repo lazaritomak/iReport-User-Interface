@@ -20,10 +20,19 @@ Activities/Modules for User:
 Minor TODO list:
 
 1. Thumbnail for video
+
 2. Limit video duration
+
 3. Validate text content
 
 (Minor TODO list can be done upon completion of main modules)
+
+APK Location:
+
+The apk can be found in app/build/outputs/apk/app-debug.apk
+
+
+Other details:
 
 Made in Android Studio.
 
