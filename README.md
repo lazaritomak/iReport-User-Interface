@@ -17,6 +17,14 @@ Activities/Modules for User:
 
 ☺ 5. Generate report ID upon sending to data center.
 
+Minor TODO list:
+
+1. Thumbnail for video
+2. Limit video duration
+3. Validate text content
+
+(Minor TODO list can be done upon completion of main modules)
+
 Made in Android Studio.
 
 Minimum SDK = 17
