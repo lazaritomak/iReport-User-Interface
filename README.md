@@ -19,15 +19,15 @@ Activities/Modules for User:
 
 Minor TODO list:
 
-1. Thumbnail for video ☻
+☻ 1. Thumbnail for video
 
-2. Limit video duration
+  2. Limit video duration
 
-3. Validate text content
+  3. Validate text content
 
-4. Change image storage to internal
+  4. Change image storage to internal
 
-5. Increase video thumbnail size.
+☻ 5. Increase video thumbnail size.
 
 (Minor TODO list can be done upon completion of main modules)
 
