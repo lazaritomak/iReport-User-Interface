@@ -196,7 +196,7 @@ public class ReportActivity extends Activity {
                         break;
                     }
                 }
-                Toast.makeText(this, f.getAbsolutePath().toString(), Toast.LENGTH_LONG).show();
+                //Toast.makeText(this, f.getAbsolutePath().toString(), Toast.LENGTH_LONG).show(); //Directory test
                 Bitmap bitmap;
 /*                BitmapFactory.Options bitmapOptions = new BitmapFactory.Options();
                 bitmap = BitmapFactory.decodeFile(f.getAbsolutePath(), bitmapOptions);*/
