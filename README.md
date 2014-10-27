@@ -25,6 +25,8 @@ Minor TODO list:
 
 3. Validate text content
 
+4. Change image storage to internal
+
 (Minor TODO list can be done upon completion of main modules)
 
 APK Location:
@@ -39,3 +41,5 @@ Made in Android Studio.
 Minimum SDK = 17
 
 Target SDK = 21
+
+Image doesn't seem to show up in emulators. Testing further.
