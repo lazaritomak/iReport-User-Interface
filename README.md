@@ -11,7 +11,7 @@ Activities/Modules for User:
 
 ☻ 2. Caption media with Text
 
-  3. Select category
+☻  3. Select category
 
   4. Submit
 
