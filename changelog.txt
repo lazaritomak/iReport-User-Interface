@@ -13,3 +13,7 @@ Changed text size and text alignment in select action button
 0.4
 Added Video Thumbnail
 Added Select Category List
+
+0.5
+Increased Select Category Padding size
+Increased Video thumbnail size
