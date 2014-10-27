@@ -31,7 +31,9 @@ Minor TODO list:
 
 APK Location:
 
-The apk can be found in app/build/outputs/apk/app-debug.apk
+The apk can be found in 
+
+...app/build/outputs/apk/app-debug.apk
 
 
 Other details:
