@@ -4,6 +4,7 @@
     <modules>
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
       <module fileurl="file://$PROJECT_DIR$/iReport(MainInterface).iml" filepath="$PROJECT_DIR$/iReport(MainInterface).iml" />
+      <module fileurl="file://$PROJECT_DIR$/iReport-User-Interface.iml" filepath="$PROJECT_DIR$/iReport-User-Interface.iml" />
     </modules>
   </component>
 </project>
