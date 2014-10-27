@@ -9,3 +9,6 @@ Changed edit text location on top of select media button
 
 0.3
 Changed text size and text alignment in select action button
+
+0.4
+Added Video Thumbnail
