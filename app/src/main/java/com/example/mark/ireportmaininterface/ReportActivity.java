@@ -186,7 +186,6 @@ public class ReportActivity extends Activity {
             }
             else if (requestCode == 101)
             {
-
                 File f = new File(Environment.getExternalStorageDirectory().toString());
                 for (File temp: f.listFiles())
                 {
