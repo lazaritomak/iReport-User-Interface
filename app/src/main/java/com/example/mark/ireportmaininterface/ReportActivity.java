@@ -21,8 +21,10 @@ import android.provider.MediaStore;
 import android.util.Log;
 import android.view.Menu;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.Spinner;
 import android.widget.Toast;
 
 import java.io.File;
@@ -30,26 +32,48 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
+import java.util.ArrayList;
+import java.util.List;
 
 public class ReportActivity extends Activity {
 
     ImageView viewImage;
     Button b;
+    Spinner catList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_report);
 
+        //Widget initialization
         b = (Button)findViewById(R.id.btnSelectPhoto);
         viewImage = (ImageView) findViewById(R.id.viewImage);
+        catList = (Spinner) findViewById(R.id.selectCategory);
+        //Event Listeners
         b.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
-                selectImage();
+                selectAction();
             }
         });
-
+        //Add to catList Spinner list
+        List<String> list = new ArrayList<String>();
+        String[] services =
+                {"Select Category",
+                "Police",
+                "Medical Emergency",
+                "Traffic Enforcer"};
+        for (int i = 0; i < services.length; i++) {
+        list.add(services[i].toString());
+        }
+/*        list.add("Select Category");
+        list.add("Police");
+        list.add("Medical Emergency");
+        list.add("Traffic Enforcer");*/
+        ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, list);// Connecting to adapter
+        dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        catList.setAdapter(dataAdapter);
 
     }
 
@@ -60,7 +84,7 @@ public class ReportActivity extends Activity {
         return true;
     }
 
-    private void selectImage(){
+    private void selectAction(){
         final CharSequence[] options = {"Take Photo", "Take Video", "Choose From Gallery", "Cancel"};
         AlertDialog.Builder builder = new AlertDialog.Builder(ReportActivity.this);
         builder.setTitle("Select Action!");

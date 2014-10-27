@@ -46,9 +46,17 @@
         android:gravity="bottom"
         android:ems="10"
         android:id="@+id/editText"
-        android:layout_above="@+id/btnSelectPhoto"
+        android:layout_above="@+id/selectCategory"
         android:layout_alignParentStart="true"
         android:layout_centerVertical="true" />
+
+    <Spinner
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/btnSelectPhoto"
+        android:padding="1dp"
+        android:gravity="bottom"
+        android:id="@+id/selectCategory"></Spinner>
 
     <Button
         android:layout_width="match_parent"
