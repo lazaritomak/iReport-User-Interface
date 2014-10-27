@@ -1,6 +1,11 @@
-Added video capture
+v0.1
+ video capture
 Added caption text
 
+0.2
 Changed layout
 Changed select media button location to the bottom
-Changed edit text location on top of select media botton
+Changed edit text location on top of select media button
+
+0.3
+Changed text size and text alignment in select action button

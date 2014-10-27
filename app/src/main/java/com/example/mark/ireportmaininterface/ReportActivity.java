@@ -2,6 +2,7 @@ package com.example.mark.ireportmaininterface;
 
 import android.app.Activity;
 import android.database.Cursor;
+import android.media.ThumbnailUtils;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -49,6 +50,7 @@ public class ReportActivity extends Activity {
             }
         });
 
+
     }
 
     @Override
@@ -61,7 +63,7 @@ public class ReportActivity extends Activity {
     private void selectImage(){
         final CharSequence[] options = {"Take Photo", "Take Video", "Choose From Gallery", "Cancel"};
         AlertDialog.Builder builder = new AlertDialog.Builder(ReportActivity.this);
-        builder.setTitle("Add Photo!");
+        builder.setTitle("Select Action!");
         builder.setItems(options, new DialogInterface.OnClickListener(){
             @Override
             public void onClick(DialogInterface dialog, int item) {
@@ -115,7 +117,7 @@ public class ReportActivity extends Activity {
                     BitmapFactory.Options bitmapOptions = new BitmapFactory.Options();
                     bitmap = BitmapFactory.decodeFile(f.getAbsolutePath(), bitmapOptions);
                     viewImage.setImageBitmap(bitmap);
-                    String path = android.os.Environment.getExternalStorageDirectory() + File.separator + "Phoenix" + File.separator + "default";
+                    /*String path = android.os.Environment.getExternalStorageDirectory() + File.separator + "Phoenix" + File.separator + "default";
                     f.delete();
                     OutputStream outFile = null;
                     File file = new File(path, String.valueOf(System.currentTimeMillis()) + ".jpg");
@@ -137,7 +139,7 @@ public class ReportActivity extends Activity {
                     catch (Exception e)
                     {
                         e.printStackTrace();
-                    }
+                    }*/
                 }
                 catch (Exception e)
                 {
@@ -161,6 +163,22 @@ public class ReportActivity extends Activity {
             else if (requestCode == 101)
             {
 
+                File f = new File(Environment.getExternalStorageDirectory().toString());
+                for (File temp: f.listFiles())
+                {
+                    if (temp.getName().equals("myvideo.mp4"))
+                    {
+                        f = temp;
+                        break;
+                    }
+                }
+                Toast.makeText(this, f.getAbsolutePath().toString(), Toast.LENGTH_LONG).show();
+                Bitmap bitmap;
+/*                BitmapFactory.Options bitmapOptions = new BitmapFactory.Options();
+                bitmap = BitmapFactory.decodeFile(f.getAbsolutePath(), bitmapOptions);*/
+                //viewImage.setImageBitmap(bitmap);
+                Bitmap bmThumbnail = ThumbnailUtils.createVideoThumbnail(f.getAbsolutePath().toString(), MediaStore.Images.Thumbnails.MICRO_KIND);
+                viewImage.setImageBitmap(bmThumbnail);
             }
         }
     }

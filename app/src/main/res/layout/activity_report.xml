@@ -54,8 +54,12 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="bottom"
+        android:keepScreenOn="true"
+        android:textSize="25dp"
         android:padding="30dp"
-        android:text="@string/take_picture"
+        android:textStyle="bold"
+        android:textAlignment="center"
+        android:text="@string/select_action"
         android:id="@+id/btnSelectPhoto"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true" />
