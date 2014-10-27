@@ -54,7 +54,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_above="@+id/btnSelectPhoto"
-        android:padding="1dp"
+        android:padding="20dp"
         android:gravity="bottom"
         android:id="@+id/selectCategory"></Spinner>
 

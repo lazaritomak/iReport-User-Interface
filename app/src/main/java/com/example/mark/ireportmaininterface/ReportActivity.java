@@ -201,7 +201,7 @@ public class ReportActivity extends Activity {
 /*                BitmapFactory.Options bitmapOptions = new BitmapFactory.Options();
                 bitmap = BitmapFactory.decodeFile(f.getAbsolutePath(), bitmapOptions);*/
                 //viewImage.setImageBitmap(bitmap);
-                Bitmap bmThumbnail = ThumbnailUtils.createVideoThumbnail(f.getAbsolutePath().toString(), MediaStore.Images.Thumbnails.MICRO_KIND);
+                Bitmap bmThumbnail = ThumbnailUtils.createVideoThumbnail(f.getAbsolutePath().toString(), MediaStore.Images.Thumbnails.MINI_KIND);
                 viewImage.setImageBitmap(bmThumbnail);
             }
         }
