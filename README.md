@@ -5,21 +5,23 @@ User interface for iReport
 
 TODO:
 
+✔ - Done
+
 Activities/Modules for User:
 
-☻ 1. Take Picture/Video
+1. Take Picture/Video ✔
 
-☻ 2. Caption media with Text
+2. Caption media with Text✔
 
-☻  3. Select category
+3. Select category ✔
 
-  4. Submit
+4. Submit
 
-  5. Generate report ID upon sending to data center.
+5. Generate report ID upon sending to data center.
 
 Minor TODO list:
 
-1. Thumbnail for video ☻
+1. Thumbnail for video ✔
 
 2. Limit video duration
 
@@ -27,7 +29,7 @@ Minor TODO list:
 
 4. Change image storage to internal
 
-5. Increase video thumbnail size.
+5. Increase video thumbnail size.✔
 
 (Minor TODO list can be done upon completion of main modules)
 
