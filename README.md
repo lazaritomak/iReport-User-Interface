@@ -40,7 +40,7 @@ The apk can be found in
 ...app/build/outputs/apk/app-debug.apk
 
 
-Other details:
+Notes/Details:
 
 Made in Android Studio.
 
@@ -49,3 +49,5 @@ Minimum SDK = 17
 Target SDK = 21
 
 Image doesn't seem to show up in emulators. Testing further.
+
+GPS does not work in in Emulators (Genymotion). To test in real Android Phone.
