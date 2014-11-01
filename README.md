@@ -15,9 +15,11 @@ Activities/Modules for User:
 
 3. Select category ✔
 
-4. Submit
+4. Get current location of device.
 
-5. Generate report ID upon sending to data center.
+5. Submit
+
+6. Generate report ID upon sending to data center.
 
 Minor TODO list:
 
@@ -40,7 +42,7 @@ The apk can be found in
 ...app/build/outputs/apk/app-debug.apk
 
 
-Other details:
+Notes/Details:
 
 Made in Android Studio.
 
@@ -50,4 +52,5 @@ Target SDK = 21
 
 Image doesn't seem to show up in emulators. Testing further.
 
-GPS needs to be tried on a real phone
+
+GPS does not work in in Emulators (Genymotion). To test in real Android Phone.
