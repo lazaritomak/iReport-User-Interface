@@ -17,3 +17,7 @@ Added Select Category List
 0.5
 Increased Select Category Padding size
 Increased Video thumbnail size
+
+0.6
+Edited Layout
+Added Submit Button (Not Yet Working)

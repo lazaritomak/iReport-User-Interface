@@ -49,3 +49,5 @@ Minimum SDK = 17
 Target SDK = 21
 
 Image doesn't seem to show up in emulators. Testing further.
+
+GPS needs to be tried on a real phone
