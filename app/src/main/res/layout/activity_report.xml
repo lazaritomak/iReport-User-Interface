@@ -59,7 +59,7 @@
         android:id="@+id/selectCategory"></Spinner>
 
     <Button
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:gravity="bottom"
         android:keepScreenOn="true"
@@ -69,7 +69,21 @@
         android:textAlignment="center"
         android:text="@string/select_action"
         android:id="@+id/btnSelectPhoto"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentBottom="true"/>
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:keepScreenOn="true"
+        android:gravity="bottom"
+        android:padding="30dp"
+        android:text="@string/submit"
+        android:textSize="25dp"
+        android:textStyle="bold"
+        android:id="@+id/btnSubmit"
+        android:layout_alignParentRight="true"
         android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true" />
+        />
 
 </RelativeLayout>

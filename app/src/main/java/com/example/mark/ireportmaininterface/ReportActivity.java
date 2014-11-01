@@ -1,6 +1,7 @@
 package com.example.mark.ireportmaininterface;
 
 import android.app.Activity;
+import android.content.Context;
 import android.database.Cursor;
 import android.media.ThumbnailUtils;
 import android.os.Bundle;
@@ -26,6 +27,11 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.Toast;
+//gps
+import android.location.Criteria;
+import android.location.Location;
+import android.location.LocationListener;
+import android.location.LocationManager;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -37,9 +43,14 @@ import java.util.List;
 
 public class ReportActivity extends Activity {
 
+    //Interface objects
     ImageView viewImage;
-    Button b;
+    Button btnAction;
+    Button btnSubmit;
     Spinner catList;
+    //Gps objects
+    LocationManager locationManager;
+    String provider;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,35 +58,93 @@ public class ReportActivity extends Activity {
         setContentView(R.layout.activity_report);
 
         //Widget initialization
-        b = (Button)findViewById(R.id.btnSelectPhoto);
+        btnAction = (Button)findViewById(R.id.btnSelectPhoto);
+        btnSubmit = (Button)findViewById(R.id.btnSubmit);
         viewImage = (ImageView) findViewById(R.id.viewImage);
         catList = (Spinner) findViewById(R.id.selectCategory);
+        //GPS initialization
+        //get the location manager
+        try
+        {
+            locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+
+            boolean isGPSEnabled = locationManager.isProviderEnabled(locationManager.GPS_PROVIDER);
+            boolean isNetworkEnabled = locationManager.isProviderEnabled(locationManager.NETWORK_PROVIDER);
+
+            //define the criteria how to select the location provider
+            Criteria criteria = new Criteria();
+            provider = locationManager.getBestProvider(criteria, true);
+            locationManager.addTestProvider("TestGPS", true, true, true, true, true, true, true, 50, 50);
+            Location location = locationManager.getLastKnownLocation("TestGPS");
+
+/*            List<String> listprov = locationManager.getAllProviders();
+            //List<String> listprov = locationManager.getProviders(criteria, true);
+            ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, listprov);// Connecting to adapter
+            dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+            catList.setAdapter(dataAdapter);*/
+
+            //Initialize the location fields,
+            if (location != null)
+            {
+                System.out.println("Provider" + provider + "has been selected");
+            }
+            else
+            {
+                //Toast.makeText(this, provider, Toast.LENGTH_LONG).show();
+                //b.setText("Location not available");
+                Toast.makeText(this, "Location not available", Toast.LENGTH_LONG).show();
+            }
+        } catch (Exception e)
+        {
+            //b.setText(e.getMessage());
+            Toast.makeText(this, e.getMessage(), Toast.LENGTH_LONG).show();
+        }
         //Event Listeners
-        b.setOnClickListener(new View.OnClickListener(){
+        btnAction.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 selectAction();
             }
         });
+
+        btnSubmit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                submitReport();
+            }
+        });
         //Add to catList Spinner list
         List<String> list = new ArrayList<String>();
         String[] services =
-                {"Select Category",
-                "Police",
+                {"Police Emergency",
                 "Medical Emergency",
-                "Traffic Enforcer"};
+                "Traffic Enforcement",
+                "Environmental Hazard/Issue"};
         for (int i = 0; i < services.length; i++) {
         list.add(services[i].toString());
         }
-/*        list.add("Select Category");
-        list.add("Police");
-        list.add("Medical Emergency");
-        list.add("Traffic Enforcer");*/
+//        list.add("Select Category");
+//        list.add("Police");
+//        list.add("Medical Emergency");
+//        list.add("Traffic Enforcer");
         ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, list);// Connecting to adapter
         dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         catList.setAdapter(dataAdapter);
 
     }
+/*
+    @Override
+
+    protected void onResume()
+    {
+        super.onResume();
+        locationManager.requestLocationUpdates(provider, 400, 1, (LocationListener) this);
+    }
+    @Override
+    protected void onPause()
+    {
+        locationManager.removeUpdates((LocationListener) this);
+    }*/
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -119,6 +188,10 @@ public class ReportActivity extends Activity {
         builder.show();
     }
 
+    private void submitReport()
+    {
+        //
+    }
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
