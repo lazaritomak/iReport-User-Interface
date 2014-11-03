@@ -6,6 +6,7 @@ package com.example.mark.ireportmaininterface;
 
 import android.content.Context;
 import android.os.AsyncTask;
+import android.util.Log;
 import android.widget.ArrayAdapter;
 import android.widget.Toast;
 
@@ -13,19 +14,22 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
+import java.io.UnsupportedEncodingException;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
 import java.net.URLEncoder;
+import java.util.Random;
 
 
 public class Functions extends AsyncTask<String, Void, String>
 {
+    private static final String TAG = ReportActivity.class.getSimpleName();
     URLConnection connection = null;
 
     String command;
     Context context;
-    public static String link = "http://localhost/iReportDB/controller.php";//ip address/localhost
+    public static String link = "http://192.168.15.10/iReportDB/controller.php";//ip address/localhost
     public Functions (Context context)
     {
         this.context = context;
@@ -41,6 +45,7 @@ public class Functions extends AsyncTask<String, Void, String>
         catch (MalformedURLException e)
         {
             e.printStackTrace();
+            Log.d(TAG, e.getMessage().toString());
         }
         URLConnection connection = null;
         try//opens the url link provided from the "link" variable
@@ -50,27 +55,165 @@ public class Functions extends AsyncTask<String, Void, String>
         catch(IOException e)
         {
             e.printStackTrace();
+
+            Log.d(TAG, e.getMessage().toString());
         }
         connection.setDoOutput(true);
         return connection;
+    }
+
+    public String getResult(URLConnection connection, String logs){
+
+        String result="";
+
+        OutputStreamWriter wr = null;
+        try{
+            wr= new OutputStreamWriter(connection.getOutputStream());
+        }
+        catch(IOException e){
+            e.printStackTrace();
+
+            Log.d(TAG, e.getMessage().toString());
+        }
+
+        try{
+            wr.write(logs);
+        }
+        catch(IOException e){
+            e.printStackTrace();
+
+            Log.d(TAG, e.getMessage().toString());
+        }
+
+        try{
+            wr.flush();
+        }catch(IOException e){
+            e.printStackTrace();
+
+            Log.d(TAG, e.getMessage().toString());
+        }
+
+        BufferedReader reader = null;
+
+        try{
+            reader = new BufferedReader(new InputStreamReader(connection.getInputStream()));
+
+        }
+        catch(IOException e){
+            e.printStackTrace();
+
+            Log.d(TAG, e.getMessage().toString());
+        }
+
+        StringBuilder sb = new StringBuilder();
+        String line = null;
+
+        try{
+            while(((line = reader.readLine())!=null)){
+                sb.append(line);
+            }
+        }
+        catch(IOException e){
+            e.printStackTrace();
+
+            Log.d(TAG, e.getMessage().toString());
+        }
+
+        result = sb.toString();
+
+        return result;
     }
     @Override
     protected String doInBackground(String... strings)
     {
         String result = "";
-
-        try {
+        try
+        {
             command = (String) strings[0];
-            if (command == "testInsert") {
+            if (command == "insertReport")
+            {
                 connection = getConnection(link);
                 String logs = "";
-                logs = "&command" + URLEncoder.encode(command, "UTF-8");
+                try
+                {
+                    logs="&command=" + URLEncoder.encode("insertReport","UTF-8");
+                }
+                catch(UnsupportedEncodingException e)
+                {
+                    e.printStackTrace();
+
+                    Log.d(TAG, e.getMessage().toString());
+                }
+                try
+                {
+                    logs+="&reportid=" + URLEncoder.encode(generateReportID(),"UTF-8");
+                }
+                catch(UnsupportedEncodingException e)
+                {
+                    e.printStackTrace();
+
+                    Log.d(TAG, e.getMessage().toString());
+                }
+                try
+                {
+                    logs+="&reportmd=" + URLEncoder.encode("url","UTF-8");
+                }
+                catch(UnsupportedEncodingException e)
+                {
+                    e.printStackTrace();
+
+                    Log.d(TAG, e.getMessage().toString());
+                }
+                try
+                {
+                    logs+="&reportloc=" + URLEncoder.encode("Maniles","UTF-8");
+                }
+                catch(UnsupportedEncodingException e)
+                {
+                    e.printStackTrace();
+
+                    Log.d(TAG, e.getMessage().toString());
+                }
+                try
+                {
+                    logs+="&reportcaption=" + URLEncoder.encode(ReportActivity.captionText.getText().toString(),"UTF-8");
+                }
+                catch(UnsupportedEncodingException e)
+                {
+                    e.printStackTrace();
+
+                    Log.d(TAG, e.getMessage().toString());
+                }
+                try
+                {
+                    logs+="&reportcateg=" + URLEncoder.encode(ReportActivity.catList.getSelectedItem().toString(),"UTF-8");
+                }
+                catch(UnsupportedEncodingException e)
+                {
+                    e.printStackTrace();
+
+                    Log.d(TAG, e.getMessage().toString());
+                }
+                result = getResult(connection, logs);
             }
-            return null;
-        }
-        catch (Exception e)
-        {
             return result;
         }
+        catch(Exception e)
+        {
+            Log.d(TAG, e.getMessage().toString());
+            return result;
+
+        }
+    }
+    private String generateReportID()
+    {
+        String genID = "";
+        char[] numArrays = {'1','2','3','4','5','6','7','8','9','0'};
+        Random rand = new Random();
+        for (int i = 0; i < 5; i++)
+        {
+            genID += numArrays[rand.nextInt(numArrays.length)];
+        }
+        return genID;
     }
 }

@@ -24,6 +24,7 @@ import android.view.Menu;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.Toast;
@@ -47,7 +48,8 @@ public class ReportActivity extends Activity {
     ImageView viewImage;
     Button btnAction;
     Button btnSubmit;
-    Spinner catList;
+    public static Spinner catList;
+    public static EditText captionText;
     //Gps objects
     LocationManager locationManager;
     String provider;
@@ -62,6 +64,7 @@ public class ReportActivity extends Activity {
         btnSubmit = (Button)findViewById(R.id.btnSubmit);
         viewImage = (ImageView) findViewById(R.id.viewImage);
         catList = (Spinner) findViewById(R.id.selectCategory);
+        captionText = (EditText) findViewById(R.id.editText);
         //GPS initialization
         //get the location manager
         try
@@ -190,7 +193,8 @@ public class ReportActivity extends Activity {
 
     private void submitReport()
     {
-        //
+        new Functions(this).execute("insertReport");
+        //Toast.makeText(this, "Inserted", Toast.LENGTH_LONG).show();
     }
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
