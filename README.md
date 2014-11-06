@@ -15,11 +15,15 @@ Activities/Modules for User:
 
 3. Select category ✔
 
-4. Get current location of device.
+4. Account Creation
 
-5. Submit
+5. Account Log In
 
-6. Generate report ID upon sending to data center.
+6. Get current location of device.
+
+7. Submit
+
+7. Generate report ID upon sending to data center.
 
 Minor TODO list:
 
