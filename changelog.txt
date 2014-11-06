@@ -21,3 +21,9 @@ Increased Video thumbnail size
 0.6
 Edited Layout
 Added Submit Button (Not Yet Working)
+
+1.0
+Changed Layout of buttons
+added navigations controls
+Added Account Creation
+Changed Spinner to AlertDialog selection with checkbox
