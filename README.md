@@ -4,6 +4,7 @@ iReport-User-Interface
 User interface for iReport
 
 TODO:
+=
 
 ✔ - Done
 
@@ -26,6 +27,7 @@ Activities/Modules for User:
 7. Generate report ID upon sending to data center.
 
 Minor TODO list:
+=
 
 1. Thumbnail for video ✔
 
@@ -40,6 +42,7 @@ Minor TODO list:
 (Minor TODO list can be done upon completion of main modules)
 
 APK Location:
+=
 
 The apk can be found in 
 
@@ -47,6 +50,7 @@ The apk can be found in
 
 
 Notes/Details:
+=
 
 Made in Android Studio.
 
