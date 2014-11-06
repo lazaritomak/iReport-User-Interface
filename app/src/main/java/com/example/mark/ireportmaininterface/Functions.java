@@ -4,7 +4,9 @@ package com.example.mark.ireportmaininterface;
  * Created by Mark on 11/1/2014.
  */
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.os.AsyncTask;
 import android.util.Log;
 import android.widget.ArrayAdapter;
@@ -27,12 +29,14 @@ public class Functions extends AsyncTask<String, Void, String>
     private static final String TAG = ReportActivity.class.getSimpleName();
     URLConnection connection = null;
 
+    AlertDialog alertDialog;
     String command;
     Context context;
     public static String link = "http://192.168.15.10/iReportDB/controller.php";//ip address/localhost
     public Functions (Context context)
     {
         this.context = context;
+        alertDialog = new AlertDialog.Builder(this.context).create();
     }
 
     public URLConnection getConnection(String link)//Retrieve and connect to the url link
@@ -140,9 +144,7 @@ public class Functions extends AsyncTask<String, Void, String>
                 }
                 catch(UnsupportedEncodingException e)
                 {
-                    e.printStackTrace();
-
-                    Log.d(TAG, e.getMessage().toString());
+                    throw new Exception();
                 }
                 try
                 {
@@ -150,9 +152,7 @@ public class Functions extends AsyncTask<String, Void, String>
                 }
                 catch(UnsupportedEncodingException e)
                 {
-                    e.printStackTrace();
-
-                    Log.d(TAG, e.getMessage().toString());
+                    throw new Exception();
                 }
                 try
                 {
@@ -160,9 +160,7 @@ public class Functions extends AsyncTask<String, Void, String>
                 }
                 catch(UnsupportedEncodingException e)
                 {
-                    e.printStackTrace();
-
-                    Log.d(TAG, e.getMessage().toString());
+                    throw new Exception();
                 }
                 try
                 {
@@ -170,9 +168,7 @@ public class Functions extends AsyncTask<String, Void, String>
                 }
                 catch(UnsupportedEncodingException e)
                 {
-                    e.printStackTrace();
-
-                    Log.d(TAG, e.getMessage().toString());
+                    throw new Exception();
                 }
                 try
                 {
@@ -180,9 +176,7 @@ public class Functions extends AsyncTask<String, Void, String>
                 }
                 catch(UnsupportedEncodingException e)
                 {
-                    e.printStackTrace();
-
-                    Log.d(TAG, e.getMessage().toString());
+                    throw new Exception();
                 }
                 try
                 {
@@ -190,9 +184,7 @@ public class Functions extends AsyncTask<String, Void, String>
                 }
                 catch(UnsupportedEncodingException e)
                 {
-                    e.printStackTrace();
-
-                    Log.d(TAG, e.getMessage().toString());
+                    throw new Exception();
                 }
                 result = getResult(connection, logs);
             }
@@ -200,9 +192,7 @@ public class Functions extends AsyncTask<String, Void, String>
         }
         catch(Exception e)
         {
-            Log.d(TAG, e.getMessage().toString());
             return result;
-
         }
     }
     private String generateReportID()

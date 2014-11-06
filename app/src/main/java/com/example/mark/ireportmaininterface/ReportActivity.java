@@ -77,8 +77,7 @@ public class ReportActivity extends Activity {
             //define the criteria how to select the location provider
             Criteria criteria = new Criteria();
             provider = locationManager.getBestProvider(criteria, true);
-            locationManager.addTestProvider("TestGPS", true, true, true, true, true, true, true, 50, 50);
-            Location location = locationManager.getLastKnownLocation("TestGPS");
+            Location location = locationManager.getLastKnownLocation(provider);
 
 /*            List<String> listprov = locationManager.getAllProviders();
             //List<String> listprov = locationManager.getProviders(criteria, true);
@@ -157,7 +156,7 @@ public class ReportActivity extends Activity {
     }
 
     private void selectAction(){
-        final CharSequence[] options = {"Take Photo", "Take Video", "Choose From Gallery", "Cancel"};
+        final CharSequence[] options = {"Take Photo", "Take Video", "Choose From Gallery", "Sign Out" ,"Cancel"};
         AlertDialog.Builder builder = new AlertDialog.Builder(ReportActivity.this);
         builder.setTitle("Select Action!");
         builder.setItems(options, new DialogInterface.OnClickListener(){
@@ -181,6 +180,11 @@ public class ReportActivity extends Activity {
                 {
                     Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
                     startActivityForResult(intent, 2);//2 selects from gallery
+                }
+                else if (options[item].equals("Sign Out"))
+                {
+                    Intent mainmenu = new Intent(ReportActivity.this, LoginMenu.class);
+                    startActivity(mainmenu);
                 }
                 else if (options[item].equals("Cancel"))
                 {
