@@ -15,9 +15,9 @@ Activities/Modules for User:
 
 3. Select category ✔
 
-4. Account Creation
+4. Account Creation ✔
 
-5. Account Log In
+5. Account Log In ✔
 
 6. Get current location of device.
 
