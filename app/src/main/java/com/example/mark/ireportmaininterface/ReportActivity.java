@@ -5,6 +5,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.media.ThumbnailUtils;
 import android.os.Bundle;
+import android.preference.DialogPreference;
 import android.view.Menu;
 import android.view.MenuItem;
 //custom imports
@@ -47,12 +48,15 @@ public class ReportActivity extends Activity {
     //Interface objects
     ImageView viewImage;
     Button btnAction;
+    Button btnCategory;
     Button btnSubmit;
     public static Spinner catList;
     public static EditText captionText;
     //Gps objects
     LocationManager locationManager;
     String provider;
+    //Alert objects
+    AlertDialog alertDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,10 +64,12 @@ public class ReportActivity extends Activity {
         setContentView(R.layout.activity_report);
 
         //Widget initialization
+        final AlertDialog.Builder builder;
         btnAction = (Button)findViewById(R.id.btnSelectPhoto);
         btnSubmit = (Button)findViewById(R.id.btnSubmit);
+        btnCategory = (Button)findViewById(R.id.selectCategory);
         viewImage = (ImageView) findViewById(R.id.viewImage);
-        catList = (Spinner) findViewById(R.id.selectCategory);
+        //catList = (Spinner) findViewById(R.id.selectCategory);
         captionText = (EditText) findViewById(R.id.editText);
         //GPS initialization
         //get the location manager
@@ -116,7 +122,7 @@ public class ReportActivity extends Activity {
             }
         });
         //Add to catList Spinner list
-        List<String> list = new ArrayList<String>();
+/*        List<String> list = new ArrayList<String>();
         String[] services =
                 {"Police Emergency",
                 "Medical Emergency",
@@ -131,8 +137,46 @@ public class ReportActivity extends Activity {
 //        list.add("Traffic Enforcer");
         ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, list);// Connecting to adapter
         dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        catList.setAdapter(dataAdapter);
+        catList.setAdapter(dataAdapter);*/
+        final CharSequence[] agencyItems = {
+                "Police Emergency",
+                "Medical Services",
+                "Traffic Enforcement",
+                "Public Works",
+                "Waste Management"
+        };
+        final ArrayList selectedItems = new ArrayList();
+        builder = new AlertDialog.Builder(this);
+        builder.setTitle("Select Category");
+        builder.setMultiChoiceItems(agencyItems, null, new DialogInterface.OnMultiChoiceClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int indexSelected, boolean isChecked) {
+                if (isChecked) {
+                    //If the user checked the item, add it to the selected items
+                    //code when user checked the checkbox
+                    selectedItems.add(indexSelected);
 
+                } else if (selectedItems.contains(indexSelected)) {
+                    //Else, if the item is already in the array, remove it
+                    //code when user unchecks the checkbox
+                    selectedItems.remove(Integer.valueOf(indexSelected));
+                }
+            }
+
+        });
+        builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i)
+            {
+
+            }
+        });
+        btnCategory.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                builder.show();
+            }
+        });
     }
 /*
     @Override

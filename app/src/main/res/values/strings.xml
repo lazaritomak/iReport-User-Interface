@@ -1,16 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="app_name">iReport(Main Interface)</string>
+    <string name="app_name">Report</string>
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
+    <!--Report Activity Strings-->
     <string name="select_action">Action</string>
     <string name="submit">Submit</string>
     <string name="login">Login</string>
-    <string name="title_activity_login_menu">LoginMenu</string>
+    <string name="select_category">Select Category</string>
+    <!--Main Menu Activity Strings-->
+    <string name="title_activity_login_menu">Login</string>
     <string name="username">Username</string>
     <string name="password">Password</string>
     <string name="register">Register</string>
-    <string name="title_activity_create_account">CreateAccount</string>
+    <!--Create Account Activity Strings-->
+    <string name="title_activity_create_account">Create Account</string>
+    <string name="preferred_username">Username: </string>
+    <string name="preferred_password">Password: </string>
+    <string name="confirm_password">Confirm Password:</string>
+    <string name="Back">Back</string>
+    <string name="error_info">Error Info</string>
 
 </resources>

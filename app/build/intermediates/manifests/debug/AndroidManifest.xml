@@ -39,6 +39,10 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity
+            android:name="com.example.mark.ireportmaininterface.CreateAccount"
+            android:label="@string/title_activity_create_account" >
+        </activity>
     </application>
 
 </manifest>

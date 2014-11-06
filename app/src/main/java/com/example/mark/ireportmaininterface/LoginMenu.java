@@ -31,7 +31,7 @@ public class LoginMenu extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login_menu);
 
-        ipAddDisp = (TextView) findViewById(R.id.ipAddDisplay);
+        ipAddDisp = (TextView) findViewById(R.id.infoDisplay);
         txtUsername = (EditText) findViewById(R.id.username);
         txtPassword = (EditText) findViewById(R.id.password);
         btnLogin = (Button) findViewById(R.id.login);
@@ -41,7 +41,7 @@ public class LoginMenu extends Activity {
         btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (txtUsername.getText().toString().equals("user") && txtPassword.getText().toString().equals("user"))
+                if (txtUsername.getText().toString().equals("a") && txtPassword.getText().toString().equals("a"))
                 {
                     Intent nextstep = new Intent(LoginMenu.this, ReportActivity.class);
                     startActivity(nextstep);
@@ -50,7 +50,7 @@ public class LoginMenu extends Activity {
                 {
                     AlertDialog alertDialog = new AlertDialog.Builder(LoginMenu.this).create();
                     alertDialog.setTitle("Login Error");
-                    alertDialog.setMessage("Invalid Username/Password Bro");
+                    alertDialog.setMessage("Invalid Username/Password");
                     alertDialog.setButton("OK",new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialogInterface, int i) {
@@ -67,7 +67,8 @@ public class LoginMenu extends Activity {
             @Override
             public void onClick(View view)
             {
-
+                Intent regstep = new Intent(LoginMenu.this, CreateAccount.class);
+                startActivity(regstep);
             }
         });
 
