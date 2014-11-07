@@ -27,3 +27,6 @@ Changed Layout of buttons
 added navigations controls
 Added Account Creation
 Changed Spinner to AlertDialog selection with checkbox
+
+1.1
+Saving of the checkbox boolean state
