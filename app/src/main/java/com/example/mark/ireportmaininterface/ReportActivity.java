@@ -57,6 +57,8 @@ public class ReportActivity extends Activity {
     String provider;
     //Alert objects
     AlertDialog alertDialog;
+    //Yes
+    boolean[] isSelectedArray;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -146,20 +148,27 @@ public class ReportActivity extends Activity {
                 "Waste Management"
         };
         final ArrayList selectedItems = new ArrayList();
+        isSelectedArray = new boolean[agencyItems.length];
+        for (int i = 0; i < isSelectedArray.length; i++)
+        {
+            isSelectedArray[i] = false;
+        }
         builder = new AlertDialog.Builder(this);
         builder.setTitle("Select Category");
-        builder.setMultiChoiceItems(agencyItems, null, new DialogInterface.OnMultiChoiceClickListener() {
+        builder.setMultiChoiceItems(agencyItems, isSelectedArray, new DialogInterface.OnMultiChoiceClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int indexSelected, boolean isChecked) {
                 if (isChecked) {
                     //If the user checked the item, add it to the selected items
                     //code when user checked the checkbox
                     selectedItems.add(indexSelected);
+                    isSelectedArray[indexSelected] = true;
 
                 } else if (selectedItems.contains(indexSelected)) {
                     //Else, if the item is already in the array, remove it
                     //code when user unchecks the checkbox
                     selectedItems.remove(Integer.valueOf(indexSelected));
+                    isSelectedArray[indexSelected] = false;
                 }
             }
 
@@ -168,13 +177,14 @@ public class ReportActivity extends Activity {
             @Override
             public void onClick(DialogInterface dialogInterface, int i)
             {
-
             }
         });
         btnCategory.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                builder.show();
+//                builder.show();
+                alertDialog = builder.create();
+                alertDialog.show();
             }
         });
     }
