@@ -39,6 +39,8 @@ Minor TODO list:
 
 5. Increase video thumbnail size.✔
 
+6. Change video thumbnail orientation
+
 (Minor TODO list can be done upon completion of main modules)
 
 APK Location:
