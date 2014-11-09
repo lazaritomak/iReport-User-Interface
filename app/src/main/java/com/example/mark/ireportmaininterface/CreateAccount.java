@@ -128,7 +128,7 @@ public class CreateAccount extends Activity {
             new Functions(this).execute("insertUser");
             alertDialog.setTitle("Success");
             alertDialog.setMessage("Registration Successful, you can now log in");
-            alertDialog.setButton("OK", new DialogInterface.OnClickListener() {
+            alertDialog.setButton("OK",     new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialogInterface, int i)
                 {

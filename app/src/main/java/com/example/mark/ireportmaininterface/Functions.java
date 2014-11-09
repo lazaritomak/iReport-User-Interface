@@ -139,8 +139,8 @@ public class Functions extends AsyncTask<String, Void, String>
         }
         else if (command == "getAccountData")
         {
-            //LoginMenu.message = result;
-            LoginMenu.ipAddDisp.setText(result);
+          LoginMenu.message = result;
+            //LoginMenu.ipAddDisp.setText(result);
         }
     }
 
@@ -186,9 +186,19 @@ public class Functions extends AsyncTask<String, Void, String>
                 logs = "&command=" + URLEncoder.encode("getAccountData", "UTF-8");
                 logs += "&user_name=" + URLEncoder.encode(LoginMenu.txtUsername.getText().toString(), "UTF-8");
                 logs += "&user_password="+ URLEncoder.encode(LoginMenu.txtPassword.getText().toString(), "UTF-8");
-                Log.d("SQL RESULT",logs);
+                Log.d("logs results",logs);
                 result = getResult(connection, logs);
+                //Check for null results, null = invaild account;
                 Log.v("Sql Result", result);
+                if (result.isEmpty())
+                {
+                    LoginMenu.message = null;
+                }
+                else
+                {
+                    LoginMenu.message = result;
+                }
+                Log.v("login Menu Result", result);
                 Log.v("Functions", "User Retrieve Successful");
             }
             return result;
@@ -199,7 +209,7 @@ public class Functions extends AsyncTask<String, Void, String>
             return result;
         }
     }
-    private String generateReportID()
+    private String generateReportID()//temp lng to
     {
         String genID = "";
         char[] numArrays = {'1','2','3','4','5','6','7','8','9','0'};

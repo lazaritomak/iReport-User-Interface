@@ -45,11 +45,26 @@ public class LoginMenu extends Activity {
                 GetAccountData();
                 ipAddDisp.setText(message);
                 //boolean yes = true;
-                if (txtUsername.getText().toString().equals(message))
+                //do not to campre null textbox to null message. put them in different condition
+                if (txtUsername.length() == 0 || txtPassword.length() == 0)
+                {
+                    AlertDialog alertDialog = new AlertDialog.Builder(LoginMenu.this).create();
+                    alertDialog.setTitle("Login Error");
+                    alertDialog.setMessage("Enter Username and Password");
+                    alertDialog.setButton("OK", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                        }
+                    });
+                    alertDialog.show();
+                }
+                else if (txtUsername.getText().toString().equals(message))
                 {
                     Intent nextstep = new Intent(LoginMenu.this, ReportActivity.class);
                     startActivity(nextstep);
-                } else {
+                }
+                else
+                {
                     AlertDialog alertDialog = new AlertDialog.Builder(LoginMenu.this).create();
                     alertDialog.setTitle("Login Error");
                     alertDialog.setMessage("Invalid Username/Password");
