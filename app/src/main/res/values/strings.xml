@@ -21,5 +21,6 @@
     <string name="confirm_password">Confirm Password:</string>
     <string name="Back">Back</string>
     <string name="error_info">Error Info</string>
+    <string name="email_add">Email Address</string>
 
 </resources>

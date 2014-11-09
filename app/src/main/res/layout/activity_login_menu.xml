@@ -60,6 +60,8 @@ d
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/login"
+            android:textStyle="bold"
+            android:textSize="20dp"
             android:id="@+id/login"
             android:layout_alignParentBottom="true"
             android:layout_alignParentEnd="true" />
@@ -69,9 +71,25 @@ d
             android:layout_height="wrap_content"
             android:text="@string/register"
             android:id="@+id/register"
+            android:textStyle="bold"
+            android:textSize="20dp"
             android:layout_toEndOf="@+id/lblPassword"
             android:layout_below="@+id/password"
             android:layout_toStartOf="@+id/login"
             android:layout_alignEnd="@+id/password" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="myReport: Mobile Community Reporting for the Municipality of Carmona"
+            android:textAlignment="center"
+            android:textSize="20dp"
+            android:id="@+id/textView"
+            android:layout_marginTop="148dp"
+            android:layout_toStartOf="@+id/login"
+            android:layout_below="@+id/infoDisplay"
+            android:layout_centerHorizontal="true"
+            android:singleLine="false" />
     </RelativeLayout>
 </RelativeLayout>

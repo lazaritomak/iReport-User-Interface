@@ -10,6 +10,7 @@ import android.content.DialogInterface;
 import android.os.AsyncTask;
 import android.util.Log;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.Toast;
 
 import java.io.BufferedReader;
@@ -26,12 +27,13 @@ import java.util.Random;
 
 public class Functions extends AsyncTask<String, Void, String>
 {
-    private static final String TAG = ReportActivity.class.getSimpleName();
     URLConnection connection = null;
 
     AlertDialog alertDialog;
     String command;
     Context context;
+    Button btnCategory;
+    //DONT FORGET TO CHANGE SERVER IP AHUEHUEHUE
     public static String link = "http://192.168.15.10/iReportDB/controller.php";//ip address/localhost
     public Functions (Context context)
     {
@@ -49,7 +51,7 @@ public class Functions extends AsyncTask<String, Void, String>
         catch (MalformedURLException e)
         {
             e.printStackTrace();
-            Log.d(TAG, e.getMessage().toString());
+            Log.v("getConnection", e.getMessage().toString());
         }
         URLConnection connection = null;
         try//opens the url link provided from the "link" variable
@@ -59,8 +61,7 @@ public class Functions extends AsyncTask<String, Void, String>
         catch(IOException e)
         {
             e.printStackTrace();
-
-            Log.d(TAG, e.getMessage().toString());
+            Log.v("getConnection", e.getMessage().toString());
         }
         connection.setDoOutput(true);
         return connection;
@@ -71,127 +72,130 @@ public class Functions extends AsyncTask<String, Void, String>
         String result="";
 
         OutputStreamWriter wr = null;
-        try{
+        try
+        {
             wr= new OutputStreamWriter(connection.getOutputStream());
         }
-        catch(IOException e){
-            e.printStackTrace();
-
-            Log.d(TAG, e.getMessage().toString());
+        catch(IOException e)
+        {
+            Log.v("getResult", e.getMessage().toString());
         }
-
-        try{
+        try
+        {
             wr.write(logs);
         }
-        catch(IOException e){
-            e.printStackTrace();
-
-            Log.d(TAG, e.getMessage().toString());
+        catch(IOException e)
+        {
+            Log.v("getResult", e.getMessage().toString());
         }
-
-        try{
+        try
+        {
             wr.flush();
-        }catch(IOException e){
-            e.printStackTrace();
-
-            Log.d(TAG, e.getMessage().toString());
+        }catch(IOException e)
+        {
+            Log.v("getResult", e.getMessage().toString());
         }
 
         BufferedReader reader = null;
 
-        try{
+        try
+        {
             reader = new BufferedReader(new InputStreamReader(connection.getInputStream()));
 
         }
-        catch(IOException e){
-            e.printStackTrace();
-
-            Log.d(TAG, e.getMessage().toString());
+        catch(IOException e)
+        {
+            Log.v("getResult", e.getMessage().toString());
         }
 
         StringBuilder sb = new StringBuilder();
         String line = null;
 
-        try{
-            while(((line = reader.readLine())!=null)){
+        try
+        {
+            while(((line = reader.readLine())!=null))
+            {
                 sb.append(line);
             }
         }
-        catch(IOException e){
-            e.printStackTrace();
-
-            Log.d(TAG, e.getMessage().toString());
+        catch(IOException e)
+        {
+            Log.v("getResult", e.getMessage().toString());
         }
-
         result = sb.toString();
 
         return result;
     }
+
+    @Override
+    protected void onPostExecute(String result) {
+        if (command == "insertReport")
+        {
+            ReportActivity.captionText.setText(result);
+        }
+        else if (command == "insertUser")
+        {
+            CreateAccount.errorlabel.setText(result);
+        }
+        else if (command == "getAccountData")
+        {
+            //LoginMenu.message = result;
+            LoginMenu.ipAddDisp.setText(result);
+        }
+    }
+
     @Override
     protected String doInBackground(String... strings)
     {
         String result = "";
+        Log.v("Functions", "doInBackground");
         try
         {
             command = (String) strings[0];
+            Log.v("Functions", "Entered background method");
             if (command == "insertReport")
             {
                 connection = getConnection(link);
                 String logs = "";
-                try
-                {
-                    logs="&command=" + URLEncoder.encode("insertReport","UTF-8");
-                }
-                catch(UnsupportedEncodingException e)
-                {
-                    throw new Exception();
-                }
-                try
-                {
-                    logs+="&reportid=" + URLEncoder.encode(generateReportID(),"UTF-8");
-                }
-                catch(UnsupportedEncodingException e)
-                {
-                    throw new Exception();
-                }
-                try
-                {
-                    logs+="&reportmd=" + URLEncoder.encode("url","UTF-8");
-                }
-                catch(UnsupportedEncodingException e)
-                {
-                    throw new Exception();
-                }
-                try
-                {
-                    logs+="&reportloc=" + URLEncoder.encode("Maniles","UTF-8");
-                }
-                catch(UnsupportedEncodingException e)
-                {
-                    throw new Exception();
-                }
-                try
-                {
-                    logs+="&reportcaption=" + URLEncoder.encode(ReportActivity.captionText.getText().toString(),"UTF-8");
-                }
-                catch(UnsupportedEncodingException e)
-                {
-                    throw new Exception();
-                }
-                try
-                {
-                    logs+="&reportcateg=" + URLEncoder.encode(ReportActivity.catList.getSelectedItem().toString(),"UTF-8");
-                }
-                catch(UnsupportedEncodingException e)
-                {
-                    throw new Exception();
-                }
+                logs="&command=" + URLEncoder.encode("insertReport","UTF-8");
+                logs+="&report_id=" + URLEncoder.encode(generateReportID(),"UTF-8");
+                logs+="&report_username=" + URLEncoder.encode("user", "UTF-8");
+                logs+="&report_murl=" + URLEncoder.encode("url","UTF-8");
+                logs+="&report_loc=" + URLEncoder.encode("Maniles","UTF-8");
+                logs+="&report_capt=" + URLEncoder.encode(ReportActivity.captionText.getText().toString(),"UTF-8");
+                Log.v("Functions", "report_capt Successful");
+
                 result = getResult(connection, logs);
+                Log.v("Functions", "Report Insert Successful Successful");
+            }
+            else if (command == "insertUser")
+            {
+                connection = getConnection(link);
+                String logs = "";
+                logs="&command=" + URLEncoder.encode("insertUser","UTF-8");
+                logs+="&user_email=" + URLEncoder.encode(CreateAccount.txtemailadd.getText().toString(),"UTF-8");
+                logs+="&user_name=" + URLEncoder.encode(CreateAccount.txtusername.getText().toString(), "UTF-8");
+                logs+="&user_password=" + URLEncoder.encode(CreateAccount.txtpassword.getText().toString(),"UTF-8");
+                result = getResult(connection, logs);
+                Log.v("Functions", "User Insert Successful");
+            }
+            else if (command == "getAccountData")
+            {
+                connection = getConnection(link);
+                String logs = "";
+                logs = "&command=" + URLEncoder.encode("getAccountData", "UTF-8");
+                logs += "&user_name=" + URLEncoder.encode(LoginMenu.txtUsername.getText().toString(), "UTF-8");
+                logs += "&user_password="+ URLEncoder.encode(LoginMenu.txtPassword.getText().toString(), "UTF-8");
+                Log.d("SQL RESULT",logs);
+                result = getResult(connection, logs);
+                Log.v("Sql Result", result);
+                Log.v("Functions", "User Retrieve Successful");
             }
             return result;
         }
         catch(Exception e)
         {
+            //Log.v("Functions", e.getMessage());
             return result;
         }
     }

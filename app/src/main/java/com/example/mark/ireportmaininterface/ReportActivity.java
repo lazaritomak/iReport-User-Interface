@@ -5,25 +5,19 @@ import android.content.Context;
 import android.database.Cursor;
 import android.media.ThumbnailUtils;
 import android.os.Bundle;
-import android.preference.DialogPreference;
 import android.view.Menu;
 import android.view.MenuItem;
 //custom imports
-import android.hardware.Camera;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
-import android.os.Bundle;
-import android.app.Activity;
 import android.os.Environment;
 import android.provider.MediaStore;
 import android.util.Log;
-import android.view.Menu;
 import android.view.View;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -32,16 +26,10 @@ import android.widget.Toast;
 //gps
 import android.location.Criteria;
 import android.location.Location;
-import android.location.LocationListener;
 import android.location.LocationManager;
 
 import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.OutputStream;
 import java.util.ArrayList;
-import java.util.List;
 
 public class ReportActivity extends Activity {
 
@@ -72,7 +60,7 @@ public class ReportActivity extends Activity {
         btnCategory = (Button)findViewById(R.id.selectCategory);
         viewImage = (ImageView) findViewById(R.id.viewImage);
         //catList = (Spinner) findViewById(R.id.selectCategory);
-        captionText = (EditText) findViewById(R.id.editText);
+        captionText = (EditText) findViewById(R.id.captionText);
         //GPS initialization
         //get the location manager
         try
@@ -123,23 +111,6 @@ public class ReportActivity extends Activity {
                 submitReport();
             }
         });
-        //Add to catList Spinner list
-/*        List<String> list = new ArrayList<String>();
-        String[] services =
-                {"Police Emergency",
-                "Medical Emergency",
-                "Traffic Enforcement",
-                "Environmental Hazard/Issue"};
-        for (int i = 0; i < services.length; i++) {
-        list.add(services[i].toString());
-        }
-//        list.add("Select Category");
-//        list.add("Police");
-//        list.add("Medical Emergency");
-//        list.add("Traffic Enforcer");
-        ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, list);// Connecting to adapter
-        dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        catList.setAdapter(dataAdapter);*/
         final CharSequence[] agencyItems = {
                 "Police Emergency",
                 "Medical Services",
@@ -251,7 +222,7 @@ public class ReportActivity extends Activity {
 
     private void submitReport()
     {
-        new Functions(this).execute("insertReport");
+        new Functions(this).execute("getAccountData");
         //Toast.makeText(this, "Inserted", Toast.LENGTH_LONG).show();
     }
     @Override

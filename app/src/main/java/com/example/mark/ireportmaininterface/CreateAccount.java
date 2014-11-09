@@ -5,6 +5,7 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -17,9 +18,11 @@ public class CreateAccount extends Activity {
 
     Button btnSubmit;
     Button btnBack;
-    EditText txtusername;
-    EditText txtpassword;
-    EditText txtconfirmpass;
+    public static EditText txtusername;
+    public static EditText txtpassword;
+    public static EditText txtconfirmpass;
+    public static EditText txtemailadd;
+    public static TextView errorlabel;
     TextView viewError;
 
     @Override
@@ -31,6 +34,8 @@ public class CreateAccount extends Activity {
         txtusername = (EditText)findViewById(R.id.username);
         txtpassword = (EditText)findViewById(R.id.password);
         txtconfirmpass = (EditText)findViewById(R.id.confirmpass);
+        txtemailadd = (EditText)findViewById(R.id.emailadd);
+        errorlabel = (TextView) findViewById(R.id.lblError);
         viewError = (TextView)findViewById(R.id.lblError);
         btnSubmit.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -60,10 +65,13 @@ public class CreateAccount extends Activity {
         });
     }
 
-    private boolean IsAllFieldsValid()
+    private boolean IsAllFieldsValid() //Checks if all fields are entered valid
     {
         boolean isvalid = false;
-        if (txtusername.getText().toString().trim().length() == 0 || txtpassword.getText().toString().trim().length() == 0 || txtconfirmpass.getText().toString().trim().length() == 0)
+        if (txtusername.getText().toString().trim().length() == 0
+                || txtpassword.getText().toString().trim().length() == 0
+                || txtconfirmpass.getText().toString().trim().length() == 0
+                ||txtemailadd.getText().toString().trim().length() == 0)
         {
             isvalid = false;
         }
@@ -76,13 +84,15 @@ public class CreateAccount extends Activity {
     private boolean IsPasswordsSame()
     {
         boolean isvalid = false;
-        if (txtpassword.getText().toString() != txtconfirmpass.getText().toString())
+        Log.v("Non same error" , txtpassword.getText().toString());
+        Log.v("Non same error" , txtconfirmpass.getText().toString());
+        if (txtpassword.getText().toString().equals(txtconfirmpass.getText().toString()))
         {
-            isvalid = false;
+            isvalid = true;
         }
         else
         {
-            isvalid = true;
+            isvalid = false;
         }
         return isvalid;
     }
@@ -109,19 +119,20 @@ public class CreateAccount extends Activity {
                 @Override
                 public void onClick(DialogInterface dialogInterface, int i)
                 {
-                    //Do nothing
+                    //D
                 }
             });
         }
         else if (infoerror == "success")
         {
+            new Functions(this).execute("insertUser");
             alertDialog.setTitle("Success");
             alertDialog.setMessage("Registration Successful, you can now log in");
             alertDialog.setButton("OK", new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialogInterface, int i)
                 {
-                    btnBack.callOnClick();
+//                    btnBack.callOnClick();
                 }
             });
         }

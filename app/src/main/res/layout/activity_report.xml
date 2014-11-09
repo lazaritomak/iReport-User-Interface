@@ -45,7 +45,7 @@
         android:inputType="textMultiLine"
         android:gravity="bottom"
         android:ems="10"
-        android:id="@+id/editText"
+        android:id="@+id/captionText"
         android:layout_above="@+id/selectCategory"
         android:layout_alignParentStart="true"
         android:layout_centerVertical="true" />

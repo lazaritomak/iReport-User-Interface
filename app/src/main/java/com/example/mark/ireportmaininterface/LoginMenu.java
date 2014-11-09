@@ -21,11 +21,13 @@ import java.util.Enumeration;
 public class LoginMenu extends Activity {
 
 
-    TextView ipAddDisp;
-    EditText txtUsername;
-    EditText txtPassword;
+    public static TextView ipAddDisp;
+    public static EditText txtUsername;
+    public static EditText txtPassword;
     Button btnLogin;
     Button btnRegister;
+    public static String message;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -37,26 +39,23 @@ public class LoginMenu extends Activity {
         btnLogin = (Button) findViewById(R.id.login);
         btnRegister = (Button) findViewById(R.id.register);
 
-
         btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (txtUsername.getText().toString().equals("a") && txtPassword.getText().toString().equals("a"))
+                GetAccountData();
+                ipAddDisp.setText(message);
+                //boolean yes = true;
+                if (txtUsername.getText().toString().equals(message))
                 {
                     Intent nextstep = new Intent(LoginMenu.this, ReportActivity.class);
                     startActivity(nextstep);
-                }
-                else
-                {
+                } else {
                     AlertDialog alertDialog = new AlertDialog.Builder(LoginMenu.this).create();
                     alertDialog.setTitle("Login Error");
                     alertDialog.setMessage("Invalid Username/Password");
-                    alertDialog.setButton("OK",new DialogInterface.OnClickListener() {
+                    alertDialog.setButton("OK", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialogInterface, int i) {
-                            String display = txtPassword.getText().toString() + "\n";
-                            display += txtUsername.getText().toString();
-                            ipAddDisp.setText(display);
                         }
                     });
                     alertDialog.show();
@@ -65,8 +64,7 @@ public class LoginMenu extends Activity {
         });
         btnRegister.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view)
-            {
+            public void onClick(View view) {
                 Intent regstep = new Intent(LoginMenu.this, CreateAccount.class);
                 startActivity(regstep);
             }
@@ -75,7 +73,10 @@ public class LoginMenu extends Activity {
         //gets ip address
         ipAddDisp.setText(getIpAddress());
     }
-
+    public void GetAccountData()
+    {
+        new Functions(this).execute("getAccountData");
+    }
     private String getIpAddress(){
         String ip = "";
         try {
@@ -106,7 +107,6 @@ public class LoginMenu extends Activity {
                     }
                     ip += ipAddress + inetAddress.getHostAddress() + "\n";
                 }
-
             }
 
         } catch (SocketException e) {
@@ -114,7 +114,7 @@ public class LoginMenu extends Activity {
             e.printStackTrace();
             ip += "Something Wrong! " + e.toString() + "\n";
         }
-
+        ip += "DO NOT FORGET TO CHANGE HOST IP LINK";
         return ip;
     }
 
