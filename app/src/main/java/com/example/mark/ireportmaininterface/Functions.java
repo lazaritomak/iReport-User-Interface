@@ -139,7 +139,7 @@ public class Functions extends AsyncTask<String, Void, String>
         }
         else if (command == "getAccountData")
         {
-            userresult = result;
+            //userresult = result;
         }
     }
 
@@ -189,8 +189,8 @@ public class Functions extends AsyncTask<String, Void, String>
                 result = getResult(connection, logs);
                 //Check for null results, null = invaild account;
                 Log.d("Sql Result", result);
-                userresult = result;
-                Log.d("USER RESULT", userresult);
+                //userresult = result;
+                //Log.d("USER RESULT", userresult);
             }
             return result;
         }
