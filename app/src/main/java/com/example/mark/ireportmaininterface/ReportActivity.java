@@ -1,10 +1,12 @@
 package com.example.mark.ireportmaininterface;
 
 import android.app.Activity;
+import android.app.Dialog;
 import android.content.Context;
 import android.database.Cursor;
 import android.media.ThumbnailUtils;
 import android.os.Bundle;
+import android.provider.Settings;
 import android.view.Menu;
 import android.view.MenuItem;
 //custom imports
@@ -41,8 +43,9 @@ public class ReportActivity extends Activity {
     public static Spinner catList;
     public static EditText captionText;
     //Gps objects
-    LocationManager locationManager;
-    String provider;
+    public static GPSTracker gps;
+    static double latitude;
+    static double longitude;
     //Alert objects
     AlertDialog alertDialog;
     //Yes
@@ -62,41 +65,8 @@ public class ReportActivity extends Activity {
         //catList = (Spinner) findViewById(R.id.selectCategory);
         captionText = (EditText) findViewById(R.id.captionText);
         //GPS initialization
-        //get the location manager
-        try
-        {
-            locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+        gps = new GPSTracker(ReportActivity.this);
 
-            boolean isGPSEnabled = locationManager.isProviderEnabled(locationManager.GPS_PROVIDER);
-            boolean isNetworkEnabled = locationManager.isProviderEnabled(locationManager.NETWORK_PROVIDER);
-
-            //define the criteria how to select the location provider
-            Criteria criteria = new Criteria();
-            provider = locationManager.getBestProvider(criteria, true);
-            Location location = locationManager.getLastKnownLocation(provider);
-
-/*            List<String> listprov = locationManager.getAllProviders();
-            //List<String> listprov = locationManager.getProviders(criteria, true);
-            ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, listprov);// Connecting to adapter
-            dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-            catList.setAdapter(dataAdapter);*/
-
-            //Initialize the location fields,
-            if (location != null)
-            {
-                System.out.println("Provider" + provider + "has been selected");
-            }
-            else
-            {
-                //Toast.makeText(this, provider, Toast.LENGTH_LONG).show();
-                //b.setText("Location not available");
-                Toast.makeText(this, "Location not available", Toast.LENGTH_LONG).show();
-            }
-        } catch (Exception e)
-        {
-            //b.setText(e.getMessage());
-            Toast.makeText(this, e.getMessage(), Toast.LENGTH_LONG).show();
-        }
         //Event Listeners
         btnAction.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -111,7 +81,7 @@ public class ReportActivity extends Activity {
                 submitReport();
             }
         });
-        final CharSequence[] agencyItems = {
+        final CharSequence[] agencyItems = {//add tag stuff here
                 "Police Emergency",
                 "Medical Services",
                 "Traffic Enforcement",
@@ -120,7 +90,8 @@ public class ReportActivity extends Activity {
         };
         final ArrayList selectedItems = new ArrayList();
         isSelectedArray = new boolean[agencyItems.length];
-        for (int i = 0; i < isSelectedArray.length; i++)
+        int arraylength = isSelectedArray.length;
+        for (int i = 0; i < arraylength; i++)//initial all the lists inside agencyItems to be unchecked ( false)
         {
             isSelectedArray[i] = false;
         }
@@ -148,6 +119,7 @@ public class ReportActivity extends Activity {
             @Override
             public void onClick(DialogInterface dialogInterface, int i)
             {
+                //do nothing
             }
         });
         btnCategory.setOnClickListener(new View.OnClickListener() {
@@ -159,19 +131,6 @@ public class ReportActivity extends Activity {
             }
         });
     }
-/*
-    @Override
-
-    protected void onResume()
-    {
-        super.onResume();
-        locationManager.requestLocationUpdates(provider, 400, 1, (LocationListener) this);
-    }
-    @Override
-    protected void onPause()
-    {
-        locationManager.removeUpdates((LocationListener) this);
-    }*/
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -181,7 +140,7 @@ public class ReportActivity extends Activity {
     }
 
     private void selectAction(){
-        final CharSequence[] options = {"Take Photo", "Take Video", "Choose From Gallery", "Sign Out" ,"Cancel"};
+        final CharSequence[] options = {"Take Photo", "Take Video", "Choose From Gallery", "Sign Out" ,"Cancel"};//Initialize options inside the builder dialog
         AlertDialog.Builder builder = new AlertDialog.Builder(ReportActivity.this);
         builder.setTitle("Select Action!");
         builder.setItems(options, new DialogInterface.OnClickListener(){
@@ -247,6 +206,7 @@ public class ReportActivity extends Activity {
                     BitmapFactory.Options bitmapOptions = new BitmapFactory.Options();
                     bitmap = BitmapFactory.decodeFile(f.getAbsolutePath(), bitmapOptions);
                     viewImage.setImageBitmap(bitmap);
+                    //no need
                     /*String path = android.os.Environment.getExternalStorageDirectory() + File.separator + "Phoenix" + File.separator + "default";
                     f.delete();
                     OutputStream outFile = null;

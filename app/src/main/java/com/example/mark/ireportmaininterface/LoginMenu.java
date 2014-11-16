@@ -5,6 +5,7 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -16,6 +17,7 @@ import java.net.InetAddress;
 import java.net.NetworkInterface;
 import java.net.SocketException;
 import java.util.Enumeration;
+import java.util.concurrent.ExecutionException;
 
 
 public class LoginMenu extends Activity {
@@ -42,9 +44,21 @@ public class LoginMenu extends Activity {
         btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                GetAccountData();
                 ipAddDisp.setText(message);
+                // Get Account Data
+                try
+                {
+                    message = new Functions(LoginMenu.this).execute("getAccountData").get();
+                } catch (InterruptedException e)
+                {
+                    e.printStackTrace();
+                } catch (ExecutionException e)
+                {
+                    e.printStackTrace();
+                }
                 //boolean yes = true;
+                Log.d("FUNCTIONS USER", Functions.userresult);
+
                 //do not to campre null textbox to null message. put them in different condition
                 if (txtUsername.length() == 0 || txtPassword.length() == 0)
                 {
@@ -75,6 +89,7 @@ public class LoginMenu extends Activity {
                     });
                     alertDialog.show();
                 }
+                Log.d("END", "END OF LINE LOGIN");
             }
         });
         btnRegister.setOnClickListener(new View.OnClickListener() {
@@ -87,10 +102,6 @@ public class LoginMenu extends Activity {
 
         //gets ip address
         ipAddDisp.setText(getIpAddress());
-    }
-    public void GetAccountData()
-    {
-        new Functions(this).execute("getAccountData");
     }
     private String getIpAddress(){
         String ip = "";

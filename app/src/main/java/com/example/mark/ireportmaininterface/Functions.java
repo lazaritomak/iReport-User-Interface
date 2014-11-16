@@ -31,6 +31,7 @@ public class Functions extends AsyncTask<String, Void, String>
 
     AlertDialog alertDialog;
     String command;
+    public static String userresult = "";
     Context context;
     Button btnCategory;
     //DONT FORGET TO CHANGE SERVER IP AHUEHUEHUE
@@ -40,7 +41,6 @@ public class Functions extends AsyncTask<String, Void, String>
         this.context = context;
         alertDialog = new AlertDialog.Builder(this.context).create();
     }
-
     public URLConnection getConnection(String link)//Retrieve and connect to the url link
     {
         URL url = null;
@@ -139,8 +139,7 @@ public class Functions extends AsyncTask<String, Void, String>
         }
         else if (command == "getAccountData")
         {
-          LoginMenu.message = result;
-            //LoginMenu.ipAddDisp.setText(result);
+            userresult = result;
         }
     }
 
@@ -186,20 +185,12 @@ public class Functions extends AsyncTask<String, Void, String>
                 logs = "&command=" + URLEncoder.encode("getAccountData", "UTF-8");
                 logs += "&user_name=" + URLEncoder.encode(LoginMenu.txtUsername.getText().toString(), "UTF-8");
                 logs += "&user_password="+ URLEncoder.encode(LoginMenu.txtPassword.getText().toString(), "UTF-8");
-                Log.d("logs results",logs);
+                //Log.d("logs results",logs);
                 result = getResult(connection, logs);
                 //Check for null results, null = invaild account;
-                Log.v("Sql Result", result);
-                if (result.isEmpty())
-                {
-                    LoginMenu.message = null;
-                }
-                else
-                {
-                    LoginMenu.message = result;
-                }
-                Log.v("login Menu Result", result);
-                Log.v("Functions", "User Retrieve Successful");
+                Log.d("Sql Result", result);
+                userresult = result;
+                Log.d("USER RESULT", userresult);
             }
             return result;
         }

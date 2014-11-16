@@ -60,6 +60,7 @@ d
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/login"
+            android:ems="5"
             android:textStyle="bold"
             android:textSize="20dp"
             android:id="@+id/login"
@@ -86,11 +87,12 @@ d
             android:textAlignment="center"
             android:textSize="20dp"
             android:id="@+id/textView"
-            android:layout_marginTop="148dp"
             android:layout_toStartOf="@+id/login"
-            android:layout_below="@+id/infoDisplay"
-            android:layout_centerHorizontal="true"
-            android:singleLine="false" />
+            android:singleLine="false"
+            android:layout_marginBottom="78dp"
+            android:layout_above="@+id/username"
+            android:layout_alignEnd="@+id/username"
+            android:layout_alignStart="@+id/lblUserName" />
     </RelativeLayout>
 </RelativeLayout>
 <!-- From: file:/C:/Users/Mark/Documents/GitHub/iReport-User-Interface/app/src/main/res/layout/activity_login_menu.xml -->
