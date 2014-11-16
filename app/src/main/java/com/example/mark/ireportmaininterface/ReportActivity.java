@@ -112,6 +112,7 @@ public class ReportActivity extends Activity {
                     selectedItems.remove(Integer.valueOf(indexSelected));
                     isSelectedArray[indexSelected] = false;
                 }
+
             }
 
         });
@@ -130,6 +131,10 @@ public class ReportActivity extends Activity {
                 alertDialog.show();
             }
         });
+        latitude = gps.getLatitude();
+        longitude = gps.getLongitude();
+        Log.d("Lat", String.valueOf(latitude));
+        Log.d("Long", String.valueOf(longitude));
     }
 
     @Override
