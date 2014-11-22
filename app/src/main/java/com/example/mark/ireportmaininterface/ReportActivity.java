@@ -32,6 +32,20 @@ import android.location.LocationManager;
 
 import java.io.File;
 import java.util.ArrayList;
+//XML creation namespaces
+import java.io.File;
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.parsers.ParserConfigurationException;
+import javax.xml.transform.Transformer;
+import javax.xml.transform.TransformerException;
+import javax.xml.transform.TransformerFactory;
+import javax.xml.transform.dom.DOMSource;
+import javax.xml.transform.stream.StreamResult;
+
+import org.w3c.dom.Attr;
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
 
 public class ReportActivity extends Activity {
 
@@ -186,8 +200,44 @@ public class ReportActivity extends Activity {
 
     private void submitReport()
     {
-        new Functions(this).execute("getAccountData");
+        new Functions(this).execute("insertReport");
         //Toast.makeText(this, "Inserted", Toast.LENGTH_LONG).show();
+        //XML creation here hehe
+        try //database structure
+        {
+            DocumentBuilderFactory docFactory = DocumentBuilderFactory.newInstance();
+            DocumentBuilder docBuilder = docFactory.newDocumentBuilder();
+            //test report elements, does not reflect the real database in the future
+            //mandatory/ username, location, caption, media, time(Actually, it's best if the server determines recieve time)
+            //optional/
+            //reportdata elements
+            Document doc = docBuilder.newDocument();
+            Element rootElement = doc.createElement("reportdata");
+            doc.appendChild(rootElement);
+
+            //username elements
+            Element username = doc.createElement("username");
+            username.appendChild(doc.createTextNode("testusername"));
+            rootElement.appendChild(username);
+
+            //Location ELEMENTS
+            //latitude elements
+            Element lat = doc.createElement("latitude");
+            lat.appendChild(doc.createTextNode(String.valueOf(latitude)));
+            rootElement.appendChild(lat);
+            //longitude
+            Element longi = doc.createElement("longitude");
+            longi.appendChild(doc.createTextNode(String.valueOf(longitude)));
+            rootElement.appendChild(longi);
+        }
+        catch (ParserConfigurationException pce)
+        {
+
+        }
+/*        catch(TransformerException tfe)
+        {
+
+        }*/
     }
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {

@@ -44,7 +44,6 @@ public class LoginMenu extends Activity {
         btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                ipAddDisp.setText(message);
                 // Get Account Data
                 try
                 {
