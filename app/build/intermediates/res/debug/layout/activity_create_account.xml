@@ -56,7 +56,6 @@
         android:text="@string/confirm_password"
         android:id="@+id/textView3"
         android:layout_toStartOf="@+id/confirmpass"
-        android:layout_alignBaseline="@+id/confirmpass"
         android:layout_alignBottom="@+id/confirmpass" />
 
     <Button
@@ -98,5 +97,46 @@
         android:id="@+id/textView4"
         android:layout_alignBottom="@+id/emailadd"
         android:layout_toStartOf="@+id/emailadd" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Gender"
+        android:id="@+id/textView5"
+        android:layout_alignBottom="@+id/radioButton"
+        android:layout_toStartOf="@+id/emailadd" />
+
+    <RadioButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/male"
+        android:id="@+id/radioButton"
+        android:layout_above="@+id/emailadd"
+        android:layout_alignStart="@+id/emailadd" />
+
+    <RadioButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/female"
+        android:id="@+id/radioButton2"
+        android:layout_alignTop="@+id/radioButton"
+        android:layout_alignStart="@+id/lblError" />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/editText"
+        android:layout_above="@+id/radioButton"
+        android:layout_centerHorizontal="true"
+        android:ems="10"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Location"
+        android:id="@+id/textView6"
+        android:layout_toStartOf="@+id/editText"
+        android:layout_above="@+id/radioButton"
+        android:layout_alignEnd="@+id/textView5" />
 </RelativeLayout>
 <!-- From: file:/C:/Users/Mark/Documents/GitHub/iReport-User-Interface/app/src/main/res/layout/activity_create_account.xml -->

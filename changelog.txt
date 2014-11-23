@@ -30,3 +30,6 @@ Changed Spinner to AlertDialog selection with checkbox
 
 1.1
 Saving of the checkbox boolean state
+
+1.2
+Lat and Long location retrieval from GPS

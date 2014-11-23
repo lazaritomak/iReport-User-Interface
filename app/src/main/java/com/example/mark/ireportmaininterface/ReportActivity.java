@@ -64,6 +64,7 @@ public class ReportActivity extends Activity {
     AlertDialog alertDialog;
     //Yes
     boolean[] isSelectedArray;
+    ArrayList<String> selectItems;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -102,7 +103,9 @@ public class ReportActivity extends Activity {
                 "Public Works",
                 "Waste Management"
         };
-        final ArrayList selectedItems = new ArrayList();
+        //final ArrayList selectedItems = new ArrayList();
+        final ArrayList<String> selectedItems = new ArrayList<String>();
+        selectItems = new ArrayList<String>();
         isSelectedArray = new boolean[agencyItems.length];
         int arraylength = isSelectedArray.length;
         for (int i = 0; i < arraylength; i++)//initial all the lists inside agencyItems to be unchecked ( false)
@@ -117,7 +120,9 @@ public class ReportActivity extends Activity {
                 if (isChecked) {
                     //If the user checked the item, add it to the selected items
                     //code when user checked the checkbox
-                    selectedItems.add(indexSelected);
+                    //selectedItems.add(indexSelected);
+                    selectedItems.add(String.valueOf(agencyItems[indexSelected]));
+                    selectItems.add(String.valueOf(agencyItems[indexSelected]));
                     isSelectedArray[indexSelected] = true;
 
                 } else if (selectedItems.contains(indexSelected)) {
@@ -126,9 +131,7 @@ public class ReportActivity extends Activity {
                     selectedItems.remove(Integer.valueOf(indexSelected));
                     isSelectedArray[indexSelected] = false;
                 }
-
             }
-
         });
         builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
             @Override
@@ -229,15 +232,42 @@ public class ReportActivity extends Activity {
             Element longi = doc.createElement("longitude");
             longi.appendChild(doc.createTextNode(String.valueOf(longitude)));
             rootElement.appendChild(longi);
+
+            //caption text elements
+
+            Element capt = doc.createElement("caption");
+            capt.appendChild(doc.createTextNode(captionText.getText().toString()));
+            rootElement.appendChild(capt);
+
+            //tag elements
+            String[] tagArr = new String[selectItems.size()];
+            tagArr = selectItems.toArray(tagArr);
+            Element tags = doc.createElement("tags");
+            rootElement.appendChild(tags);
+            int o = selectItems.size();
+            for(String s: tagArr) {
+                Element tagname = doc.createElement("tagname");
+                tagname.appendChild(doc.createTextNode(s));
+                tags.appendChild(tagname);
+            }
+
+            TransformerFactory transformerFactory = TransformerFactory.newInstance();
+            Transformer transformer = transformerFactory.newTransformer();
+            DOMSource source = new DOMSource(doc);
+            StreamResult result = new StreamResult(System.out);
+            transformer.transform(source, result);
+            Log.d("MESSAGE", result.toString());
         }
         catch (ParserConfigurationException pce)
         {
-
+            pce.printStackTrace();
+            Log.d("XML ParserConfigurationException", pce.getMessage());
         }
-/*        catch(TransformerException tfe)
+        catch(TransformerException tfe)
         {
-
-        }*/
+            tfe.printStackTrace();
+            Log.d("XML TransformerException", tfe.getMessage());
+        }
     }
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
