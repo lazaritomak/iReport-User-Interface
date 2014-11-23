@@ -56,6 +56,8 @@ Notes/Details:
 
 Made in Android Studio.
 
+Place iReportDB folder to your htdocs, and change the link from Functions.java
+
 Minimum SDK = 17
 
 Target SDK = 21
