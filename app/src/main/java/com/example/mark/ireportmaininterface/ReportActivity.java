@@ -254,9 +254,12 @@ public class ReportActivity extends Activity {
             TransformerFactory transformerFactory = TransformerFactory.newInstance();
             Transformer transformer = transformerFactory.newTransformer();
             DOMSource source = new DOMSource(doc);
-            StreamResult result = new StreamResult(System.out);
+            //StreamResult result = new StreamResult(System.out);
+            //save to directory
+            StreamResult result = new StreamResult(new File(android.os.Environment.getExternalStorageDirectory(), "upload_data.xml"));
             transformer.transform(source, result);
             Log.d("MESSAGE", result.toString());
+            //now to fucking upload it
         }
         catch (ParserConfigurationException pce)
         {
