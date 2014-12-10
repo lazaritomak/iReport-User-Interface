@@ -55,11 +55,11 @@ public class LoginMenu extends Activity {
                 {
                     e.printStackTrace();
                 }
-                //boolean yes = true;
+                boolean yes = true;
                 Log.d("FUNCTIONS USER", Functions.userresult);
 
-                //do not to campre null textbox to null message. put them in different condition
                 if (txtUsername.length() == 0 || txtPassword.length() == 0)
+                //if (!yes) //testing
                 {
                     AlertDialog alertDialog = new AlertDialog.Builder(LoginMenu.this).create();
                     alertDialog.setTitle("Login Error");

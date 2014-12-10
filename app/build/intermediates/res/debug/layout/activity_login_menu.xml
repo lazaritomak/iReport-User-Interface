@@ -83,16 +83,15 @@ d
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceLarge"
-            android:text="myReport: Mobile Community Reporting for the Municipality of Carmona"
+            android:text="myReports"
             android:textAlignment="center"
             android:textSize="20dp"
             android:id="@+id/textView"
             android:layout_toStartOf="@+id/login"
             android:singleLine="false"
-            android:layout_marginBottom="78dp"
+            android:layout_marginBottom="75dp"
             android:layout_above="@+id/username"
-            android:layout_alignEnd="@+id/username"
-            android:layout_alignStart="@+id/lblUserName" />
+            android:layout_alignStart="@+id/username" />
     </RelativeLayout>
 </RelativeLayout>
 <!-- From: file:/C:/Users/Mark/Documents/GitHub/iReport-User-Interface/app/src/main/res/layout/activity_login_menu.xml -->

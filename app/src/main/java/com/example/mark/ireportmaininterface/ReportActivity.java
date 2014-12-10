@@ -58,8 +58,8 @@ public class ReportActivity extends Activity {
     public static EditText captionText;
     //Gps objects
     public static GPSTracker gps;
-    static double latitude;
-    static double longitude;
+    public static double latitude;
+    public static double longitude;
     //Alert objects
     AlertDialog alertDialog;
     //Yes
@@ -203,7 +203,7 @@ public class ReportActivity extends Activity {
 
     private void submitReport()
     {
-        new Functions(this).execute("insertReport");
+        new Functions(this).execute("insertReport");//obsolete, remove after the xml upload works.
         //Toast.makeText(this, "Inserted", Toast.LENGTH_LONG).show();
         //XML creation here hehe
         try //database structure
@@ -244,7 +244,7 @@ public class ReportActivity extends Activity {
             tagArr = selectItems.toArray(tagArr);
             Element tags = doc.createElement("tags");
             rootElement.appendChild(tags);
-            int o = selectItems.size();
+            //int o = selectItems.size();
             for(String s: tagArr) {
                 Element tagname = doc.createElement("tagname");
                 tagname.appendChild(doc.createTextNode(s));
@@ -259,7 +259,8 @@ public class ReportActivity extends Activity {
             StreamResult result = new StreamResult(new File(android.os.Environment.getExternalStorageDirectory(), "upload_data.xml"));
             transformer.transform(source, result);
             Log.d("MESSAGE", result.toString());
-            //now to fucking upload it
+            //now to  upload it
+            //si mak daw dito
         }
         catch (ParserConfigurationException pce)
         {

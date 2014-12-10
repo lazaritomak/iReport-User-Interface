@@ -35,7 +35,9 @@ public class Functions extends AsyncTask<String, Void, String>
     Context context;
     Button btnCategory;
     //DONT FORGET TO CHANGE SERVER IP AHUEHUEHUE
-    public static String link = "http://192.168.15.10/iReportDB/controller.php";//ip address/localhost
+    //static String ipadd = "172.16.11.183";
+    public static String link = "http://172.16.11.183/iReportDB/controller.php";//ip address/localhost
+    //public static String uploadlink = "http://192.168.15.10/AdminInterface/index.php/upload/do_upload";
     public Functions (Context context)
     {
         this.context = context;
@@ -160,7 +162,7 @@ public class Functions extends AsyncTask<String, Void, String>
                 logs+="&report_id=" + URLEncoder.encode(generateReportID(),"UTF-8");
                 logs+="&report_username=" + URLEncoder.encode("user", "UTF-8");
                 logs+="&report_murl=" + URLEncoder.encode("url","UTF-8");
-                logs+="&report_loc=" + URLEncoder.encode("Maniles","UTF-8");
+                logs+="&report_loc=" + URLEncoder.encode(String.valueOf(ReportActivity.latitude + " " + ReportActivity.longitude),"UTF-8");
                 logs+="&report_capt=" + URLEncoder.encode(ReportActivity.captionText.getText().toString(),"UTF-8");
                 Log.v("Functions", "report_capt Successful");
 

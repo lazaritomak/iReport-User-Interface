@@ -92,17 +92,17 @@
                 </string>
                 <string name="error_info" >Error Info
                 </string>
-                <string name="female" >Female
-                </string>
                 <string name="hello_world" >Hello world!
                 </string>
-                <string name="preferred_username" >Username: 
+                <string name="female" >Female
                 </string>
-                <string name="login" >Login
+                <string name="password" >Password
                 </string>
                 <string name="select_category" >Select Category
                 </string>
-                <string name="password" >Password
+                <string name="login" >Login
+                </string>
+                <string name="preferred_username" >Username: 
                 </string>
             </file>
             <file
