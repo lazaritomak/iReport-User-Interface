@@ -139,7 +139,7 @@ public class LoginMenu extends Activity {
             e.printStackTrace();
             ip += "Something Wrong! " + e.toString() + "\n";
         }
-        ip += "DO NOT FORGET TO CHANGE HOST IP LINK";
+        ip += "DO NOT FORGET TO CHANGE HOST IP LINK\nGITHUB PROJECT";
         return ip;
     }
 
