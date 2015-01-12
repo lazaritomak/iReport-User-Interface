@@ -26,15 +26,22 @@
         <activity
             android:name=".LoginMenu"
             android:label="@string/title_activity_login_menu" >
-            <intent-filter>
+<!--            <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
+            </intent-filter>-->
         </activity>
         <activity
             android:name=".CreateAccount"
             android:label="@string/title_activity_create_account" >
+        </activity>
+        <activity
+            android:name=".CreateReport"
+            android:label="@string/title_activity_create_report" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
         </activity>
     </application>
 

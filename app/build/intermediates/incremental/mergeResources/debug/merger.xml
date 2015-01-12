@@ -80,6 +80,8 @@
                 </string>
                 <string name="submit" >Submit
                 </string>
+                <string name="title_activity_create_report" >CreateReport
+                </string>
                 <string name="select_action" >Action
                 </string>
                 <string name="register" >Register
@@ -92,17 +94,17 @@
                 </string>
                 <string name="error_info" >Error Info
                 </string>
-                <string name="female" >Female
-                </string>
                 <string name="hello_world" >Hello world!
                 </string>
-                <string name="preferred_username" >Username: 
+                <string name="female" >Female
                 </string>
-                <string name="login" >Login
+                <string name="password" >Password
                 </string>
                 <string name="select_category" >Select Category
                 </string>
-                <string name="password" >Password
+                <string name="login" >Login
+                </string>
+                <string name="preferred_username" >Username: 
                 </string>
             </file>
             <file
@@ -122,6 +124,21 @@
                 <dimen name="activity_horizontal_margin" >64dp
                 </dimen>
             </file>
+            <file
+                name="prompt"
+                path="C:\Users\Mark\Documents\GitHub\iReport-User-Interface\app\src\main\res\layout\prompt.xml"
+                qualifiers=""
+                type="layout" />
+            <file
+                name="activity_create_report"
+                path="C:\Users\Mark\Documents\GitHub\iReport-User-Interface\app\src\main\res\layout\activity_create_report.xml"
+                qualifiers=""
+                type="layout" />
+            <file
+                name="create_report"
+                path="C:\Users\Mark\Documents\GitHub\iReport-User-Interface\app\src\main\res\menu\create_report.xml"
+                qualifiers=""
+                type="menu" />
         </source>
         <source path="C:\Users\Mark\Documents\GitHub\iReport-User-Interface\app\build\generated\res\rs\debug" />
         <source path="C:\Users\Mark\Documents\GitHub\iReport-User-Interface\app\build\generated\res\generated\debug" />

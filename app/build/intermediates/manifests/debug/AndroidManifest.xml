@@ -33,15 +33,26 @@
         <activity
             android:name="com.example.mark.ireportmaininterface.LoginMenu"
             android:label="@string/title_activity_login_menu" >
+
+            <!--
+                <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+            -->
+        </activity>
+        <activity
+            android:name="com.example.mark.ireportmaininterface.CreateAccount"
+            android:label="@string/title_activity_create_account" >
+        </activity>
+        <activity
+            android:name="com.example.mark.ireportmaininterface.CreateReport"
+            android:label="@string/title_activity_create_report" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-        </activity>
-        <activity
-            android:name="com.example.mark.ireportmaininterface.CreateAccount"
-            android:label="@string/title_activity_create_account" >
         </activity>
     </application>
 

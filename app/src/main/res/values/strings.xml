@@ -4,17 +4,17 @@
     <string name="app_name">Report</string>
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
-    <!--Report Activity Strings-->
+    <!-- Report Activity Strings -->
     <string name="select_action">Action</string>
     <string name="submit">Submit</string>
     <string name="login">Login</string>
     <string name="select_category">Select Category</string>
-    <!--Main Menu Activity Strings-->
+    <!-- Main Menu Activity Strings -->
     <string name="title_activity_login_menu">Login</string>
     <string name="username">Username</string>
     <string name="password">Password</string>
     <string name="register">Register</string>
-    <!--Create Account Activity Strings-->
+    <!-- Create Account Activity Strings -->
     <string name="title_activity_create_account">Create Account</string>
     <string name="preferred_username">Username: </string>
     <string name="preferred_password">Password: </string>
@@ -24,5 +24,6 @@
     <string name="email_add">Email Address</string>
     <string name="male">Male</string>
     <string name="female">Female</string>
+    <string name="title_activity_create_report">CreateReport</string>
 
 </resources>
