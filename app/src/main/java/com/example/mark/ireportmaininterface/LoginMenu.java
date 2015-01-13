@@ -73,6 +73,7 @@ public class LoginMenu extends Activity {
                 }
                 else if (txtUsername.getText().toString().equals(message))
                 {
+                    ReportActivity.username = txtUsername.getText().toString();
                     Intent nextstep = new Intent(LoginMenu.this, ReportActivity.class);
                     startActivity(nextstep);
                 }
@@ -139,7 +140,7 @@ public class LoginMenu extends Activity {
             e.printStackTrace();
             ip += "Something Wrong! " + e.toString() + "\n";
         }
-        ip += "DO NOT FORGET TO CHANGE HOST IP LINK";
+        ip += "DO NOT FORGET TO CHANGE HOST IP LINK\nGITHUB PROJECT";
         return ip;
     }
 

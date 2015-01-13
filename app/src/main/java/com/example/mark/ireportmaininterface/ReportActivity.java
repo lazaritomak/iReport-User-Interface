@@ -5,6 +5,8 @@ import android.app.Dialog;
 import android.content.Context;
 import android.database.Cursor;
 import android.media.ThumbnailUtils;
+import android.net.http.AndroidHttpClient;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.provider.Settings;
 import android.view.Menu;
@@ -30,10 +32,19 @@ import android.location.Criteria;
 import android.location.Location;
 import android.location.LocationManager;
 
+import java.io.ByteArrayInputStream;
+import java.io.DataOutputStream;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.HttpURLConnection;
 import java.util.ArrayList;
 //XML creation namespaces
 import java.io.File;
+import java.util.List;
+
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
@@ -43,12 +54,24 @@ import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
 
+import org.apache.http.HttpResponse;
+import org.apache.http.NameValuePair;
+import org.apache.http.client.ClientProtocolException;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.entity.UrlEncodedFormEntity;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.entity.InputStreamEntity;
+import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.message.BasicNameValuePair;
 import org.w3c.dom.Attr;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 
 public class ReportActivity extends Activity {
 
+    //session objects
+    public static String username;
+    public static boolean isLoggedIn;
     //Interface objects
     ImageView viewImage;
     Button btnAction;
@@ -200,12 +223,40 @@ public class ReportActivity extends Activity {
         });
         builder.show();
     }
-
     private void submitReport()
     {
-        new Functions(this).execute("insertReport");//obsolete, remove after the xml upload works.
-        //Toast.makeText(this, "Inserted", Toast.LENGTH_LONG).show();
-        //XML creation here hehe
+        //new Functions(this).execute("insertReport");
+        new Functions(this).execute("uploadData");
+    }
+
+    private void generateHttpPostData()
+    {
+        String TAG = "ReportActivity.java";
+        String postReceiverUrl = "http://192.168.15.10/iReportDB/filereceive.php";
+        Log.v(TAG, "postURL: " + postReceiverUrl);
+
+        try
+        {
+            //basic info
+            HttpClient httpClient = new DefaultHttpClient();
+            HttpPost httpPost = new HttpPost(postReceiverUrl);
+            List <NameValuePair> nameValuePairs = new ArrayList<NameValuePair>(2);
+            //nameValuePairs.add(new BasicNameValuePair("rpt_id", new Functions(this).generateReportID()));
+            nameValuePairs.add(new BasicNameValuePair("rpt_username", "user"));
+            nameValuePairs.add(new BasicNameValuePair("rpt_lat", String.valueOf(latitude)));
+            nameValuePairs.add(new BasicNameValuePair("rpt_long", String.valueOf(longitude)));
+            nameValuePairs.add(new BasicNameValuePair("rpt_desc", captionText.getText().toString()));
+            httpPost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
+            httpClient.execute(httpPost);
+            Toast.makeText(this, "Sent to server", Toast.LENGTH_LONG).show();
+        }
+        catch (IOException e)
+        {
+            Toast.makeText(this, e.getMessage(), Toast.LENGTH_LONG).show();
+        }
+    }
+    private void generateXMLReport()
+    {
         try //database structure
         {
             DocumentBuilderFactory docFactory = DocumentBuilderFactory.newInstance();
@@ -254,13 +305,10 @@ public class ReportActivity extends Activity {
             TransformerFactory transformerFactory = TransformerFactory.newInstance();
             Transformer transformer = transformerFactory.newTransformer();
             DOMSource source = new DOMSource(doc);
-            //StreamResult result = new StreamResult(System.out);
             //save to directory
             StreamResult result = new StreamResult(new File(android.os.Environment.getExternalStorageDirectory(), "upload_data.xml"));
             transformer.transform(source, result);
             Log.d("MESSAGE", result.toString());
-            //now to  upload it
-            //si mak daw dito
         }
         catch (ParserConfigurationException pce)
         {
@@ -373,3 +421,4 @@ public class ReportActivity extends Activity {
         return super.onOptionsItemSelected(item);
     }
 }
+

@@ -1,5 +1,6 @@
 // Top-level build file where you can add configuration options common to all sub-projects/modules.
 
+apply plugin: 'android'
 buildscript {
     repositories {
         jcenter()
@@ -12,8 +13,21 @@ buildscript {
     }
 }
 
-allprojects {
-    repositories {
-        jcenter()
+android {
+    compileSdkVersion 20
+    buildToolsVersion "20.0.0"
+
+    defaultConfig {
+        applicationId "com.courses.sottocorp.sunshine"
+        minSdkVersion 10
+        targetSdkVersion 20
+        versionCode 1
+        versionName "1.0"
+    }
+    buildTypes {
+        release {
+            runProguard false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
     }
 }
