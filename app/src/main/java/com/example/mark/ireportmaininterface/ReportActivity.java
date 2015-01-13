@@ -69,8 +69,10 @@ import org.w3c.dom.Element;
 
 public class ReportActivity extends Activity {
 
-    //Interface objects
+    //session objects
     public static String username;
+    public static boolean isLoggedIn;
+    //Interface objects
     ImageView viewImage;
     Button btnAction;
     Button btnCategory;

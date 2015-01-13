@@ -73,6 +73,7 @@ public class LoginMenu extends Activity {
                 }
                 else if (txtUsername.getText().toString().equals(message))
                 {
+                    ReportActivity.username = txtUsername.getText().toString();
                     Intent nextstep = new Intent(LoginMenu.this, ReportActivity.class);
                     startActivity(nextstep);
                 }
