@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
@@ -74,6 +75,10 @@ public class LoginMenu extends Activity {
                 else if (txtUsername.getText().toString().equals(message))
                 {
                     ReportActivity.username = txtUsername.getText().toString();
+                    SharedPreferences mySession = getSharedPreferences(ReportActivity.PREFS_NAME, 0);
+                    SharedPreferences.Editor sessionEditor = mySession.edit();
+                    sessionEditor.putBoolean("sessionState", true);
+                    sessionEditor.commit();
                     Intent nextstep = new Intent(LoginMenu.this, ReportActivity.class);
                     startActivity(nextstep);
                 }
