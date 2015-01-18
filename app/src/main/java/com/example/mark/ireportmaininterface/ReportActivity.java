@@ -3,6 +3,7 @@ package com.example.mark.ireportmaininterface;
 import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.media.ThumbnailUtils;
 import android.net.http.AndroidHttpClient;
@@ -71,6 +72,7 @@ import org.w3c.dom.Element;
 public class ReportActivity extends Activity {
 
     //session objects
+    public static final String PREFS_NAME = "PrefsFile";
     public static String username;
     public static boolean isLoggedIn;
     //Interface objects
@@ -216,8 +218,12 @@ public class ReportActivity extends Activity {
                 }
                 else if (options[item].equals("Sign Out"))
                 {
-                    Intent mainmenu = new Intent(ReportActivity.this, LoginMenu.class);
-                    startActivity(mainmenu);
+                    SharedPreferences mySession = getSharedPreferences(PREFS_NAME, 0);
+                    SharedPreferences.Editor sessionEditor = mySession.edit();
+                    sessionEditor.putBoolean("sessionState", false);
+                    sessionEditor.commit();
+                    Intent mainMenu = new Intent(ReportActivity.this, LoginMenu.class);
+                    startActivity(mainMenu);
                 }
                 else if (options[item].equals("Cancel"))
                 {
@@ -239,6 +245,8 @@ public class ReportActivity extends Activity {
         String postReceiverUrl = "http://192.168.15.10/iReportDB/filereceive.php";
         Log.v(TAG, "postURL: " + postReceiverUrl);
 
+        String[] tagArr = new String[selectItems.size()];
+        tagArr = selectItems.toArray(tagArr);
         try
         {
             //basic info
