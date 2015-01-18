@@ -267,7 +267,7 @@ public class ReportActivity extends Activity {
         {
             genFileName += charFileName[rand.nextInt(charFileName.length)];
         }
-        return genFileName;
+        return genFileName + ".jpg";
     }
     private void generateXMLReport()
     {
