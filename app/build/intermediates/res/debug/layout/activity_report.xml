@@ -9,7 +9,7 @@
     tools:context=".ReportActivity">
 
     <LinearLayout
-        android:id="@+id/LinearLayout1"
+        android:id="@+id/buttonlayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"

@@ -44,6 +44,7 @@ import java.util.ArrayList;
 //XML creation namespaces
 import java.io.File;
 import java.util.List;
+import java.util.Random;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -184,6 +185,7 @@ public class ReportActivity extends Activity {
         return true;
     }
 
+    String picFileName;
     private void selectAction(){
         final CharSequence[] options = {"Take Photo", "Take Video", "Choose From Gallery", "Sign Out" ,"Cancel"};//Initialize options inside the builder dialog
         AlertDialog.Builder builder = new AlertDialog.Builder(ReportActivity.this);
@@ -194,7 +196,9 @@ public class ReportActivity extends Activity {
                 if (options[item].equals("Take Photo"))
                 {
                     Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-                    File f = new File(android.os.Environment.getExternalStorageDirectory(), "temp.jpg");
+//                    File f = new File(android.os.Environment.getExternalStorageDirectory(), "temp.jpg");
+                    File f = new File(android.os.Environment.getExternalStorageDirectory(), picFileName = generateFileName());
+                    //generate file name
                     intent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(f));
                     startActivityForResult(intent, 1);//1 is take photo
                 }
@@ -254,6 +258,18 @@ public class ReportActivity extends Activity {
         {
             Toast.makeText(this, e.getMessage(), Toast.LENGTH_LONG).show();
         }
+    }
+    private String generateFileName()
+    {
+        String genFileName = "";
+        String stringFileName = "abcdefghijklmnopqrstuvwxyz123456789";
+        char[] charFileName = stringFileName.toCharArray();
+        Random rand = new Random();
+        for (int i = 0 ;i < 10; i++)
+        {
+            genFileName += charFileName[rand.nextInt(charFileName.length)];
+        }
+        return genFileName + ".jpg";
     }
     private void generateXMLReport()
     {
@@ -331,7 +347,8 @@ public class ReportActivity extends Activity {
                 File f = new File(Environment.getExternalStorageDirectory().toString());
                 for (File temp: f.listFiles())
                 {
-                    if (temp.getName().equals("temp.jpg"))
+//                    if (temp.getName().equals("temp.jpg"))
+                    if (temp.getName().equals(picFileName))
                     {
                         f = temp;
                         break;

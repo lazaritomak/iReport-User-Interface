@@ -29,6 +29,11 @@
                 qualifiers=""
                 type="layout" />
             <file
+                name="activity_create_report"
+                path="C:\Users\Mark\Documents\GitHub\iReport-User-Interface\app\src\main\res\layout\activity_create_report.xml"
+                qualifiers=""
+                type="layout" />
+            <file
                 name="activity_login_menu"
                 path="C:\Users\Mark\Documents\GitHub\iReport-User-Interface\app\src\main\res\layout\activity_login_menu.xml"
                 qualifiers=""
@@ -39,8 +44,18 @@
                 qualifiers=""
                 type="layout" />
             <file
+                name="prompt"
+                path="C:\Users\Mark\Documents\GitHub\iReport-User-Interface\app\src\main\res\layout\prompt.xml"
+                qualifiers=""
+                type="layout" />
+            <file
                 name="create_account"
                 path="C:\Users\Mark\Documents\GitHub\iReport-User-Interface\app\src\main\res\menu\create_account.xml"
+                qualifiers=""
+                type="menu" />
+            <file
+                name="create_report"
+                path="C:\Users\Mark\Documents\GitHub\iReport-User-Interface\app\src\main\res\menu\create_report.xml"
                 qualifiers=""
                 type="menu" />
             <file
@@ -79,6 +94,8 @@
                 <string name="Back" >Back
                 </string>
                 <string name="submit" >Submit
+                </string>
+                <string name="title_activity_create_report" >CreateReport
                 </string>
                 <string name="select_action" >Action
                 </string>
