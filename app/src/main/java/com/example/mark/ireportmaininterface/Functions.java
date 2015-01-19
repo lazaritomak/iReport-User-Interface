@@ -157,11 +157,11 @@ public class Functions extends AsyncTask<String, Void, String>
             nameValuePairs.add(new BasicNameValuePair("rpt_desc", ReportActivity.captionText.getText().toString()));
             httpPost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
             httpClient.execute(httpPost);
-            //Toast.makeText(this, "Sent to server", Toast.LENGTH_LONG).show();
+            Toast.makeText(context, "Sent to server", Toast.LENGTH_LONG).show();
         }
         catch (IOException e)
         {
-            //Toast.makeText(this, e.getMessage(), Toast.LENGTH_LONG).show();
+            Toast.makeText(context, "Failed Send to Server", Toast.LENGTH_LONG).show();
         }
     }
     @Override
