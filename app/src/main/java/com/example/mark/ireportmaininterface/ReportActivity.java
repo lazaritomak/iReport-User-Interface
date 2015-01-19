@@ -200,7 +200,6 @@ public class ReportActivity extends Activity {
                     Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
 //                    File f = new File(android.os.Environment.getExternalStorageDirectory(), "temp.jpg");
                     File f = new File(android.os.Environment.getExternalStorageDirectory(), picFileName = generateFileName());
-                    //generate file name
                     intent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(f));
                     startActivityForResult(intent, 1);//1 is take photo
                 }
