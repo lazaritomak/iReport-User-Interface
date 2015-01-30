@@ -141,9 +141,8 @@ public class Functions extends AsyncTask<String, Void, String>
     public void generateHttpPostData()
     {
         String TAG = "ReportActivity.java";
-        String postReceiverUrl = "http://192.168.15.10/iReportDB/filereceive.php";
+        String postReceiverUrl = "http://192.168.100.42/iReportDB/filereceive.php";
         Log.v(TAG, "postURL: " + postReceiverUrl);
-
         try
         {
             //httpclient
@@ -151,10 +150,12 @@ public class Functions extends AsyncTask<String, Void, String>
             HttpPost httpPost = new HttpPost(postReceiverUrl);
             List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>(2);
             nameValuePairs.add(new BasicNameValuePair("rpt_id",generateReportID()));
-            nameValuePairs.add(new BasicNameValuePair("rpt_username", "user"));
+            nameValuePairs.add(new BasicNameValuePair("rpt_username", ReportActivity.username));
             nameValuePairs.add(new BasicNameValuePair("rpt_lat", String.valueOf(ReportActivity.latitude)));
             nameValuePairs.add(new BasicNameValuePair("rpt_long", String.valueOf(ReportActivity.longitude)));
             nameValuePairs.add(new BasicNameValuePair("rpt_desc", ReportActivity.captionText.getText().toString()));
+            nameValuePairs.add(new BasicNameValuePair("rpt_image", ReportActivity.image_str));
+//            Toast.makeText(context, ReportActivity.image_str, Toast.LENGTH_LONG).show();
             httpPost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
             httpClient.execute(httpPost);
             Toast.makeText(context, "Sent to server", Toast.LENGTH_LONG).show();

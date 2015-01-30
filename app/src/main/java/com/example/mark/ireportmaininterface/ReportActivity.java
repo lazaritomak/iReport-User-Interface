@@ -10,6 +10,7 @@ import android.net.http.AndroidHttpClient;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.provider.Settings;
+import android.util.Base64;
 import android.view.Menu;
 import android.view.MenuItem;
 //custom imports
@@ -34,6 +35,7 @@ import android.location.Location;
 import android.location.LocationManager;
 
 import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
 import java.io.DataOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
@@ -77,6 +79,8 @@ public class ReportActivity extends Activity {
     public static final String PREFS_NAME = "PrefsFile";
     public static String username;
     public static boolean isLoggedIn;
+    public static Bitmap selectedBitmap;
+    public static String image_str;
     //Interface objects
     ImageView viewImage;
     Button btnAction;
@@ -243,7 +247,7 @@ public class ReportActivity extends Activity {
     private void generateHttpPostData()
     {
         String TAG = "ReportActivity.java";
-        String postReceiverUrl = "http://192.168.15.10/iReportDB/filereceive.php";
+        String postReceiverUrl = "http://192.168.100.42/iReportDB/filereceive.php";
         Log.v(TAG, "postURL: " + postReceiverUrl);
 
         String[] tagArr = new String[selectItems.size()];
@@ -259,6 +263,7 @@ public class ReportActivity extends Activity {
             nameValuePairs.add(new BasicNameValuePair("rpt_lat", String.valueOf(latitude)));
             nameValuePairs.add(new BasicNameValuePair("rpt_long", String.valueOf(longitude)));
             nameValuePairs.add(new BasicNameValuePair("rpt_desc", captionText.getText().toString()));
+            nameValuePairs.add(new BasicNameValuePair("rpt_image", image_str));
             httpPost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
             httpClient.execute(httpPost);
             Toast.makeText(this, "Sent to server", Toast.LENGTH_LONG).show();
@@ -368,6 +373,12 @@ public class ReportActivity extends Activity {
                     Bitmap bitmap;
                     BitmapFactory.Options bitmapOptions = new BitmapFactory.Options();
                     bitmap = BitmapFactory.decodeFile(f.getAbsolutePath(), bitmapOptions);
+                    ByteArrayOutputStream stream = new ByteArrayOutputStream();
+                    //image compression
+                    bitmap.compress(Bitmap.CompressFormat.JPEG, 90, stream);
+                    byte[] byte_arr = stream.toByteArray();
+                    image_str = Base64.encodeToString(byte_arr, Base64.DEFAULT);
+                    //view image
                     viewImage.setImageBitmap(bitmap);
                     //no need
                     String path = android.os.Environment.getExternalStorageDirectory() + File.separator + "Phoenix" + File.separator + "default";
