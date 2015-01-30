@@ -65,7 +65,7 @@ public class CreateAccount extends Activity {
         });
     }
 
-    private boolean IsAllFieldsValid() //Checks if all fields are entered valid
+    private boolean IsAllFieldsValid() //Checks if all fields are entered valid yes
     {
         boolean isvalid = false;
         if (txtusername.getText().toString().trim().length() == 0
