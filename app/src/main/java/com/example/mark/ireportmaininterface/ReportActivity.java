@@ -38,8 +38,10 @@ import java.io.DataOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.util.ArrayList;
 //XML creation namespaces
@@ -253,7 +255,7 @@ public class ReportActivity extends Activity {
             HttpPost httpPost = new HttpPost(postReceiverUrl);
             List <NameValuePair> nameValuePairs = new ArrayList<NameValuePair>(2);
             //nameValuePairs.add(new BasicNameValuePair("rpt_id", new Functions(this).generateReportID()));
-            nameValuePairs.add(new BasicNameValuePair("rpt_username", "user"));
+            nameValuePairs.add(new BasicNameValuePair("rpt_username", username));
             nameValuePairs.add(new BasicNameValuePair("rpt_lat", String.valueOf(latitude)));
             nameValuePairs.add(new BasicNameValuePair("rpt_long", String.valueOf(longitude)));
             nameValuePairs.add(new BasicNameValuePair("rpt_desc", captionText.getText().toString()));
@@ -368,7 +370,7 @@ public class ReportActivity extends Activity {
                     bitmap = BitmapFactory.decodeFile(f.getAbsolutePath(), bitmapOptions);
                     viewImage.setImageBitmap(bitmap);
                     //no need
-                    /*String path = android.os.Environment.getExternalStorageDirectory() + File.separator + "Phoenix" + File.separator + "default";
+                    String path = android.os.Environment.getExternalStorageDirectory() + File.separator + "Phoenix" + File.separator + "default";
                     f.delete();
                     OutputStream outFile = null;
                     File file = new File(path, String.valueOf(System.currentTimeMillis()) + ".jpg");
@@ -390,7 +392,7 @@ public class ReportActivity extends Activity {
                     catch (Exception e)
                     {
                         e.printStackTrace();
-                    }*/
+                    }
                 }
                 catch (Exception e)
                 {
