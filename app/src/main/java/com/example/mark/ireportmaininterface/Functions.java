@@ -44,9 +44,8 @@ public class Functions extends AsyncTask<String, Void, String>
     Context context;
     Button btnCategory;
     //DONT FORGET TO CHANGE SERVER IP AHUEHUEHUE
-    //static String ipadd = "172.16.11.183";
-    public static String link = "http://172.16.12.171/iReportDB/controller.php";//ip address/localhost
-    //public static String uploadlink = "http://192.168.15.10/AdminInterface/index.php/upload/do_upload";
+    static String ipadd = "192.168.100.30";
+    public static String link = "http://"+ipadd+"/iReportDB/controller.php";//ip address/localhost
     public Functions (Context context)
     {
         this.context = context;
@@ -141,7 +140,7 @@ public class Functions extends AsyncTask<String, Void, String>
     public void generateHttpPostData()
     {
         String TAG = "ReportActivity.java";
-        String postReceiverUrl = "http://192.168.100.42/iReportDB/filereceive.php";
+        String postReceiverUrl = "http://"+ipadd+"/iReportDB/filereceive.php";
         Log.v(TAG, "postURL: " + postReceiverUrl);
         try
         {
