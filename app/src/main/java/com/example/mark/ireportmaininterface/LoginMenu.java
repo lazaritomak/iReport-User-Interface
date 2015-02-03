@@ -13,6 +13,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.net.InetAddress;
 import java.net.NetworkInterface;
@@ -39,9 +40,15 @@ public class LoginMenu extends Activity {
         ipAddDisp = (TextView) findViewById(R.id.infoDisplay);
         txtUsername = (EditText) findViewById(R.id.username);
         txtPassword = (EditText) findViewById(R.id.password);
+
+        SharedPreferences mySession = getSharedPreferences(ReportActivity.PREFS_NAME, 0);
+        if (mySession.getBoolean("sessionState", true) == true)
+        {
+            Intent nextstep = new Intent(LoginMenu.this, ReportActivity.class);
+            startActivity(nextstep);
+        }
         btnLogin = (Button) findViewById(R.id.login);
         btnRegister = (Button) findViewById(R.id.register);
-
         btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -78,7 +85,10 @@ public class LoginMenu extends Activity {
                     SharedPreferences mySession = getSharedPreferences(ReportActivity.PREFS_NAME, 0);
                     SharedPreferences.Editor sessionEditor = mySession.edit();
                     sessionEditor.putBoolean("sessionState", true);
+                    sessionEditor.putString("sessionUser", txtUsername.getText().toString());
                     sessionEditor.commit();
+//                    Toast.makeText(getApplicationContext(), mySession.getString("sessionState", null), Toast.LENGTH_LONG).show();
+//                    Toast.makeText(getApplicationContext(), "Yes", Toast.LENGTH_LONG).show();
                     Intent nextstep = new Intent(LoginMenu.this, ReportActivity.class);
                     startActivity(nextstep);
                 }
