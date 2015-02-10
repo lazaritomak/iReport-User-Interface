@@ -5,6 +5,7 @@ import android.app.Dialog;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.database.Cursor;
+import android.media.MediaRecorder;
 import android.media.ThumbnailUtils;
 import android.net.http.AndroidHttpClient;
 import android.os.AsyncTask;
@@ -103,6 +104,7 @@ public class ReportActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_report);
 
+
         //Widget initialization
         final AlertDialog.Builder builder;
         btnAction = (Button)findViewById(R.id.btnSelectPhoto);
@@ -112,7 +114,19 @@ public class ReportActivity extends Activity {
         //catList = (Spinner) findViewById(R.id.selectCategory);
         captionText = (EditText) findViewById(R.id.captionText);
         //GPS initialization
+
         gps = new GPSTracker(ReportActivity.this);
+        if (!gps.isGPSEnabled)
+        {
+            Toast.makeText(this, "Your GPS is disabled, please enable your GPS", Toast.LENGTH_LONG).show();
+        }
+        if (!gps.isNetworkEnabled)
+        {
+            Toast.makeText(this, "Your Network is disabled, your GPS cannot work without network", Toast.LENGTH_LONG).show();
+        }
+        SharedPreferences mySession = getSharedPreferences(ReportActivity.PREFS_NAME, 0);
+        Toast.makeText(this, mySession.getString("sessionUser", null), Toast.LENGTH_SHORT).show();
+        username = mySession.getString("sessionUser", null);
 
         //Event Listeners
         btnAction.setOnClickListener(new View.OnClickListener() {
@@ -241,6 +255,10 @@ public class ReportActivity extends Activity {
     private void submitReport()
     {
         //new Functions(this).execute("insertReport");
+        if (!gps.isNetworkEnabled || !gps.isGPSEnabled)
+        {
+            new AlertDialog.Builder(this).setTitle("GPS / Network not enabled").setMessage("Your Phone cannot detect your GPS Location, Please include the exact location of the area of the incident");
+        }
         new Functions(this).execute("uploadData");
     }
 
@@ -419,7 +437,14 @@ public class ReportActivity extends Activity {
                 int columnIndex = c.getColumnIndex(filePath[0]);
                 String picturePath = c.getString(columnIndex);
                 c.close();
+                //start
                 Bitmap thumbnail = (BitmapFactory.decodeFile(picturePath));
+                //start
+                ByteArrayOutputStream stream = new ByteArrayOutputStream();
+                thumbnail.compress(Bitmap.CompressFormat.JPEG, 90, stream);
+                byte[] byte_arr = stream.toByteArray();
+                image_str = Base64.encodeToString(byte_arr, Base64.DEFAULT);
+                //end
                 Log.w("path of image from gallery....***************.....", picturePath + "");
                 Toast.makeText(this, picturePath.toString() + "", Toast.LENGTH_LONG).show();
                 viewImage.setImageBitmap(thumbnail);
@@ -436,7 +461,7 @@ public class ReportActivity extends Activity {
                     }
                 }
                 //Toast.makeText(this, f.getAbsolutePath().toString(), Toast.LENGTH_LONG).show(); //Directory test
-                Bitmap bitmap;
+//                Bitmap bitmap;
 /*                BitmapFactory.Options bitmapOptions = new BitmapFactory.Options();
                 bitmap = BitmapFactory.decodeFile(f.getAbsolutePath(), bitmapOptions);*/
                 //viewImage.setImageBitmap(bitmap);
