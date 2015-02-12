@@ -7,6 +7,7 @@ package com.example.mark.ireportmaininterface;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.util.Log;
 import android.widget.ArrayAdapter;
@@ -44,7 +45,7 @@ public class Functions extends AsyncTask<String, Void, String>
     Context context;
     Button btnCategory;
     //DONT FORGET TO CHANGE SERVER IP AHUEHUEHUE
-    static String ipadd = "192.168.100.30";
+    static String ipadd = "192.168.100.7";
     public static String link = "http://"+ipadd+"/iReportDB/controller.php";//ip address/localhost
     public Functions (Context context)
     {
@@ -83,40 +84,26 @@ public class Functions extends AsyncTask<String, Void, String>
 
         OutputStreamWriter wr = null;
         try
-        {
-            wr= new OutputStreamWriter(connection.getOutputStream());
-        }
+        {wr= new OutputStreamWriter(connection.getOutputStream());}
         catch(IOException e)
-        {
-            Log.v("getResult", e.getMessage().toString());
-        }
+        {Log.v("getResult", e.getMessage().toString()); }
+
         try
-        {
-            wr.write(logs);
-        }
+        {wr.write(logs); }
         catch(IOException e)
-        {
-            Log.v("getResult", e.getMessage().toString());
-        }
+        {Log.v("getResult", e.getMessage().toString()); }
+
         try
-        {
-            wr.flush();
-        }catch(IOException e)
-        {
-            Log.v("getResult", e.getMessage().toString());
-        }
+        {wr.flush();}
+        catch(IOException e)
+        { Log.v("getResult", e.getMessage().toString()); }
 
         BufferedReader reader = null;
 
         try
-        {
-            reader = new BufferedReader(new InputStreamReader(connection.getInputStream()));
-
-        }
+        { reader = new BufferedReader(new InputStreamReader(connection.getInputStream()));}
         catch(IOException e)
-        {
-            Log.v("getResult", e.getMessage().toString());
-        }
+        { Log.v("getResult", e.getMessage().toString());}
 
         StringBuilder sb = new StringBuilder();
         String line = null;
@@ -148,7 +135,7 @@ public class Functions extends AsyncTask<String, Void, String>
             HttpClient httpClient = new DefaultHttpClient();
             HttpPost httpPost = new HttpPost(postReceiverUrl);
             List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>(2);
-            nameValuePairs.add(new BasicNameValuePair("rpt_id",generateReportID()));
+//            nameValuePairs.add(new BasicNameValuePair("rpt_id",generateReportID()));
             nameValuePairs.add(new BasicNameValuePair("rpt_username", ReportActivity.username));
             nameValuePairs.add(new BasicNameValuePair("rpt_lat", String.valueOf(ReportActivity.latitude)));
             nameValuePairs.add(new BasicNameValuePair("rpt_long", String.valueOf(ReportActivity.longitude)));
@@ -157,12 +144,23 @@ public class Functions extends AsyncTask<String, Void, String>
 //            Toast.makeText(context, ReportActivity.image_str, Toast.LENGTH_LONG).show();
             httpPost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
             httpClient.execute(httpPost);
-            Toast.makeText(context, "Sent to server", Toast.LENGTH_LONG).show();
         }
         catch (IOException e)
         {
-            Toast.makeText(context, "Failed Send to Server", Toast.LENGTH_LONG).show();
         }
+    }
+    public void showMessage(Context context, String title, String message, String OkButtonString)
+    {
+        AlertDialog.Builder builder = new AlertDialog.Builder(context);
+        builder.setTitle(title);
+        builder.setMessage(message);
+        builder.setPositiveButton(OkButtonString, new DialogInterface.OnClickListener()
+        {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+            }
+        });
+        builder.show();
     }
     @Override
     protected void onPostExecute(String result) {
@@ -176,7 +174,7 @@ public class Functions extends AsyncTask<String, Void, String>
         }
         else if (command == "getAccountData")
         {
-            //userresult = result;
+
         }
     }
 
@@ -195,8 +193,10 @@ public class Functions extends AsyncTask<String, Void, String>
                 logs="&command=" + URLEncoder.encode("insertReport","UTF-8");
                 logs+="&report_id=" + URLEncoder.encode(generateReportID(),"UTF-8");
                 logs+="&report_username=" + URLEncoder.encode("user", "UTF-8");
-                logs+="&report_murl=" + URLEncoder.encode("url","UTF-8");
-                logs+="&report_loc=" + URLEncoder.encode(String.valueOf(ReportActivity.latitude + " " + ReportActivity.longitude),"UTF-8");
+                logs+="$report_lat=" + String.valueOf(ReportActivity.latitude);
+                logs+="$report_long=" + String.valueOf(ReportActivity.longitude);
+//                logs+="&report_murl=" + URLEncoder.encode("url","UTF-8");
+//                logs+="&report_loc=" + URLEncoder.encode(String.valueOf(ReportActivity.latitude + " " + ReportActivity.longitude),"UTF-8");
                 logs+="&report_capt=" + URLEncoder.encode(ReportActivity.captionText.getText().toString(),"UTF-8");
                 Log.v("Functions", "report_capt Successful");
 
@@ -221,16 +221,21 @@ public class Functions extends AsyncTask<String, Void, String>
                 logs = "&command=" + URLEncoder.encode("getAccountData", "UTF-8");
                 logs += "&user_name=" + URLEncoder.encode(LoginMenu.txtUsername.getText().toString(), "UTF-8");
                 logs += "&user_password="+ URLEncoder.encode(LoginMenu.txtPassword.getText().toString(), "UTF-8");
-                //Log.d("logs results",logs);
                 result = getResult(connection, logs);
-                //Check for null results, null = invaild account;
                 Log.d("Sql Result", result);
-                //userresult = result;
-                //Log.d("USER RESULT", userresult);
             }
             else if (command == "uploadData")
             {
                 generateHttpPostData();
+                result = "Your Report has been sent to the cops";
+            }
+            else if (command == "viewStatus")
+            {
+                connection = getConnection(link);
+                String logs = "";
+                logs = "&command=" + URLEncoder.encode("viewStatus", "UTF-8");
+                logs += "&user_name=" + URLEncoder.encode(ReportActivity.username, "UTF-8");
+                result = getResult(connection, logs);
             }
             return result;
         }

@@ -1,6 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <merger version="2" >
 
+    <dataSet config="20.0.0" >
+        <source path="C:\Users\Mark\Documents\GitHub\iReport-User-Interface\app\build\intermediates\exploded-aar\com.android.support\support-v4\20.0.0\res" />
+    </dataSet>
     <dataSet config="main" >
         <source path="C:\Users\Mark\Documents\GitHub\iReport-User-Interface\app\src\main\res" >
             <file
@@ -79,37 +82,15 @@
             <file
                 path="C:\Users\Mark\Documents\GitHub\iReport-User-Interface\app\src\main\res\values\strings.xml"
                 qualifiers="" >
-                <string name="confirm_password" >Confirm:
+                <string name="title_activity_view_status" >ViewStatus
                 </string>
                 <string name="email_add" >Email Address
-                </string>
-                <string name="title_activity_login_menu" >Login
                 </string>
                 <string name="action_settings" >Settings
                 </string>
                 <string name="preferred_password" >Password: 
                 </string>
-                <string name="title_activity_create_account" >Create Account
-                </string>
-                <string name="Back" >Back
-                </string>
-                <string name="submit" >Submit
-                </string>
-                <string name="title_activity_create_report" >CreateReport
-                </string>
-                <string name="select_action" >Action
-                </string>
-                <string name="register" >Register
-                </string>
-                <string name="male" >Male
-                </string>
-                <string name="app_name" >Report
-                </string>
                 <string name="username" >Username
-                </string>
-                <string name="error_info" >Error Info
-                </string>
-                <string name="female" >Female
                 </string>
                 <string name="hello_world" >Hello world!
                 </string>
@@ -120,6 +101,38 @@
                 <string name="select_category" >Select Category
                 </string>
                 <string name="password" >Password
+                </string>
+                <string name="confirm_password" >Confirm:
+                </string>
+                <string name="title_activity_login_menu" >Login
+                </string>
+                <string name="title_item_detail" >Item Detail
+                </string>
+                <string name="title_activity_create_account" >Create Account
+                </string>
+                <string name="Back" >Back
+                </string>
+                <string name="submit" >Submit
+                </string>
+                <string name="title_status_detail" >Status Detail
+                </string>
+                <string name="title_item_list" >Items
+                </string>
+                <string name="title_activity_create_report" >CreateReport
+                </string>
+                <string name="title_status_list" >Status
+                </string>
+                <string name="register" >Register
+                </string>
+                <string name="select_action" >Action
+                </string>
+                <string name="male" >Male
+                </string>
+                <string name="app_name" >Report
+                </string>
+                <string name="error_info" >Error Info
+                </string>
+                <string name="female" >Female
                 </string>
             </file>
             <file
@@ -139,6 +152,21 @@
                 <dimen name="activity_horizontal_margin" >64dp
                 </dimen>
             </file>
+            <file
+                name="activity_view_status"
+                path="C:\Users\Mark\Documents\GitHub\iReport-User-Interface\app\src\main\res\layout\activity_view_status.xml"
+                qualifiers=""
+                type="layout" />
+            <file
+                name="view_status"
+                path="C:\Users\Mark\Documents\GitHub\iReport-User-Interface\app\src\main\res\menu\view_status.xml"
+                qualifiers=""
+                type="menu" />
+            <file
+                name="view_reports"
+                path="C:\Users\Mark\Documents\GitHub\iReport-User-Interface\app\src\main\res\layout\view_reports.xml"
+                qualifiers=""
+                type="layout" />
         </source>
         <source path="C:\Users\Mark\Documents\GitHub\iReport-User-Interface\app\build\generated\res\rs\debug" />
         <source path="C:\Users\Mark\Documents\GitHub\iReport-User-Interface\app\build\generated\res\generated\debug" />

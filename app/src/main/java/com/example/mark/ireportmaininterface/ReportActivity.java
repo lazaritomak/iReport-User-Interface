@@ -51,6 +51,7 @@ import java.util.ArrayList;
 import java.io.File;
 import java.util.List;
 import java.util.Random;
+import java.util.concurrent.ExecutionException;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -122,7 +123,7 @@ public class ReportActivity extends Activity {
         }
         if (!gps.isNetworkEnabled)
         {
-            Toast.makeText(this, "Your Network is disabled, your GPS cannot work without network", Toast.LENGTH_LONG).show();
+            Toast.makeText(this, "Your Network is disabled, your GPS cannot work without any network", Toast.LENGTH_LONG).show();
         }
         SharedPreferences mySession = getSharedPreferences(ReportActivity.PREFS_NAME, 0);
         Toast.makeText(this, mySession.getString("sessionUser", null), Toast.LENGTH_SHORT).show();
@@ -143,11 +144,12 @@ public class ReportActivity extends Activity {
             }
         });
         final CharSequence[] agencyItems = {//add tag stuff here
-                "Police Emergency",
-                "Medical Services",
-                "Traffic Enforcement",
-                "Public Works",
-                "Waste Management"
+                "Crime",
+                "Health",
+                "Fire",
+                "Traffic",
+                "Infrastructure",
+                "Waste"
         };
         //final ArrayList selectedItems = new ArrayList();
         final ArrayList<String> selectedItems = new ArrayList<String>();
@@ -208,8 +210,9 @@ public class ReportActivity extends Activity {
     }
 
     String picFileName;
+
     private void selectAction(){
-        final CharSequence[] options = {"Take Photo", "Take Video", "Choose From Gallery", "Sign Out" ,"Cancel"};//Initialize options inside the builder dialog
+        final CharSequence[] options = {"Take Photo", /*"Take Video",*/ "Status","Choose From Gallery", "Sign Out" ,"Cancel"};//Initialize options inside the builder dialog
         AlertDialog.Builder builder = new AlertDialog.Builder(ReportActivity.this);
         builder.setTitle("Select Action!");
         builder.setItems(options, new DialogInterface.OnClickListener(){
@@ -220,16 +223,22 @@ public class ReportActivity extends Activity {
                     Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
 //                    File f = new File(android.os.Environment.getExternalStorageDirectory(), "temp.jpg");
                     File f = new File(android.os.Environment.getExternalStorageDirectory(), picFileName = generateFileName());
+                    Toast.makeText(ReportActivity.this, f.getAbsolutePath(), Toast.LENGTH_SHORT).show();
                     intent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(f));
                     startActivityForResult(intent, 1);//1 is take photo
                 }
-                else if (options[item].equals("Take Video"))
+                else if (options[item].equals("View Reports Statuses"))
                 {
-                    Intent intent = new Intent(MediaStore.ACTION_VIDEO_CAPTURE);
-                    File f = new File(android.os.Environment.getExternalStorageDirectory(), "myvideo.mp4");
-                    intent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(f));
-                    startActivityForResult(intent, 101); //101 is video capture
+                    Intent mainMenu = new Intent(ReportActivity.this, ViewStatus.class);
+                    startActivity(mainMenu);
                 }
+//                else if (options[item].equals("Take Video"))
+//                {
+//                    Intent intent = new Intent(MediaStore.ACTION_VIDEO_CAPTURE);
+//                    File f = new File(android.os.Environment.getExternalStorageDirectory(), "myvideo.mp4");
+//                    intent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(f));
+//                    startActivityForResult(intent, 101); //101 is video capture
+//                }
                 else if (options[item].equals("Choose From Gallery"))
                 {
                     Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
@@ -240,6 +249,7 @@ public class ReportActivity extends Activity {
                     SharedPreferences mySession = getSharedPreferences(PREFS_NAME, 0);
                     SharedPreferences.Editor sessionEditor = mySession.edit();
                     sessionEditor.putBoolean("sessionState", false);
+                    sessionEditor.putString("sessionUser", "");
                     sessionEditor.commit();
                     Intent mainMenu = new Intent(ReportActivity.this, LoginMenu.class);
                     startActivity(mainMenu);
@@ -257,9 +267,67 @@ public class ReportActivity extends Activity {
         //new Functions(this).execute("insertReport");
         if (!gps.isNetworkEnabled || !gps.isGPSEnabled)
         {
-            new AlertDialog.Builder(this).setTitle("GPS / Network not enabled").setMessage("Your Phone cannot detect your GPS Location, Please include the exact location of the area of the incident");
+            AlertDialog.Builder builder = new AlertDialog.Builder(this);
+            builder.setTitle("GPS / Network not enabled");
+            builder.setMessage("Your Phone cannot detect your GPS Location, Please include the exact location of the area of the incident");
+            builder.setPositiveButton("Already Included", new DialogInterface.OnClickListener()
+            {
+                @Override
+                public void onClick(DialogInterface dialogInterface, int i) {
+                    sendReport();
+                }
+            });
+            builder.setNegativeButton("Not yet Included", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialogInterface, int i) {
+
+                }
+            });
+            builder.show();
         }
-        new Functions(this).execute("uploadData");
+        else
+        {
+            sendReport();
+        }
+    }
+    private void sendReport()
+    {
+        try
+        {
+            AlertDialog alertDialog = new AlertDialog.Builder(ReportActivity.this).create();
+            alertDialog.setTitle("Success");
+            alertDialog.setMessage(new Functions(ReportActivity.this).execute("uploadData").get());
+            alertDialog.setButton("Oh Yeah", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialogInterface, int i) {
+                }
+            });
+            alertDialog.show();
+        }
+        catch (InterruptedException e)
+        {
+            AlertDialog alertDialog = new AlertDialog.Builder(ReportActivity.this).create();
+            alertDialog.setTitle("Message");
+            alertDialog.setMessage("Your report did not send successfully");
+            alertDialog.setButton("Oh Shit", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialogInterface, int i) {
+                }
+            });
+            alertDialog.show();
+        }
+        catch (ExecutionException e)
+        {
+            AlertDialog alertDialog = new AlertDialog.Builder(ReportActivity.this).create();
+            alertDialog.setTitle("Message");
+            alertDialog.setMessage("Your report did not send successfully");
+            alertDialog.setButton("Oh Shit", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialogInterface, int i) {
+                }
+            });
+            alertDialog.show();
+        }
     }
 
     private void generateHttpPostData()
@@ -377,6 +445,7 @@ public class ReportActivity extends Activity {
             if (requestCode == 1)
             {
                 File f = new File(Environment.getExternalStorageDirectory().toString());
+
                 for (File temp: f.listFiles())
                 {
 //                    if (temp.getName().equals("temp.jpg"))
@@ -386,6 +455,7 @@ public class ReportActivity extends Activity {
                         break;
                     }
                 }
+                Toast.makeText(this, f.getAbsoluteFile().toString(), Toast.LENGTH_LONG).show();
                 try
                 {
                     Bitmap bitmap;
@@ -398,6 +468,11 @@ public class ReportActivity extends Activity {
                     image_str = Base64.encodeToString(byte_arr, Base64.DEFAULT);
                     //view image
                     viewImage.setImageBitmap(bitmap);
+                    //File out put stream
+                    FileOutputStream fos = new FileOutputStream(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES));
+                    fos.write(byte_arr);
+                    fos.close();
+
                     //no need
                     String path = android.os.Environment.getExternalStorageDirectory() + File.separator + "Phoenix" + File.separator + "default";
                     f.delete();

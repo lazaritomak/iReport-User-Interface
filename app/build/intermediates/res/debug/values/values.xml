@@ -29,6 +29,11 @@
     <string name="title_activity_create_account">Create Account</string>
     <string name="title_activity_create_report">CreateReport</string>
     <string name="title_activity_login_menu">Login</string>
+    <string name="title_activity_view_status">ViewStatus</string>
+    <string name="title_item_detail">Item Detail</string>
+    <string name="title_item_list">Items</string>
+    <string name="title_status_detail">Status Detail</string>
+    <string name="title_status_list">Status</string>
     <string name="username">Username</string>
     <!-- From: file:/C:/Users/Mark/Documents/GitHub/iReport-User-Interface/app/src/main/res/values/styles.xml -->
     <eat-comment />

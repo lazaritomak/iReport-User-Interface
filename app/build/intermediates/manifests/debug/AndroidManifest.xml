@@ -4,6 +4,10 @@
     android:versionCode="1"
     android:versionName="1.0" >
 
+    <uses-sdk
+        android:minSdkVersion="17"
+        android:targetSdkVersion="20" />
+
     <uses-permission android:name="android.permission.ACCESS_MOCK_LOCATION" />
     <!-- //Phone peripherals -->
     <uses-permission android:name="android.permission.CAMERA" />
@@ -11,15 +15,12 @@
     <uses-feature android:name="android.hardware.Camera" />
 
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
  <!-- GPS permissions -->
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
-
-    <uses-sdk
-        android:minSdkVersion="17"
-        android:targetSdkVersion="20" />
 
     <application
         android:allowBackup="true"
@@ -53,6 +54,10 @@
         <activity
             android:name="com.example.mark.ireportmaininterface.CreateReport"
             android:label="@string/title_activity_create_report" >
+        </activity>
+        <activity
+            android:name="com.example.mark.ireportmaininterface.ViewStatus"
+            android:label="@string/title_activity_view_status" >
         </activity>
     </application>
 

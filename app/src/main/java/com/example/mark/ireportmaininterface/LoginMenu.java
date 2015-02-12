@@ -21,6 +21,8 @@ import java.net.SocketException;
 import java.util.Enumeration;
 import java.util.concurrent.ExecutionException;
 
+import static android.widget.Toast.LENGTH_LONG;
+
 
 public class LoginMenu extends Activity {
 
@@ -42,8 +44,9 @@ public class LoginMenu extends Activity {
         txtPassword = (EditText) findViewById(R.id.password);
 
         SharedPreferences mySession = getSharedPreferences(ReportActivity.PREFS_NAME, 0);
-        if (mySession.getBoolean("sessionState", true) == true)
+        if (mySession.getBoolean("sessionState", false) == true)
         {
+//            ReportActivity.username = mySession.getString("sessionUser", null);
             Intent nextstep = new Intent(LoginMenu.this, ReportActivity.class);
             startActivity(nextstep);
         }
@@ -56,6 +59,7 @@ public class LoginMenu extends Activity {
                 try
                 {
                     message = new Functions(LoginMenu.this).execute("getAccountData").get();
+                    Toast.makeText(LoginMenu.this, message, Toast.LENGTH_SHORT).show();
                 } catch (InterruptedException e)
                 {
                     e.printStackTrace();
@@ -87,8 +91,6 @@ public class LoginMenu extends Activity {
                     sessionEditor.putBoolean("sessionState", true);
                     sessionEditor.putString("sessionUser", txtUsername.getText().toString());
                     sessionEditor.commit();
-//                    Toast.makeText(getApplicationContext(), mySession.getString("sessionState", null), Toast.LENGTH_LONG).show();
-//                    Toast.makeText(getApplicationContext(), "Yes", Toast.LENGTH_LONG).show();
                     Intent nextstep = new Intent(LoginMenu.this, ReportActivity.class);
                     startActivity(nextstep);
                 }
@@ -116,7 +118,7 @@ public class LoginMenu extends Activity {
         });
 
         //gets ip address
-        ipAddDisp.setText(getIpAddress());
+//        ipAddDisp.setText(getIpAddress());
     }
     private String getIpAddress(){
         String ip = "";

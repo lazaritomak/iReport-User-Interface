@@ -25,5 +25,10 @@
     <string name="male">Male</string>
     <string name="female">Female</string>
     <string name="title_activity_create_report">CreateReport</string>
+    <string name="title_status_list">Status</string>
+    <string name="title_status_detail">Status Detail</string>
+    <string name="title_activity_view_status">ViewStatus</string>
+    <string name="title_item_list">Items</string>
+    <string name="title_item_detail">Item Detail</string>
 
 </resources>

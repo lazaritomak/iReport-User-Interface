@@ -115,7 +115,7 @@ public class CreateAccount extends Activity {
         {
             alertDialog.setTitle("Non-same Passwords");
             alertDialog.setMessage("Your passwords are not the same, please recheck");
-            alertDialog.setButton("OK", new DialogInterface.OnClickListener() {
+                    alertDialog.setButton("OK", new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialogInterface, int i)
                 {

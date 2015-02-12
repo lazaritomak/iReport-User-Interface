@@ -91,6 +91,7 @@ d
             android:singleLine="false"
             android:layout_marginBottom="75dp"
             android:layout_above="@+id/username"
-            android:layout_alignStart="@+id/username" />
+            android:layout_alignStart="@+id/username"
+            android:layout_alignEnd="@+id/infoDisplay" />
     </RelativeLayout>
 </RelativeLayout>
