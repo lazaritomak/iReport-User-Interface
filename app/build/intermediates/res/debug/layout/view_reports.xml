@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:id="@+id/txtSection"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:minHeight="?android:attr/listPreferredItemHeight"
+        android:gravity="center_horizontal"
+        android:layout_weight="1" />
+
+</LinearLayout><!-- From: file:/C:/Users/Mark/Documents/GitHub/iReport-User-Interface/app/src/main/res/layout/view_reports.xml -->
