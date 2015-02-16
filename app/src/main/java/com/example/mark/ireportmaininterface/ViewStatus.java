@@ -73,17 +73,24 @@ public class ViewStatus extends Activity {
         String[] resultArr;
         try
         {
+            //Initialize Hashmap and ArrayList
             ArrayList<HashMap<String, String>> feedList = new ArrayList<HashMap<String, String>>();
             HashMap<String, String> map = new HashMap<String, String>();
+            //Tokenizer for separating text with delimiter
             StringTokenizer st;
+            //Text for headers
             TextView header = (TextView) findViewById(R.id.textView);
             header.setText("Reports");
             lv = (ListView)findViewById(R.id.listView);
+            //get result from server
             result = new Functions(this).execute("viewStatus").get();
+            //Split each record with ;
             resultArr = result.split(";");
+            //Create arrays for report id, date, and progress
             reportid = new String[resultArr.length];
             reportdate = new String[resultArr.length];
             reportprogress = new String[resultArr.length];
+            //Initialize the results to each of the array
             for (int i = 0; i < resultArr.length; i++)
             {
                 st = new StringTokenizer(resultArr[i].toString(), "/");
