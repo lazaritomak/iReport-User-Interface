@@ -59,7 +59,6 @@ public class LoginMenu extends Activity {
                 try
                 {
                     message = new Functions(LoginMenu.this).execute("getAccountData").get();
-                    Toast.makeText(LoginMenu.this, message, Toast.LENGTH_SHORT).show();
                 } catch (InterruptedException e)
                 {
                     e.printStackTrace();
@@ -83,7 +82,7 @@ public class LoginMenu extends Activity {
                     });
                     alertDialog.show();
                 }
-                else if (txtUsername.getText().toString().equals(message))
+                else if (txtUsername.getText().toString().equals(message))//if successful
                 {
                     ReportActivity.username = txtUsername.getText().toString();
                     SharedPreferences mySession = getSharedPreferences(ReportActivity.PREFS_NAME, 0);
