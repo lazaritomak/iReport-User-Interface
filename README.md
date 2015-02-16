@@ -24,7 +24,7 @@ TODO:
 8. Generate report ID upon sending to data center (server generated). ✔
 9. Force Generation of image to Gallery. ✔
 10. Check for GPS Service Accessibility. ✔
-11. Generation of Report Status. ✔
+11. Generation of Report Status (Crude layout). ✔
 
 Minor TODO list:
 =
