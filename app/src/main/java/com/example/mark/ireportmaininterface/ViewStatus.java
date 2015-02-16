@@ -21,7 +21,7 @@ import java.util.concurrent.ExecutionException;
 
 public class ViewStatus extends Activity {
 
-
+    //Having their own arrays for display purposes
     String[] reportid;
     String[] reportdate;
     String[] reportprogress;
@@ -33,7 +33,7 @@ public class ViewStatus extends Activity {
         {
             initializeList();
         }
-        catch(Exception e)
+        catch(Exception e)//I should probably remove but errors could occur, so fuck it.
         {
             new AlertDialog.Builder(ViewStatus.this)
                     .setTitle("Error")
