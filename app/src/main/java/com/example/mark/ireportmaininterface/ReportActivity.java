@@ -117,17 +117,23 @@ public class ReportActivity extends Activity {
         //GPS initialization
 
         gps = new GPSTracker(ReportActivity.this);
-        if (!gps.isGPSEnabled)
-        {
-            Toast.makeText(this, "Your GPS is disabled, please enable your GPS", Toast.LENGTH_LONG).show();
-        }
-        if (!gps.isNetworkEnabled)
-        {
-            Toast.makeText(this, "Your Network is disabled, your GPS cannot work without any network", Toast.LENGTH_LONG).show();
-        }
+
         SharedPreferences mySession = getSharedPreferences(ReportActivity.PREFS_NAME, 0);
-        Toast.makeText(this, mySession.getString("sessionUser", null), Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, "Welcome, " + mySession.getString("sessionUser", null), Toast.LENGTH_SHORT).show();
         username = mySession.getString("sessionUser", null);
+
+        if (!gps.canGetLocation())
+        {
+/*            if (!gps.isGPSEnabled)
+            {
+                Toast.makeText(this, "Your GPS is disabled, please enable your GPS service", Toast.LENGTH_LONG).show();
+            }
+            if (!gps.isNetworkEnabled)
+            {
+                Toast.makeText(this, "Your Network is disabled, your GPS cannot work without any network", Toast.LENGTH_LONG).show();
+            }*/
+            gps.showSettingsAlert();
+        }
 
         //Event Listeners
         btnAction.setOnClickListener(new View.OnClickListener() {
@@ -212,7 +218,7 @@ public class ReportActivity extends Activity {
     String picFileName;
 
     private void selectAction(){
-        final CharSequence[] options = {"Take Photo", /*"Take Video",*/ "Status","Choose From Gallery", "Sign Out" ,"Cancel"};//Initialize options inside the builder dialog
+        final CharSequence[] options = {"Take Photo", /*"Take Video",*/ "View Report Status","Choose From Gallery", "Sign Out" ,"Cancel"};//Initialize options inside the builder dialog
         AlertDialog.Builder builder = new AlertDialog.Builder(ReportActivity.this);
         builder.setTitle("Select Action!");
         builder.setItems(options, new DialogInterface.OnClickListener(){
@@ -227,7 +233,7 @@ public class ReportActivity extends Activity {
                     intent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(f));
                     startActivityForResult(intent, 1);//1 is take photo
                 }
-                else if (options[item].equals("View Reports Statuses"))
+                else if (options[item].equals("View Report Status"))
                 {
                     Intent mainMenu = new Intent(ReportActivity.this, ViewStatus.class);
                     startActivity(mainMenu);
@@ -280,7 +286,7 @@ public class ReportActivity extends Activity {
             builder.setNegativeButton("Not yet Included", new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialogInterface, int i) {
-
+                    gps.showSettingsAlert();
                 }
             });
             builder.show();
@@ -474,7 +480,7 @@ public class ReportActivity extends Activity {
                     fos.close();
 
                     //no need
-                    String path = android.os.Environment.getExternalStorageDirectory() + File.separator + "Phoenix" + File.separator + "default";
+/*                    String path = android.os.Environment.getExternalStorageDirectory() + File.separator + "Phoenix" + File.separator + "default";
                     f.delete();
                     OutputStream outFile = null;
                     File file = new File(path, String.valueOf(System.currentTimeMillis()) + ".jpg");
@@ -496,7 +502,7 @@ public class ReportActivity extends Activity {
                     catch (Exception e)
                     {
                         e.printStackTrace();
-                    }
+                    }*/
                 }
                 catch (Exception e)
                 {
