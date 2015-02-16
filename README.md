@@ -58,6 +58,8 @@ Place the **iReportDB** folder inside the htdocs folder located in your xampp di
 
 *Target SDK* = 21
 
+App is tested on a virtual Google Nexus 7.
+
 Image doesn't seem to show up in emulators. Testing further. (FIXED)
 
 GPS does not work in in Emulators (Genymotion). To test in real Android Phone. (FIXED, must be enabled and tested).
