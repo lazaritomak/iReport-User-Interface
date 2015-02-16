@@ -52,9 +52,7 @@ The apk can be found in
 Notes/Details:
 =
 
-Made in Android Studio.
-
-Place **iReportDB** folder to your htdocs, and change the **IP Address** of the server from **Functions.java**
+Place the **iReportDB** folder inside the htdocs folder located in your xampp directory, and change the **IP Address** of the server from **Functions.java**
 
 *Minimum SDK* = 17
 
