@@ -29,7 +29,22 @@ public class ViewStatus extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_view_status);
-        initializeList();
+        try
+        {
+            initializeList();
+        }
+        catch(Exception e)
+        {
+            new AlertDialog.Builder(ViewStatus.this)
+                    .setTitle("Error")
+                    .setMessage(e.getMessage())
+                    .setPositiveButton("Its Ok", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialogInterface, int i) {
+
+                }
+            });
+        }
     }
 
 
@@ -56,7 +71,6 @@ public class ViewStatus extends Activity {
         ListView lv;
         String result = "";
         String[] resultArr;
-        String[] listArr;
         try
         {
             ArrayList<HashMap<String, String>> feedList = new ArrayList<HashMap<String, String>>();
