@@ -1,16 +1,10 @@
 package com.example.mark.ireportmaininterface;
 
 import android.app.Activity;
-import android.app.Dialog;
-import android.content.Context;
 import android.content.SharedPreferences;
 import android.database.Cursor;
-import android.media.MediaRecorder;
 import android.media.ThumbnailUtils;
-import android.net.http.AndroidHttpClient;
-import android.os.AsyncTask;
 import android.os.Bundle;
-import android.provider.Settings;
 import android.util.Base64;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -31,25 +25,12 @@ import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.Toast;
 //gps
-import android.location.Criteria;
-import android.location.Location;
-import android.location.LocationManager;
 
-import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
-import java.io.DataOutputStream;
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
-import java.net.HttpURLConnection;
 import java.util.ArrayList;
 //XML creation namespaces
-import java.io.File;
-import java.util.List;
 import java.util.Random;
 import java.util.concurrent.ExecutionException;
 
@@ -62,16 +43,6 @@ import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
 
-import org.apache.http.HttpResponse;
-import org.apache.http.NameValuePair;
-import org.apache.http.client.ClientProtocolException;
-import org.apache.http.client.HttpClient;
-import org.apache.http.client.entity.UrlEncodedFormEntity;
-import org.apache.http.client.methods.HttpPost;
-import org.apache.http.entity.InputStreamEntity;
-import org.apache.http.impl.client.DefaultHttpClient;
-import org.apache.http.message.BasicNameValuePair;
-import org.w3c.dom.Attr;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 
@@ -100,6 +71,9 @@ public class ReportActivity extends Activity {
     boolean[] isSelectedArray;
     ArrayList<String> selectItems;
 
+    int sI = -1;
+    int selectedItem;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -115,8 +89,8 @@ public class ReportActivity extends Activity {
         //catList = (Spinner) findViewById(R.id.selectCategory);
         captionText = (EditText) findViewById(R.id.captionText);
         //GPS initialization
-
         gps = new GPSTracker(ReportActivity.this);
+        //item selection
 
         SharedPreferences mySession = getSharedPreferences(ReportActivity.PREFS_NAME, 0);
         Toast.makeText(this, "Welcome, " + mySession.getString("sessionUser", null), Toast.LENGTH_SHORT).show();
@@ -168,7 +142,7 @@ public class ReportActivity extends Activity {
         }
         builder = new AlertDialog.Builder(this);
         builder.setTitle("Select Category");
-        builder.setMultiChoiceItems(agencyItems, isSelectedArray, new DialogInterface.OnMultiChoiceClickListener() {
+/*        builder.setMultiChoiceItems(agencyItems, isSelectedArray, new DialogInterface.OnMultiChoiceClickListener() { // Multi choice, preserve tihs.
             @Override
             public void onClick(DialogInterface dialogInterface, int indexSelected, boolean isChecked) {
                 if (isChecked) {
@@ -186,17 +160,24 @@ public class ReportActivity extends Activity {
                     isSelectedArray[indexSelected] = false;
                 }
             }
-        });
+        });*/
+        builder.setSingleChoiceItems(agencyItems, sI, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        sI = i;
+                        Toast.makeText(ReportActivity.this, String.valueOf(sI), Toast.LENGTH_SHORT).show();
+                    }
+                });
         builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
             @Override
-            public void onClick(DialogInterface dialogInterface, int i)
-            {
-                //do nothing
+            public void onClick(DialogInterface dialogInterface, int i) {
+                Toast.makeText(ReportActivity.this, String.valueOf(sI), Toast.LENGTH_SHORT).show();//TEST
             }
         });
         btnCategory.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                Toast.makeText(ReportActivity.this, String.valueOf(sI), Toast.LENGTH_SHORT).show(); //TEST
                 alertDialog = builder.create();
                 alertDialog.show();
             }
@@ -426,8 +407,7 @@ public class ReportActivity extends Activity {
 
                 for (File temp: f.listFiles())
                 {
-//                    if (temp.getName().equals("temp.jpg"))
-                    if (temp.getName().equals(picFileName))
+                    if (temp.getName().equals(picFileName))//finds the filename as the intent saved
                     {
                         f = temp;
                         break;
@@ -451,31 +431,6 @@ public class ReportActivity extends Activity {
                     FileOutputStream fos = new FileOutputStream(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES));
                     fos.write(byte_arr);
                     fos.close();
-
-                    //no need
-/*                    String path = android.os.Environment.getExternalStorageDirectory() + File.separator + "Phoenix" + File.separator + "default";
-                    f.delete();
-                    OutputStream outFile = null;
-                    File file = new File(path, String.valueOf(System.currentTimeMillis()) + ".jpg");
-                    try
-                    {
-                        outFile = new FileOutputStream(file);
-                        bitmap.compress(Bitmap.CompressFormat.JPEG, 85, outFile);
-                        outFile.flush();
-                        outFile.close();
-                    }
-                    catch (FileNotFoundException e)
-                    {
-                        e.printStackTrace();
-                    }
-                    catch (IOException e)
-                    {
-                        e.printStackTrace();
-                    }
-                    catch (Exception e)
-                    {
-                        e.printStackTrace();
-                    }*/
                 }
                 catch (Exception e)
                 {
@@ -503,7 +458,7 @@ public class ReportActivity extends Activity {
                 Toast.makeText(this, picturePath.toString() + "", Toast.LENGTH_LONG).show();
                 viewImage.setImageBitmap(thumbnail);
             }
-            else if (requestCode == 101)
+/*            else if (requestCode == 101)
             {
                 File f = new File(Environment.getExternalStorageDirectory().toString());
                 for (File temp: f.listFiles())
@@ -516,12 +471,12 @@ public class ReportActivity extends Activity {
                 }
                 //Toast.makeText(this, f.getAbsolutePath().toString(), Toast.LENGTH_LONG).show(); //Directory test
 //                Bitmap bitmap;
-/*                BitmapFactory.Options bitmapOptions = new BitmapFactory.Options();
-                bitmap = BitmapFactory.decodeFile(f.getAbsolutePath(), bitmapOptions);*/
+*//*                BitmapFactory.Options bitmapOptions = new BitmapFactory.Options();
+                bitmap = BitmapFactory.decodeFile(f.getAbsolutePath(), bitmapOptions);*//*
                 //viewImage.setImageBitmap(bitmap);
                 Bitmap bmThumbnail = ThumbnailUtils.createVideoThumbnail(f.getAbsolutePath().toString(), MediaStore.Images.Thumbnails.MINI_KIND);
                 viewImage.setImageBitmap(bmThumbnail);
-            }
+            }*/
         }
     }
 
