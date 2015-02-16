@@ -1,7 +1,9 @@
 iReport-User-Interface
-======================
+=
 
 User interface for iReport
+
+**Don't forget to Change the Server's IP address in Functions.java.**
 
 TODO:
 =
@@ -10,7 +12,7 @@ TODO:
 
 ✘ - Cannot Do/Buggy/Requires More Technical Expertise
 
-Activities/Modules for User:
+*Activities/Modules for User:*
 
 1. Take Picture/Video ✔
 2. Caption media with Text✔
@@ -27,6 +29,8 @@ Activities/Modules for User:
 Minor TODO list:
 =
 
+*Aesthetics/Minor Functionalities*
+
 1. Thumbnail for video ✔
 2. Limit video duration ✘
 3. Validate text content
@@ -35,7 +39,7 @@ Minor TODO list:
 6. Change video thumbnail orientation ✔
 7. Fixed orientation and formatting for Status Reports ✘
 
-(Minor TODO list can be done upon completion of main modules)
+*(Minor TODO list can be done upon completion of main modules)*
 
 APK Location:
 =
@@ -50,11 +54,11 @@ Notes/Details:
 
 Made in Android Studio.
 
-Place iReportDB folder to your htdocs, and change the link from Functions.java
+Place **iReportDB** folder to your htdocs, and change the **IP Address** of the server from **Functions.java**
 
-Minimum SDK = 17
+*Minimum SDK* = 17
 
-Target SDK = 21
+*Target SDK* = 21
 
 Image doesn't seem to show up in emulators. Testing further. (FIXED)
 
