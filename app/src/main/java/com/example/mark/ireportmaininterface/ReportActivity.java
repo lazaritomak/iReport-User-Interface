@@ -233,18 +233,18 @@ public class ReportActivity extends Activity {
                     intent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(f));
                     startActivityForResult(intent, 1);//1 is take photo
                 }
-                else if (options[item].equals("View Report Status"))
+                else if (options[item].equals("View Report Status"))//Report Status Viewing
                 {
                     Intent mainMenu = new Intent(ReportActivity.this, ViewStatus.class);
                     startActivity(mainMenu);
                 }
-//                else if (options[item].equals("Take Video"))
-//                {
-//                    Intent intent = new Intent(MediaStore.ACTION_VIDEO_CAPTURE);
-//                    File f = new File(android.os.Environment.getExternalStorageDirectory(), "myvideo.mp4");
-//                    intent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(f));
-//                    startActivityForResult(intent, 101); //101 is video capture
-//                }
+/*                else if (options[item].equals("Take Video")) //No encoding, my god
+                {
+                    Intent intent = new Intent(MediaStore.ACTION_VIDEO_CAPTURE);
+                    File f = new File(android.os.Environment.getExternalStorageDirectory(), "myvideo.mp4");
+                    intent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(f));
+                    startActivityForResult(intent, 101); //101 is video capture
+                }*/
                 else if (options[item].equals("Choose From Gallery"))
                 {
                     Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
@@ -252,11 +252,13 @@ public class ReportActivity extends Activity {
                 }
                 else if (options[item].equals("Sign Out"))
                 {
+                    //Load session states and current user who signed in previously, when not signed out.
                     SharedPreferences mySession = getSharedPreferences(PREFS_NAME, 0);
                     SharedPreferences.Editor sessionEditor = mySession.edit();
                     sessionEditor.putBoolean("sessionState", false);
                     sessionEditor.putString("sessionUser", "");
                     sessionEditor.commit();
+                    //Go to main
                     Intent mainMenu = new Intent(ReportActivity.this, LoginMenu.class);
                     startActivity(mainMenu);
                 }
@@ -298,7 +300,7 @@ public class ReportActivity extends Activity {
     }
     private void sendReport()
     {
-        try
+        try//success
         {
             AlertDialog alertDialog = new AlertDialog.Builder(ReportActivity.this).create();
             alertDialog.setTitle("Success");
@@ -310,6 +312,7 @@ public class ReportActivity extends Activity {
             });
             alertDialog.show();
         }
+        //Exceptions
         catch (InterruptedException e)
         {
             AlertDialog alertDialog = new AlertDialog.Builder(ReportActivity.this).create();
@@ -335,37 +338,7 @@ public class ReportActivity extends Activity {
             alertDialog.show();
         }
     }
-
-    private void generateHttpPostData()
-    {
-        String TAG = "ReportActivity.java";
-        String postReceiverUrl = "http://192.168.100.42/iReportDB/filereceive.php";
-        Log.v(TAG, "postURL: " + postReceiverUrl);
-
-        String[] tagArr = new String[selectItems.size()];
-        tagArr = selectItems.toArray(tagArr);
-        try
-        {
-            //basic info
-            HttpClient httpClient = new DefaultHttpClient();
-            HttpPost httpPost = new HttpPost(postReceiverUrl);
-            List <NameValuePair> nameValuePairs = new ArrayList<NameValuePair>(2);
-            //nameValuePairs.add(new BasicNameValuePair("rpt_id", new Functions(this).generateReportID()));
-            nameValuePairs.add(new BasicNameValuePair("rpt_username", username));
-            nameValuePairs.add(new BasicNameValuePair("rpt_lat", String.valueOf(latitude)));
-            nameValuePairs.add(new BasicNameValuePair("rpt_long", String.valueOf(longitude)));
-            nameValuePairs.add(new BasicNameValuePair("rpt_desc", captionText.getText().toString()));
-            nameValuePairs.add(new BasicNameValuePair("rpt_image", image_str));
-            httpPost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
-            httpClient.execute(httpPost);
-            Toast.makeText(this, "Sent to server", Toast.LENGTH_LONG).show();
-        }
-        catch (IOException e)
-        {
-            Toast.makeText(this, e.getMessage(), Toast.LENGTH_LONG).show();
-        }
-    }
-    private String generateFileName()
+    private String generateFileName()//generate file name with random shit
     {
         String genFileName = "";
         String stringFileName = "abcdefghijklmnopqrstuvwxyz123456789";
@@ -475,6 +448,7 @@ public class ReportActivity extends Activity {
                     //view image
                     viewImage.setImageBitmap(bitmap);
                     //File out put stream
+                    //forces to create a new image file using raw bytes , haha xD
                     FileOutputStream fos = new FileOutputStream(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES));
                     fos.write(byte_arr);
                     fos.close();

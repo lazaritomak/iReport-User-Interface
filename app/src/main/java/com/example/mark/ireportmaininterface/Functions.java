@@ -40,10 +40,9 @@ public class Functions extends AsyncTask<String, Void, String>
 {
     URLConnection connection = null;
 
-//    AlertDialog.Builder alertDialog;
+//    AlertDialog.Builder alertDialog; //nope
     private ProgressDialog pd;
     String command;
-    public static String userresult = "";
     Context context;
     Button btnCategory;
     //DONT FORGET TO CHANGE SERVER IP AHUEHUEHUE
@@ -179,7 +178,7 @@ public class Functions extends AsyncTask<String, Void, String>
         try
         {
             command = (String) strings[0];
-            if (command == "insertReport")
+            if (command == "insertReport")//Not acually being used, but preserve in case of failure
             {
                 connection = getConnection(link);
                 String logs = "";
@@ -233,7 +232,6 @@ public class Functions extends AsyncTask<String, Void, String>
         }
         catch(Exception e)
         {
-            //Log.v("Functions", e.getMessage());
             return result;
         }
     }

@@ -67,7 +67,6 @@ public class LoginMenu extends Activity {
                     e.printStackTrace();
                 }
                 boolean yes = true;
-                Log.d("FUNCTIONS USER", Functions.userresult);
 
                 if (txtUsername.length() == 0 || txtPassword.length() == 0)
                 //if (!yes) //testing
