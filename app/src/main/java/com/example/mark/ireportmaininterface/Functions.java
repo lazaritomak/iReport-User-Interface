@@ -5,6 +5,7 @@ package com.example.mark.ireportmaininterface;
  */
 
 import android.app.AlertDialog;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.SharedPreferences;
@@ -39,7 +40,8 @@ public class Functions extends AsyncTask<String, Void, String>
 {
     URLConnection connection = null;
 
-    AlertDialog alertDialog;
+//    AlertDialog.Builder alertDialog;
+    private ProgressDialog pd;
     String command;
     public static String userresult = "";
     Context context;
@@ -50,7 +52,6 @@ public class Functions extends AsyncTask<String, Void, String>
     public Functions (Context context)
     {
         this.context = context;
-        alertDialog = new AlertDialog.Builder(this.context).create();
     }
     public URLConnection getConnection(String link)//Retrieve and connect to the url link
     {
@@ -134,13 +135,11 @@ public class Functions extends AsyncTask<String, Void, String>
             HttpClient httpClient = new DefaultHttpClient();
             HttpPost httpPost = new HttpPost(postReceiverUrl);
             List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>(2);
-//            nameValuePairs.add(new BasicNameValuePair("rpt_id",generateReportID()));
             nameValuePairs.add(new BasicNameValuePair("rpt_username", ReportActivity.username));
             nameValuePairs.add(new BasicNameValuePair("rpt_lat", String.valueOf(ReportActivity.latitude)));
             nameValuePairs.add(new BasicNameValuePair("rpt_long", String.valueOf(ReportActivity.longitude)));
             nameValuePairs.add(new BasicNameValuePair("rpt_desc", ReportActivity.captionText.getText().toString()));
             nameValuePairs.add(new BasicNameValuePair("rpt_image", ReportActivity.image_str));
-//            Toast.makeText(context, ReportActivity.image_str, Toast.LENGTH_LONG).show();
             httpPost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
             httpClient.execute(httpPost);
         }
@@ -148,19 +147,14 @@ public class Functions extends AsyncTask<String, Void, String>
         {
         }
     }
-    public void showMessage(Context context, String title, String message, String OkButtonString)
-    {
-        AlertDialog.Builder builder = new AlertDialog.Builder(context);
-        builder.setTitle(title);
-        builder.setMessage(message);
-        builder.setPositiveButton(OkButtonString, new DialogInterface.OnClickListener()
-        {
-            @Override
-            public void onClick(DialogInterface dialogInterface, int i) {
-            }
-        });
-        builder.show();
+
+    @Override
+    protected void onPreExecute() {
+        pd = new ProgressDialog(context);
+        pd.setMessage("Please Wait...");
+        pd.show();
     }
+
     @Override
     protected void onPostExecute(String result) {
         if (command == "insertReport")
@@ -173,8 +167,8 @@ public class Functions extends AsyncTask<String, Void, String>
         }
         else if (command == "getAccountData")
         {
-
         }
+        pd.dismiss();
     }
 
     @Override
@@ -195,7 +189,6 @@ public class Functions extends AsyncTask<String, Void, String>
                 logs+="$report_lat=" + String.valueOf(ReportActivity.latitude);
                 logs+="$report_long=" + String.valueOf(ReportActivity.longitude);
 //                logs+="&report_murl=" + URLEncoder.encode("url","UTF-8");
-//                logs+="&report_loc=" + URLEncoder.encode(String.valueOf(ReportActivity.latitude + " " + ReportActivity.longitude),"UTF-8");
                 logs+="&report_capt=" + URLEncoder.encode(ReportActivity.captionText.getText().toString(),"UTF-8");
                 Log.v("Functions", "report_capt Successful");
 
