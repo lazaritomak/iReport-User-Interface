@@ -197,7 +197,6 @@ public class ReportActivity extends Activity {
         btnCategory.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-//                builder.show();
                 alertDialog = builder.create();
                 alertDialog.show();
             }
