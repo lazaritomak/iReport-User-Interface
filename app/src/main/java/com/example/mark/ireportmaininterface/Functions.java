@@ -70,8 +70,7 @@ public class Functions extends AsyncTask<String, Void, String>
             connection = url.openConnection();
         }
         catch(IOException e)
-        {
-            e.printStackTrace();
+        { e.printStackTrace();
             Log.v("getConnection", e.getMessage().toString());
         }
         connection.setDoOutput(true);
