@@ -102,11 +102,6 @@ function InsertReport()
 }
 function InsertUser()
 {
-	// $sql = "INSERT INTO tbl_users VALUES('".$_POST['user_email']."' , '".$_POST['user_name']."' , '".$_POST['user_password']."');";
-	// $q = mysql_query($sql);
-	// echo $q;
-	// echo "\n User Inserted";
-
 	include 'db_connect.php';
 	
 	if ($stmt=$mysqli->prepare("INSERT INTO tbl_users VALUES (?, ?, ?)"))
