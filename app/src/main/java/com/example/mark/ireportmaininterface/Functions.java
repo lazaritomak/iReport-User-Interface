@@ -123,9 +123,10 @@ public class Functions extends AsyncTask<String, Void, String>
         return result;
     }
 
-    public void generateHttpPostData()
+    public boolean generateHttpPostData()
     {
         String TAG = "ReportActivity.java";
+        boolean successful;
         String postReceiverUrl = "http://"+ipadd+"/iReportDB/filereceive.php";
         Log.v(TAG, "postURL: " + postReceiverUrl);
         try
@@ -141,10 +142,13 @@ public class Functions extends AsyncTask<String, Void, String>
             nameValuePairs.add(new BasicNameValuePair("rpt_image", ReportActivity.image_str));
             httpPost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
             httpClient.execute(httpPost);
+            successful = true;
         }
-        catch (IOException e)
+        catch (Exception e)
         {
+            successful = false;
         }
+        return successful;
     }
 
     @Override
@@ -217,8 +221,14 @@ public class Functions extends AsyncTask<String, Void, String>
             }
             else if (command == "uploadData")
             {
-                generateHttpPostData();
-                result = "Your Report has been sent to the cops";
+                if (generateHttpPostData())
+                {
+                    result = "Your Report has been sent to the cops";
+                }
+                else
+                {
+                    result = "Your report did not send successfully";
+                }
             }
             else if (command == "viewStatus")
             {
