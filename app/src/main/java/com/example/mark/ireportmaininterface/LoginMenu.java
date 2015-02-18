@@ -68,8 +68,20 @@ public class LoginMenu extends Activity {
                 }
                 boolean yes = true;
 
-                if (txtUsername.length() == 0 || txtPassword.length() == 0)
+                if (txtUsername.getText().toString().equals(message))//if successful
                 //if (!yes) //testing
+                {
+                    //start
+                    ReportActivity.username = txtUsername.getText().toString();
+                    SharedPreferences mySession = getSharedPreferences(ReportActivity.PREFS_NAME, 0);
+                    SharedPreferences.Editor sessionEditor = mySession.edit();
+                    sessionEditor.putBoolean("sessionState", true);
+                    sessionEditor.putString("sessionUser", txtUsername.getText().toString());
+                    sessionEditor.commit();
+                    Intent nextStep = new Intent(LoginMenu.this, ReportActivity.class);
+                    startActivity(nextStep);
+                }
+                else if (txtUsername.length() == 0 || txtPassword.length() == 0)
                 {
                     AlertDialog alertDialog = new AlertDialog.Builder(LoginMenu.this).create();
                     alertDialog.setTitle("Login Error");
@@ -80,17 +92,6 @@ public class LoginMenu extends Activity {
                         }
                     });
                     alertDialog.show();
-                }
-                else if (txtUsername.getText().toString().equals(message))//if successful
-                {
-                    ReportActivity.username = txtUsername.getText().toString();
-                    SharedPreferences mySession = getSharedPreferences(ReportActivity.PREFS_NAME, 0);
-                    SharedPreferences.Editor sessionEditor = mySession.edit();
-                    sessionEditor.putBoolean("sessionState", true);
-                    sessionEditor.putString("sessionUser", txtUsername.getText().toString());
-                    sessionEditor.commit();
-                    Intent nextstep = new Intent(LoginMenu.this, ReportActivity.class);
-                    startActivity(nextstep);
                 }
                 else
                 {
