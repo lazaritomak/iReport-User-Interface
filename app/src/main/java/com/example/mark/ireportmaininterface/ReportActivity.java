@@ -285,7 +285,7 @@ public class ReportActivity extends Activity {
             AlertDialog alertDialog = new AlertDialog.Builder(ReportActivity.this).create();
             alertDialog.setTitle("Success");
             alertDialog.setMessage(new Functions(ReportActivity.this).execute("uploadData").get());
-            alertDialog.setButton("Oh Yeah", new DialogInterface.OnClickListener() {
+            alertDialog.setButton("OK", new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialogInterface, int i) {
                 }
