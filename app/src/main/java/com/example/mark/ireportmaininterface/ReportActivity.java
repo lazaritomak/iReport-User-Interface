@@ -171,13 +171,12 @@ public class ReportActivity extends Activity {
         builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
-                Toast.makeText(ReportActivity.this, String.valueOf(sI), Toast.LENGTH_SHORT).show();//TEST
+                Toast.makeText(ReportActivity.this, String.valueOf(agencyItems[sI]), Toast.LENGTH_SHORT).show();//TEST
             }
         });
         btnCategory.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(ReportActivity.this, String.valueOf(sI), Toast.LENGTH_SHORT).show(); //TEST
                 alertDialog = builder.create();
                 alertDialog.show();
             }
