@@ -2,18 +2,6 @@
 <pre-dex-items>
 
     <item
-        dex="C:\Users\Mark\Documents\GitHub\iReport-User-Interface\app\build\intermediates\pre-dexed\debug\classes-af2aace7302731fc18186790e0741532058476bc.jar"
-        jar="C:\Users\Mark\Documents\GitHub\iReport-User-Interface\app\build\intermediates\exploded-aar\com.android.support\support-v4\20.0.0\classes.jar"
-        jumboMode="false"
-        revision="20.0.0"
-        sha1="8694693636ab36910c8100ce527c258ff3ebece0"/>
-    <item
-        dex="C:\Users\Mark\Documents\GitHub\iReport-User-Interface\app\build\intermediates\pre-dexed\debug\nativecss-61acf6f5be340536c50d94d8b1778c3f2cdb22ff.jar"
-        jar="C:\Users\Mark\Documents\GitHub\iReport-User-Interface\app\libs\nativecss.jar"
-        jumboMode="false"
-        revision="20.0.0"
-        sha1="4760abba2ea8409641db6b999c429b1760a3552a"/>
-    <item
         dex="C:\Users\Mark\Documents\GitHub\iReport-User-Interface\app\build\intermediates\pre-dexed\debug\support-annotations-20.0.0-656dce0983aedf356ee3c0d9702b9b565d4f7ad2.jar"
         jar="C:\Users\Mark\AppData\Local\Android\android-studio\sdk\extras\android\m2repository\com\android\support\support-annotations\20.0.0\support-annotations-20.0.0.jar"
         jumboMode="false"
@@ -25,5 +13,11 @@
         jumboMode="false"
         revision="20.0.0"
         sha1="e40b3078e3fbd353c9f44da8df25a8fc0078209d"/>
+    <item
+        dex="C:\Users\Mark\Documents\GitHub\iReport-User-Interface\app\build\intermediates\pre-dexed\debug\classes-af2aace7302731fc18186790e0741532058476bc.jar"
+        jar="C:\Users\Mark\Documents\GitHub\iReport-User-Interface\app\build\intermediates\exploded-aar\com.android.support\support-v4\20.0.0\classes.jar"
+        jumboMode="false"
+        revision="20.0.0"
+        sha1="8694693636ab36910c8100ce527c258ff3ebece0"/>
 
 </pre-dex-items>
