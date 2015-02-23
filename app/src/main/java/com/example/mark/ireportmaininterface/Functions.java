@@ -139,6 +139,7 @@ public class Functions extends AsyncTask<String, Void, String>
             nameValuePairs.add(new BasicNameValuePair("rpt_lat", String.valueOf(ReportActivity.latitude)));
             nameValuePairs.add(new BasicNameValuePair("rpt_long", String.valueOf(ReportActivity.longitude)));
             nameValuePairs.add(new BasicNameValuePair("rpt_desc", ReportActivity.captionText.getText().toString()));
+            nameValuePairs.add(new BasicNameValuePair("rpt_categ", ReportActivity.selectedAgency));
             nameValuePairs.add(new BasicNameValuePair("rpt_image", ReportActivity.image_str));
             httpPost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
             httpClient.execute(httpPost);
