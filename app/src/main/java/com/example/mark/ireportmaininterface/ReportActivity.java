@@ -72,7 +72,7 @@ public class ReportActivity extends Activity {
     ArrayList<String> selectItems;
 
     int sI = -1;
-    int selectedItem;
+    public static String selectedAgency;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -172,6 +172,7 @@ public class ReportActivity extends Activity {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
                 Toast.makeText(ReportActivity.this, String.valueOf(agencyItems[sI]), Toast.LENGTH_SHORT).show();//TEST
+                selectedAgency = String.valueOf(agencyItems[sI]);
             }
         });
         btnCategory.setOnClickListener(new View.OnClickListener() {
