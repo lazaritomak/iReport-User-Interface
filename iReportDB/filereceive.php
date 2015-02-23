@@ -17,11 +17,12 @@ $rpt_lat = $_POST["rpt_lat"];
 $rpt_long = $_POST["rpt_long"];
 $rpt_desc = $_POST["rpt_desc"];
 $rpt_image = $_POST["rpt_image"];
+$rpt_categ = $_POST["rpt_categ"];
 $rpt_status = "pending";
 $rpt_date = date('Y-m-d');
 
 $filename="androidmessages.html";
-file_put_contents($filename,$rpt_id."<br />".$rpt_username."<br />".$rpt_lat."<br />".$rpt_long."<br />".$rpt_desc."<br />".$rpt_image."<br />".$rpt_date);
+file_put_contents($filename,$rpt_id."<br />".$rpt_username."<br />".$rpt_lat."<br />".$rpt_long."<br />".$rpt_desc."<br />".$rpt_image."<br />".$rpt_date."<br />".$rpt_categ);
 
 $host = "localhost";
 $user = "root";
@@ -30,9 +31,9 @@ $database = "ireportdb";
 $mysqli = new mysqli($host, $user, $password, $database);
 
 //INSERT reports
-if ($stmt = $mysqli->prepare("INSERT INTO tbl_reports VALUES (?, ?, ?, ?, ?, ?, ?)"))
+if ($stmt = $mysqli->prepare("INSERT INTO tbl_reports VALUES (?, ?, ?, ?, ?, ?, ?, ?)"))
 {
-	$stmt->bind_param("sssssss", $rpt_id, $rpt_username, $rpt_desc, $rpt_lat, $rpt_long, $rpt_date, $rpt_status);
+	$stmt->bind_param("ssssssss", $rpt_id, $rpt_username, $rpt_desc, $rpt_lat, $rpt_long, $rpt_date, $rpt_status, $rpt_categ);
 	$stmt->execute();
 	echo "Your Report has been sent to the cops";
 }
