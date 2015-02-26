@@ -46,7 +46,7 @@ public class Functions extends AsyncTask<String, Void, String>
     Context context;
     Button btnCategory;
     //DONT FORGET TO CHANGE SERVER IP AHUEHUEHUE
-    static String ipadd = "192.168.100.7";
+    static String ipadd = "192.168.100.18";
     public static String link = "http://"+ipadd+"/iReportDB/controller.php";//ip address/localhost
     public Functions (Context context)
     {

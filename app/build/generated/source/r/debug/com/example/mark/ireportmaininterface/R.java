@@ -45,6 +45,7 @@ public final class R {
         public static final int radiolayout=0x7f080014;
         public static final int register=0x7f080019;
         public static final int selectCategory=0x7f08001d;
+        public static final int sign_out=0x7f080025;
         public static final int textView=0x7f080020;
         public static final int textView1=0x7f080022;
         public static final int textView2=0x7f080003;
@@ -69,8 +70,9 @@ public final class R {
         public static final int create_account=0x7f070000;
         public static final int create_report=0x7f070001;
         public static final int login_menu=0x7f070002;
-        public static final int report=0x7f070003;
-        public static final int view_status=0x7f070004;
+        public static final int main_activity_actions=0x7f070003;
+        public static final int report=0x7f070004;
+        public static final int view_status=0x7f070005;
     }
     public static final class string {
         public static final int Back=0x7f050000;
