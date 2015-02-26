@@ -257,49 +257,70 @@ public class ReportActivity extends Activity {
             });
             builder.show();
         }
+        else if (image_str.length() <= 0)
+        {
+            SimpleAlert("No media provided", "Please provide a picture for proof", "OK");
+        }
+        else if (captionText.length() <= 0)
+        {
+            SimpleAlert("No Description Provided", "Please provide a description of the incident and kindly include the location", "OK");
+        }
         else
         {
-            sendReport();
+            if (sI < 0)
+            {
+                AlertDialog.Builder builder = new AlertDialog.Builder(this);
+                builder.setTitle("No category selected");
+                builder.setMessage("Your report will be defaultly set as Crime. Do you want to set the category?");
+                builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        final AlertDialog.Builder builder = SetCategory();
+                        alertDialog = builder.create();
+                        alertDialog.show();
+                    }
+                });
+                builder.setNegativeButton("No, send it now", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        sendReport();
+                    }
+                });
+                builder.show();
+            }
+            else
+            {
+                sendReport();
+            }
         }
     }
+
+    private void SimpleAlert(String title, String message, String buttonMessage) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle(title);
+        builder.setMessage(message);
+        builder.setPositiveButton(buttonMessage, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+            }
+        });
+        builder.show();
+    }
+
     private void sendReport()
     {
         try//success
         {
-            AlertDialog alertDialog = new AlertDialog.Builder(ReportActivity.this).create();
-            alertDialog.setTitle("Success");
-            alertDialog.setMessage(new Functions(ReportActivity.this).execute("uploadData").get());
-            alertDialog.setButton("OK", new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialogInterface, int i) {
-                }
-            });
-            alertDialog.show();
+            SimpleAlert("Success", new Functions(ReportActivity.this).execute("uploadData").get(), "OK");
         }
         //Exceptions
         catch (InterruptedException e)
         {
-            AlertDialog alertDialog = new AlertDialog.Builder(ReportActivity.this).create();
-            alertDialog.setTitle("Message");
-            alertDialog.setMessage("Your report did not send successfully");
-            alertDialog.setButton("Oh Shit", new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialogInterface, int i) {
-                }
-            });
-            alertDialog.show();
+            SimpleAlert("Unsuccessful", "Your Report did not send successfull", "Damn");
         }
         catch (ExecutionException e)
         {
-            AlertDialog alertDialog = new AlertDialog.Builder(ReportActivity.this).create();
-            alertDialog.setTitle("Message");
-            alertDialog.setMessage("Your report did not send successfully");
-            alertDialog.setButton("Oh Shit", new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialogInterface, int i) {
-                }
-            });
-            alertDialog.show();
+            SimpleAlert("Unsuccessful", "Your report did not send successfully", "Damn");
         }
     }
     private String generateFileName()//generate file name with random shit
