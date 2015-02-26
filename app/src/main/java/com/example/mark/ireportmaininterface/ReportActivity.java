@@ -70,7 +70,6 @@ public class ReportActivity extends Activity {
         setContentView(R.layout.activity_report);
 
         //Widget initialization
-        final AlertDialog.Builder builder;
         btnAction = (Button)findViewById(R.id.btnSelectPhoto);
         btnSubmit = (Button)findViewById(R.id.btnSubmit);
         btnCategory = (Button)findViewById(R.id.selectCategory);
@@ -112,6 +111,23 @@ public class ReportActivity extends Activity {
                 submitReport();
             }
         });
+
+        final AlertDialog.Builder builder = SetCategory();
+        btnCategory.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                alertDialog = builder.create();
+                alertDialog.show();
+            }
+        });
+        latitude = gps.getLatitude();
+        longitude = gps.getLongitude();
+        Log.d("Lat", String.valueOf(latitude));
+        Log.d("Long", String.valueOf(longitude));
+    }
+
+    private AlertDialog.Builder SetCategory() {
+        final AlertDialog.Builder builder;
         final CharSequence[] agencyItems = {//add tag stuff here
                 "Crime",
                 "Health",
@@ -151,30 +167,24 @@ public class ReportActivity extends Activity {
             }
         });*/
         builder.setSingleChoiceItems(agencyItems, sI, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                        sI = i;
-                        Toast.makeText(ReportActivity.this, String.valueOf(sI), Toast.LENGTH_SHORT).show();
-                    }
-                });
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                sI = i;
+                Toast.makeText(ReportActivity.this, String.valueOf(sI), Toast.LENGTH_SHORT).show();
+            }
+        });
         builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
-                Toast.makeText(ReportActivity.this, String.valueOf(agencyItems[sI]), Toast.LENGTH_SHORT).show();//TEST
-                selectedAgency = String.valueOf(agencyItems[sI]);
+                try {
+                    Toast.makeText(ReportActivity.this, String.valueOf(agencyItems[sI]), Toast.LENGTH_SHORT).show();//TEST
+                    selectedAgency = String.valueOf(agencyItems[sI]);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
             }
         });
-        btnCategory.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                alertDialog = builder.create();
-                alertDialog.show();
-            }
-        });
-        latitude = gps.getLatitude();
-        longitude = gps.getLongitude();
-        Log.d("Lat", String.valueOf(latitude));
-        Log.d("Long", String.valueOf(longitude));
+        return builder;
     }
 
     @Override
@@ -242,8 +252,7 @@ public class ReportActivity extends Activity {
             AlertDialog.Builder builder = new AlertDialog.Builder(this);
             builder.setTitle("GPS / Network not enabled");
             builder.setMessage("Your Phone cannot detect your GPS Location, Please include the exact location of the area of the incident");
-            builder.setPositiveButton("Already Included", new DialogInterface.OnClickListener()
-            {
+            builder.setPositiveButton("Already Included", new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialogInterface, int i) {
                     sendReport();
