@@ -199,4 +199,10 @@ public class GPSTracker extends Service implements LocationListener {
         return null;
     }
 
+    public void openGPSSettings()
+    {
+        Intent intent = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
+        mContext.startActivity(intent);
+    }
+
 }
