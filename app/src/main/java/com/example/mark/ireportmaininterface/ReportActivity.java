@@ -43,9 +43,7 @@ public class ReportActivity extends Activity {
     //session objects
     public static final String PREFS_NAME = "PrefsFile";
     public static String username;
-    public static boolean isLoggedIn;
-    public static Bitmap selectedBitmap;
-    public static String image_str;
+    public static String image_str = "";
     //Interface objects
     ImageView viewImage;
     Button btnAction;
