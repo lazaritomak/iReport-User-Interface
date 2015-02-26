@@ -40,13 +40,11 @@ public class Functions extends AsyncTask<String, Void, String>
 {
     URLConnection connection = null;
 
-//    AlertDialog.Builder alertDialog; //nope
     private ProgressDialog pd;
     String command;
     Context context;
-    Button btnCategory;
-    //DONT FORGET TO CHANGE SERVER IP AHUEHUEHUE
     static String ipadd = "192.168.100.18";
+    public static String serverIP = ipadd;
     public static String link = "http://"+ipadd+"/iReportDB/controller.php";//ip address/localhost
     public Functions (Context context)
     {

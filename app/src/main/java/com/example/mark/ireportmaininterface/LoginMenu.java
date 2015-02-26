@@ -118,6 +118,7 @@ public class LoginMenu extends Activity {
 
         //gets ip address
 //        ipAddDisp.setText(getIpAddress());
+        ipAddDisp.setText(Functions.serverIP);
     }
     private String getIpAddress(){
         String ip = "";
