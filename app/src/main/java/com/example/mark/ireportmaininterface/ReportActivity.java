@@ -233,14 +233,7 @@ public class ReportActivity extends Activity {
                 else if (options[item].equals("Sign Out"))
                 {
                     //Load session states and current user who signed in previously, when not signed out.
-                    SharedPreferences mySession = getSharedPreferences(PREFS_NAME, 0);
-                    SharedPreferences.Editor sessionEditor = mySession.edit();
-                    sessionEditor.putBoolean("sessionState", false);
-                    sessionEditor.putString("sessionUser", "");
-                    sessionEditor.commit();
-                    //Go to main
-                    Intent mainMenu = new Intent(ReportActivity.this, LoginMenu.class);
-                    startActivity(mainMenu);
+                    SignOut();
                 }
                 else if (options[item].equals("Cancel"))
                 {
@@ -395,6 +388,18 @@ public class ReportActivity extends Activity {
             tfe.printStackTrace();
             Log.d("XML TransformerException", tfe.getMessage());
         }
+    }
+    private void SignOut()
+    {
+        //Load session states and current user who signed in previously, when not signed out.
+        SharedPreferences mySession = getSharedPreferences(PREFS_NAME, 0);
+        SharedPreferences.Editor sessionEditor = mySession.edit();
+        sessionEditor.putBoolean("sessionState", false);
+        sessionEditor.putString("sessionUser", "");
+        sessionEditor.commit();
+        //Go to main
+        Intent mainMenu = new Intent(ReportActivity.this, LoginMenu.class);
+        startActivity(mainMenu);
     }
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
