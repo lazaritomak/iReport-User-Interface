@@ -47,8 +47,18 @@
                 qualifiers=""
                 type="layout" />
             <file
+                name="activity_view_status"
+                path="C:\Users\Mark\Documents\GitHub\iReport-User-Interface\app\src\main\res\layout\activity_view_status.xml"
+                qualifiers=""
+                type="layout" />
+            <file
                 name="prompt"
                 path="C:\Users\Mark\Documents\GitHub\iReport-User-Interface\app\src\main\res\layout\prompt.xml"
+                qualifiers=""
+                type="layout" />
+            <file
+                name="view_reports"
+                path="C:\Users\Mark\Documents\GitHub\iReport-User-Interface\app\src\main\res\layout\view_reports.xml"
                 qualifiers=""
                 type="layout" />
             <file
@@ -67,8 +77,18 @@
                 qualifiers=""
                 type="menu" />
             <file
+                name="main_activity_actions"
+                path="C:\Users\Mark\Documents\GitHub\iReport-User-Interface\app\src\main\res\menu\main_activity_actions.xml"
+                qualifiers=""
+                type="menu" />
+            <file
                 name="report"
                 path="C:\Users\Mark\Documents\GitHub\iReport-User-Interface\app\src\main\res\menu\report.xml"
+                qualifiers=""
+                type="menu" />
+            <file
+                name="view_status"
+                path="C:\Users\Mark\Documents\GitHub\iReport-User-Interface\app\src\main\res\menu\view_status.xml"
                 qualifiers=""
                 type="menu" />
             <file
@@ -152,26 +172,6 @@
                 <dimen name="activity_horizontal_margin" >64dp
                 </dimen>
             </file>
-            <file
-                name="activity_view_status"
-                path="C:\Users\Mark\Documents\GitHub\iReport-User-Interface\app\src\main\res\layout\activity_view_status.xml"
-                qualifiers=""
-                type="layout" />
-            <file
-                name="view_status"
-                path="C:\Users\Mark\Documents\GitHub\iReport-User-Interface\app\src\main\res\menu\view_status.xml"
-                qualifiers=""
-                type="menu" />
-            <file
-                name="view_reports"
-                path="C:\Users\Mark\Documents\GitHub\iReport-User-Interface\app\src\main\res\layout\view_reports.xml"
-                qualifiers=""
-                type="layout" />
-            <file
-                name="main_activity_actions"
-                path="C:\Users\Mark\Documents\GitHub\iReport-User-Interface\app\src\main\res\menu\main_activity_actions.xml"
-                qualifiers=""
-                type="menu" />
         </source>
         <source path="C:\Users\Mark\Documents\GitHub\iReport-User-Interface\app\build\generated\res\rs\debug" />
         <source path="C:\Users\Mark\Documents\GitHub\iReport-User-Interface\app\build\generated\res\generated\debug" />
