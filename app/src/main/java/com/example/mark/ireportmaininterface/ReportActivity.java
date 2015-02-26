@@ -7,6 +7,7 @@ import android.media.ThumbnailUtils;
 import android.os.Bundle;
 import android.util.Base64;
 import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 //custom imports
 import android.app.AlertDialog;
@@ -78,7 +79,6 @@ public class ReportActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_report);
-
 
         //Widget initialization
         final AlertDialog.Builder builder;
@@ -191,14 +191,16 @@ public class ReportActivity extends Activity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.report, menu);
-        return true;
+        // Inflate the menu items for use in the action bar
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.main_activity_actions, menu);
+        return super.onCreateOptionsMenu(menu);
     }
 
     String picFileName;
 
     private void selectAction(){
-        final CharSequence[] options = {"Take Photo", /*"Take Video",*/ "View Report Status","Choose From Gallery", "Sign Out" ,"Cancel"};//Initialize options inside the builder dialog
+        final CharSequence[] options = {"Take Photo", /*"Take Video",*/ "View Report Status","Choose From Gallery", /*"Sign Out" ,*/ "Cancel"};//Initialize options inside the builder dialog
         AlertDialog.Builder builder = new AlertDialog.Builder(ReportActivity.this);
         builder.setTitle("Select Action!");
         builder.setItems(options, new DialogInterface.OnClickListener(){
@@ -490,11 +492,16 @@ public class ReportActivity extends Activity {
         // Handle action bar item clicks here. The action bar will
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-        if (id == R.id.action_settings) {
-            return true;
+        switch (item.getItemId()) {
+            case R.id.action_settings:
+                gps.openGPSSettings();
+                return true;
+            case R.id.sign_out:
+                SignOut();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
         }
-        return super.onOptionsItemSelected(item);
     }
 }
 
