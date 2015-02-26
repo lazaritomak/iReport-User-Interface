@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+<item android:id="@+id/action_settings"
+    android:title="GPS Settings"
+    android:orderInCategory="100"
+    android:showAsAction="never"/>
+<item android:id="@+id/sign_out"
+    android:title="Sign Out"
+    android:orderInCategory="100"
+    android:showAsAction="never"/>
+
+</menu><!-- From: file:/C:/Users/Mark/Documents/GitHub/iReport-User-Interface/app/src/main/res/menu/main_activity_actions.xml -->
