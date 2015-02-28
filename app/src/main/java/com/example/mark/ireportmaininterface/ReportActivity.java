@@ -291,6 +291,7 @@ public class ReportActivity extends Activity {
         builder.setNegativeButton("No, send it now", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
+                selectedAgency = agencyItems[0];
                 sendReport();
             }
         });
