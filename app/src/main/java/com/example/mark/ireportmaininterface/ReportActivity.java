@@ -207,17 +207,11 @@ public class ReportActivity extends Activity {
             public void onClick(DialogInterface dialog, int item) {
                 if (options[item].equals("Take Photo"))
                 {
-                    Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-//                    File f = new File(android.os.Environment.getExternalStorageDirectory(), "temp.jpg");
-                    File f = new File(android.os.Environment.getExternalStorageDirectory(), picFileName = generateFileName());
-                    Toast.makeText(ReportActivity.this, f.getAbsolutePath(), Toast.LENGTH_SHORT).show();
-                    intent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(f));
-                    startActivityForResult(intent, 1);//1 is take photo
+                    GetCameraPhoto();
                 }
                 else if (options[item].equals("View Report Status"))//Report Status Viewing
                 {
-                    Intent mainMenu = new Intent(ReportActivity.this, ViewStatus.class);
-                    startActivity(mainMenu);
+                    ViewReportStatus();
                 }
 /*                else if (options[item].equals("Take Video")) //No encoding, my god
                 {
@@ -228,8 +222,7 @@ public class ReportActivity extends Activity {
                 }*/
                 else if (options[item].equals("Choose From Gallery"))
                 {
-                    Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-                    startActivityForResult(intent, 2);//2 selects from gallery
+                    GetGalleryPhoto();
                 }
                 else if (options[item].equals("Sign Out"))
                 {
@@ -244,6 +237,26 @@ public class ReportActivity extends Activity {
         });
         builder.show();
     }
+
+    private void ViewReportStatus() {
+        Intent mainMenu = new Intent(this, ViewStatus.class);
+        startActivity(mainMenu);
+    }
+
+    private void GetGalleryPhoto() {
+        Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+        startActivityForResult(intent, 2);//2 selects from gallery
+    }
+
+    private void GetCameraPhoto() {
+        Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+//                    File f = new File(android.os.Environment.getExternalStorageDirectory(), "temp.jpg");
+        File f = new File(Environment.getExternalStorageDirectory(), picFileName = generateFileName());
+        Toast.makeText(this, f.getAbsolutePath(), Toast.LENGTH_SHORT).show();
+        intent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(f));
+        startActivityForResult(intent, 1);//1 is take photo
+    }
+
     private void submitReport()
     {
         //new Functions(this).execute("insertReport");
