@@ -82,16 +82,13 @@ public class LoginMenu extends Activity {
                 {
                     SimpleAlert("Login Error", "Enter Username and Password", "OK");
                 }
-                else//if successful
+                else if ((txtUsername.getText().toString().equals(message)))//if successful
                 {
-                    ReportActivity.username = txtUsername.getText().toString();
-                    SharedPreferences mySession = getSharedPreferences(ReportActivity.PREFS_NAME, 0);
-                    SharedPreferences.Editor sessionEditor = mySession.edit();
-                    sessionEditor.putBoolean("sessionState", true);
-                    sessionEditor.putString("sessionUser", txtUsername.getText().toString());
-                    sessionEditor.commit();
-                    Intent nextStep = new Intent(LoginMenu.this, ReportActivity.class);
-                    startActivity(nextStep);
+                    SignIn();
+                }
+                else//if some unknown error occurred because fuck this shit
+                {
+                    SimpleAlert("Login Error", "An unknown error occurred, Please try again", "OK");
                 }
                 Log.d("END", "END OF LINE LOGIN");
             }
