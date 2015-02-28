@@ -110,12 +110,8 @@ public class Functions extends AsyncTask<String, Void, String>
             HttpClient httpClient = new DefaultHttpClient();
             HttpPost httpPost = new HttpPost(postReceiverUrl);
             List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>(2);
-            nameValuePairs.add(new BasicNameValuePair("rpt_username", ReportActivity.username));
-            nameValuePairs.add(new BasicNameValuePair("rpt_lat", String.valueOf(ReportActivity.latitude)));
-            nameValuePairs.add(new BasicNameValuePair("rpt_long", String.valueOf(ReportActivity.longitude)));
-            nameValuePairs.add(new BasicNameValuePair("rpt_desc", ReportActivity.captionText.getText().toString()));
-            nameValuePairs.add(new BasicNameValuePair("rpt_categ", ReportActivity.selectedAgency));
-            nameValuePairs.add(new BasicNameValuePair("rpt_image", ReportActivity.image_str));
+            //data needed
+            NameValuePairsData(nameValuePairs);
             httpPost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
             httpClient.execute(httpPost);
             successful = true;
@@ -125,6 +121,16 @@ public class Functions extends AsyncTask<String, Void, String>
             successful = false;
         }
         return successful;
+    }
+
+    private void NameValuePairsData(List<NameValuePair> nameValuePairs) {
+    //add new data here
+        nameValuePairs.add(new BasicNameValuePair("rpt_username", ReportActivity.username));
+        nameValuePairs.add(new BasicNameValuePair("rpt_lat", String.valueOf(ReportActivity.latitude)));
+        nameValuePairs.add(new BasicNameValuePair("rpt_long", String.valueOf(ReportActivity.longitude)));
+        nameValuePairs.add(new BasicNameValuePair("rpt_desc", ReportActivity.captionText.getText().toString()));
+        nameValuePairs.add(new BasicNameValuePair("rpt_categ", ReportActivity.selectedAgency));
+        nameValuePairs.add(new BasicNameValuePair("rpt_image", ReportActivity.image_str));
     }
 
     @Override
@@ -143,9 +149,6 @@ public class Functions extends AsyncTask<String, Void, String>
         else if (command == "insertUser")
         {
             CreateAccount.errorlabel.setText(result);
-        }
-        else if (command == "getAccountData")
-        {
         }
         pd.dismiss();
     }
