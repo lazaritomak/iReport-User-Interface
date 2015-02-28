@@ -33,7 +33,7 @@ Minor TODO list:
 
 1. Thumbnail for video ✔
 2. Limit video duration ✘
-3. Validate text content
+3. Validate text content ✔
 4. Change image storage to internal ✔
 5. Increase video thumbnail size.✔
 6. Change video thumbnail orientation ✔
