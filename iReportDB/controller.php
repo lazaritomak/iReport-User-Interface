@@ -41,6 +41,9 @@ switch ($command)
 	case 'viewStatus':
 	viewStatus();
 	break;
+	case 'testConnection':
+	testConnection();
+	break;
 	default;
 	echo "Unknown Command";
 	break;
@@ -92,9 +95,8 @@ function setUserInsertVariables()//tbl_user insertion fields
 		$user_password = $_POST['user_password'];
 	}
 }
-function InsertReport()
+function InsertReport()//obsolete, new insert method is found in filreceive.php
 {
-	// $sql = "INSERT INTO tbl_reports VALUES('".$_POST['report_id']."' , '".$_POST['report_username']."' , '".$_POST['report_murl']."' , '".$_POST['report_capt']."' , '".$_POST['report_loc']."');";
 	$sql = "INSERT INTO tbl_reports VALUES('".$_POST['report-id']."' , '".$_POST['report_username']."' , '".$_POST['report_capt']."' , '".$_POST['report_lat']."' , '".$_POST['report_long']."');";
 	$q = mysql_query($sql);
 	echo $q;
@@ -109,6 +111,10 @@ function InsertUser()
 		$stmt->bind_param("sss", $_POST['user_email'], $_POST['user_name'], $_POST['user_password']);
 		$stmt->execute();
 		echo "\n User Has been Added";
+	}
+	else
+	{
+		$mysqli->error;
 	}
 }
 function GetAccountData()
@@ -129,25 +135,21 @@ function GetAccountData()
 	{
 		echo $mysqli->error;
 	}
-
-/* 	$sql = "SELECT user_name FROM tbl_users WHERE user_name = '".$_POST['user_name']."' AND user_password = '".$_POST['user_password']."';";
-	$q = mysql_query($sql);
-	//$values = mysql_fetch_array($q);
-	while ($result = mysql_fetch_assoc($q))
-	{
-		$r = implode(",",$result);
-		echo $r;
-	} */
 }
 function viewStatus()
 {
-	$sql = "SELECT * FROM tbl_reports WHERE reportusername = '".$_POST['user_name']."';";
+	$sql = "SELECT reportdate, reportprogress, reportmediacaption FROM tbl_reports WHERE reportusername = '".$_POST['user_name']."' ORDER BY reportdate DESC;";
 	$q = mysql_query($sql);
 	
 	while ($row = mysql_fetch_array($q))
 	{
-		echo $row['reportid']." / ".$row['reportdate']." / ".$row['reportprogress'].";";
+		echo $row['reportdate']." / ".$row['reportprogress']." / ".substr($row['reportmediacaption'], 0 , 30)."...".";";
 	}
+}
+
+function testConnection()
+{
+	echo "1";
 }
 
 ?>
