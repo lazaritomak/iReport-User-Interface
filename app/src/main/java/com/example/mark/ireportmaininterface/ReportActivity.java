@@ -279,10 +279,6 @@ public class ReportActivity extends Activity {
             });
             builder.show();
         }
-        else if (image_str.length() <= 0)
-        {
-            SimpleAlert("No media provided", "Please provide a picture for proof", "OK");
-        }
         else if (captionText.length() <= 0)
         {
             SimpleAlert("No Description Provided", "Please provide a description of the incident and kindly include the location", "OK");
@@ -306,6 +302,25 @@ public class ReportActivity extends Activity {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
                         sendReport();
+                    }
+                });
+                builder.show();
+            }
+            else if (image_str.length() <= 0)
+            {
+                AlertDialog.Builder builder = new AlertDialog.Builder(this);
+                builder.setTitle("No image provided");
+                builder.setMessage("Please take a picture of the incident or upload one from your gallery?");
+                builder.setPositiveButton("Take Picture", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        GetCameraPhoto();
+                    }
+                });
+                builder.setNegativeButton("Upload From Gallery", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        GetGalleryPhoto();
                     }
                 });
                 builder.show();
