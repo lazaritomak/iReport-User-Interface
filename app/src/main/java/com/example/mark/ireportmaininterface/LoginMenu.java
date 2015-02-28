@@ -43,6 +43,8 @@ public class LoginMenu extends Activity {
         txtUsername = (EditText) findViewById(R.id.username);
         txtPassword = (EditText) findViewById(R.id.password);
 
+        ipAddDisp.setText(Functions.ServerAddress);
+
         SharedPreferences mySession = getSharedPreferences(ReportActivity.PREFS_NAME, 0);
         if (mySession.getBoolean("sessionState", false) == true)
         {
@@ -59,7 +61,6 @@ public class LoginMenu extends Activity {
                 try
                 {
                     message = new Functions(LoginMenu.this).execute("getAccountData").get();
-                    ToastMessage(message);
                 } catch (InterruptedException e)
                 {
                     e.printStackTrace();
@@ -72,7 +73,6 @@ public class LoginMenu extends Activity {
                 if (!(txtUsername.getText().toString().equals(message)))
                 //if (!yes) //testing
                 {
-                    //start
                     SimpleAlert("Login Error", "Invalid Username/Password", "OK");
                 }
                 else if (txtUsername.length() == 0 || txtPassword.length() == 0)
