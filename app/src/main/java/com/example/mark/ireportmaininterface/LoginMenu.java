@@ -72,7 +72,9 @@ public class LoginMenu extends Activity {
                     e.printStackTrace();
                     SimpleAlert("Error", "Cannot retrieve account", "OK");
                 }
+                //boolean yes = true;
                 //if (!yes) //testing
+                if (!(txtUsername.getText().toString().equals(message)))
                 {
                     SimpleAlert("Login Error", "Invalid Username/Password", "OK");
                 }
