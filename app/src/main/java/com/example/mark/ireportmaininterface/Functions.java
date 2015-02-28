@@ -89,7 +89,6 @@ public class Functions extends AsyncTask<String, Void, String>
         return result;
     }
 
-    public boolean generateHttpPostData()
     public boolean GenerateHttpPostData()
     {
         String TAG = "ReportActivity.java";
@@ -193,7 +192,6 @@ public class Functions extends AsyncTask<String, Void, String>
             }
             else if (command == "uploadData")
             {
-                if (generateHttpPostData())
                 if (GenerateHttpPostData())
                 {
                     result = "Your Report has been sent to the cops";
