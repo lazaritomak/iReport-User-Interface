@@ -68,10 +68,18 @@ public class LoginMenu extends Activity {
                 }
                 boolean yes = true;
 
-                if (txtUsername.getText().toString().equals(message))//if successful
+                if (!(txtUsername.getText().toString().equals(message)))
                 //if (!yes) //testing
                 {
                     //start
+                    SimpleAlert("Login Error", "Invalid Username/Password", "OK");
+                }
+                else if (txtUsername.length() == 0 || txtPassword.length() == 0)
+                {
+                    SimpleAlert("Login Error", "Enter Username and Password", "OK");
+                }
+                else//if successful
+                {
                     ReportActivity.username = txtUsername.getText().toString();
                     SharedPreferences mySession = getSharedPreferences(ReportActivity.PREFS_NAME, 0);
                     SharedPreferences.Editor sessionEditor = mySession.edit();
@@ -80,30 +88,6 @@ public class LoginMenu extends Activity {
                     sessionEditor.commit();
                     Intent nextStep = new Intent(LoginMenu.this, ReportActivity.class);
                     startActivity(nextStep);
-                }
-                else if (txtUsername.length() == 0 || txtPassword.length() == 0)
-                {
-                    AlertDialog alertDialog = new AlertDialog.Builder(LoginMenu.this).create();
-                    alertDialog.setTitle("Login Error");
-                    alertDialog.setMessage("Enter Username and Password");
-                    alertDialog.setButton("OK", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialogInterface, int i) {
-                        }
-                    });
-                    alertDialog.show();
-                }
-                else
-                {
-                    AlertDialog alertDialog = new AlertDialog.Builder(LoginMenu.this).create();
-                    alertDialog.setTitle("Login Error");
-                    alertDialog.setMessage("Invalid Username/Password");
-                    alertDialog.setButton("OK", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialogInterface, int i) {
-                        }
-                    });
-                    alertDialog.show();
                 }
                 Log.d("END", "END OF LINE LOGIN");
             }
