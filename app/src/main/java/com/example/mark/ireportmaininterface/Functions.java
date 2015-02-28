@@ -155,40 +155,15 @@ public class Functions extends AsyncTask<String, Void, String>
             Log.v("Command", command);
             if (command == "insertReport")//Not acually being used, but preserve in case of failure
             {
-                connection = getConnection(link);
-                String logs = "";
-                logs="&command=" + URLEncoder.encode("insertReport","UTF-8");
-                logs+="&report_id=" + URLEncoder.encode(generateReportID(),"UTF-8");
-                logs+="&report_username=" + URLEncoder.encode("user", "UTF-8");
-                logs+="$report_lat=" + String.valueOf(ReportActivity.latitude);
-                logs+="$report_long=" + String.valueOf(ReportActivity.longitude);
-//                logs+="&report_murl=" + URLEncoder.encode("url","UTF-8");
-                logs+="&report_capt=" + URLEncoder.encode(ReportActivity.captionText.getText().toString(),"UTF-8");
-                Log.v("Functions", "report_capt Successful");
-
-                result = getResult(connection, logs);
-                Log.v("Functions", "Report Insert Successful Successful");
+                result = InsertReport();
             }
             else if (command == "insertUser")
             {
-                connection = getConnection(link);
-                String logs = "";
-                logs="&command=" + URLEncoder.encode("insertUser","UTF-8");
-                logs+="&user_email=" + URLEncoder.encode(CreateAccount.txtemailadd.getText().toString(),"UTF-8");
-                logs+="&user_name=" + URLEncoder.encode(CreateAccount.txtusername.getText().toString(), "UTF-8");
-                logs+="&user_password=" + URLEncoder.encode(CreateAccount.txtpassword.getText().toString(),"UTF-8");
-                result = getResult(connection, logs);
-                Log.v("Functions", "User Insert Successful");
+                result = AddUser();
             }
             else if (command == "getAccountData")
             {
-                connection = getConnection(link);
-                String logs = "";
-                logs = "&command=" + URLEncoder.encode("getAccountData", "UTF-8");
-                logs += "&user_name=" + URLEncoder.encode(LoginMenu.txtUsername.getText().toString(), "UTF-8");
-                logs += "&user_password="+ URLEncoder.encode(LoginMenu.txtPassword.getText().toString(), "UTF-8");
-                result = getResult(connection, logs);
-                Log.d("Sql Result", result);
+                result = GetAccountData();
             }
             else if (command == "uploadData")
             {
@@ -203,11 +178,7 @@ public class Functions extends AsyncTask<String, Void, String>
             }
             else if (command == "viewStatus")
             {
-                connection = getConnection(link);
-                String logs = "";
-                logs = "&command=" + URLEncoder.encode("viewStatus", "UTF-8");
-                logs += "&user_name=" + URLEncoder.encode(ReportActivity.username, "UTF-8");
-                result = getResult(connection, logs);
+                result = ViewStatus();
             }
             else if (command == "testConnection")
             {
@@ -220,19 +191,60 @@ public class Functions extends AsyncTask<String, Void, String>
         }
         catch(Exception e)
         {
-            result = "0";
             return result;
         }
     }
-    public String generateReportID()//temp lng to
-    {
-        String genID = "";
-        char[] numArrays = {'1','2','3','4','5','6','7','8','9','0'};
-        Random rand = new Random();
-        for (int i = 0; i < 5; i++)
-        {
-            genID += numArrays[rand.nextInt(numArrays.length)];
-        }
-        return genID;
+
+    private String ViewStatus() throws UnsupportedEncodingException {
+        String result = "";
+        connection = getConnection(link);
+        String logs = "";
+        logs = "&command=" + URLEncoder.encode("viewStatus", "UTF-8");
+        logs += "&user_name=" + URLEncoder.encode(ReportActivity.username, "UTF-8");
+        result = getResult(connection, logs);
+        return result;
+    }
+
+    private String GetAccountData() throws UnsupportedEncodingException {
+        String result = "";
+        connection = getConnection(link);
+        String logs = "";
+        logs = "&command=" + URLEncoder.encode("getAccountData", "UTF-8");
+        logs += "&user_name=" + URLEncoder.encode(LoginMenu.txtUsername.getText().toString(), "UTF-8");
+        logs += "&user_password="+ URLEncoder.encode(LoginMenu.txtPassword.getText().toString(), "UTF-8");
+        result = getResult(connection, logs);
+        Log.d("Sql Result", result);
+        return result;
+    }
+
+    private String AddUser() throws UnsupportedEncodingException {
+        String result = "";
+        connection = getConnection(link);
+        String logs = "";
+        logs="&command=" + URLEncoder.encode("insertUser", "UTF-8");
+        logs+="&user_email=" + URLEncoder.encode(CreateAccount.txtemailadd.getText().toString(),"UTF-8");
+        logs+="&user_name=" + URLEncoder.encode(CreateAccount.txtusername.getText().toString(), "UTF-8");
+        logs+="&user_password=" + URLEncoder.encode(CreateAccount.txtpassword.getText().toString(),"UTF-8");
+        result = getResult(connection, logs);
+        Log.v("Functions", "User Insert Successful");
+        return result;
+    }
+
+    private String InsertReport() throws UnsupportedEncodingException {
+        String result = "";
+        connection = getConnection(link);
+        String logs = "";
+        logs="&command=" + URLEncoder.encode("insertReport", "UTF-8");
+        //logs+="&report_id=" + URLEncoder.encode(generateReportID(),"UTF-8");
+        logs+="&report_username=" + URLEncoder.encode("user", "UTF-8");
+        logs+="$report_lat=" + String.valueOf(ReportActivity.latitude);
+        logs+="$report_long=" + String.valueOf(ReportActivity.longitude);
+//                logs+="&report_murl=" + URLEncoder.encode("url","UTF-8");
+        logs+="&report_capt=" + URLEncoder.encode(ReportActivity.captionText.getText().toString(),"UTF-8");
+        Log.v("Functions", "report_capt Successful");
+
+        result = getResult(connection, logs);
+        Log.v("Functions", "Report Insert Successful Successful");
+        return result;
     }
 }
