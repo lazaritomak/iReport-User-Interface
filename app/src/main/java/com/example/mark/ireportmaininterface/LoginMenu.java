@@ -59,6 +59,7 @@ public class LoginMenu extends Activity {
                 try
                 {
                     message = new Functions(LoginMenu.this).execute("getAccountData").get();
+                    ToastMessage(message);
                 } catch (InterruptedException e)
                 {
                     e.printStackTrace();
@@ -102,7 +103,21 @@ public class LoginMenu extends Activity {
 
         //gets ip address
 //        ipAddDisp.setText(getIpAddress());
-        ipAddDisp.setText(Functions.serverIP);
+    }
+    private void SimpleAlert(String title, String message, String buttonMessage) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle(title);
+        builder.setMessage(message);
+        builder.setPositiveButton(buttonMessage, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+            }
+        });
+        builder.show();
+    }
+    private void ToastMessage(String message)
+    {
+        Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
     }
     private String getIpAddress(){
         String ip = "";
