@@ -167,25 +167,11 @@ public class Functions extends AsyncTask<String, Void, String>
             }
             else if (command == "uploadData")
             {
-                if (GenerateHttpPostData())
-                {
-                    result = "Your Report has been sent to the cops";
-                }
-                else
-                {
-                    result = "Your report did not send successfully";
-                }
+                result = UploadData();
             }
             else if (command == "viewStatus")
             {
                 result = ViewStatus();
-            }
-            else if (command == "testConnection")
-            {
-                connection = getConnection(link);
-                String logs = "";
-                logs = "&command="+URLEncoder.encode("testConnection", "UTF-8");
-                result = getResult(connection, logs);
             }
             return result;
         }
@@ -193,6 +179,19 @@ public class Functions extends AsyncTask<String, Void, String>
         {
             return result;
         }
+    }
+
+    private String UploadData() {
+        String result = "";
+        if (GenerateHttpPostData())
+        {
+            result = "Your Report has been sent to the cops";
+        }
+        else
+        {
+            result = "Your report did not send successfully";
+        }
+        return result;
     }
 
     private String ViewStatus() throws UnsupportedEncodingException {
