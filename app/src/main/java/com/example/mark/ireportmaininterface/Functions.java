@@ -27,6 +27,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.io.UnsupportedEncodingException;
+import java.net.ConnectException;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
@@ -43,7 +44,7 @@ public class Functions extends AsyncTask<String, Void, String>
     private ProgressDialog pd;
     String command;
     Context context;
-    static String ipadd = "192.168.100.18";
+    static String ipadd = "192.168.15.10";
     public static String serverIP = ipadd;
     public static String link = "http://"+ipadd+"/iReportDB/controller.php";//ip address/localhost
     public Functions (Context context)
@@ -52,71 +53,47 @@ public class Functions extends AsyncTask<String, Void, String>
     }
     public URLConnection getConnection(String link)//Retrieve and connect to the url link
     {
-        URL url = null;
-        try//retrieves link from string
-        {
-            url = new URL(link);
-        }
-        catch (MalformedURLException e)
-        {
-            e.printStackTrace();
-            Log.v("getConnection", e.getMessage().toString());
-        }
         URLConnection connection = null;
-        try//opens the url link provided from the "link" variable
-        {
+        try {
+            URL url = null;
+            url = new URL(link);
+            connection = null;
+            Log.v("getConnection", "Connecting");
             connection = url.openConnection();
+            Log.v("getConnection", "Connected");
+            connection.setDoOutput(true);
+        } catch (IOException e) {
+            e.printStackTrace();
         }
-        catch(IOException e)
-        { e.printStackTrace();
-            Log.v("getConnection", e.getMessage().toString());
-        }
-        connection.setDoOutput(true);
         return connection;
     }
 
-    public String getResult(URLConnection connection, String logs){
-
+    public String getResult(URLConnection connection, String logs)
+    {
         String result="";
+        try {
+            OutputStreamWriter wr = null;
 
-        OutputStreamWriter wr = null;
-        try
-        {wr= new OutputStreamWriter(connection.getOutputStream());}
-        catch(IOException e)
-        {Log.v("getResult", e.getMessage().toString()); }
+            Log.v("Reader1", "Writing");
+            wr= new OutputStreamWriter(connection.getOutputStream());
+            wr.write(logs);
+            wr.flush();
 
-        try
-        {wr.write(logs); }
-        catch(IOException e)
-        {Log.v("getResult", e.getMessage().toString()); }
+            BufferedReader reader = null;
 
-        try
-        {wr.flush();}
-        catch(IOException e)
-        { Log.v("getResult", e.getMessage().toString()); }
+            reader = new BufferedReader(new InputStreamReader(connection.getInputStream()));
 
-        BufferedReader reader = null;
+            StringBuilder sb = new StringBuilder();
+            String line = null;
 
-        try
-        { reader = new BufferedReader(new InputStreamReader(connection.getInputStream()));}
-        catch(IOException e)
-        { Log.v("getResult", e.getMessage().toString());}
-
-        StringBuilder sb = new StringBuilder();
-        String line = null;
-
-        try
-        {
             while(((line = reader.readLine())!=null))
             {
                 sb.append(line);
             }
+            result = sb.toString();
+        } catch (IOException e) {
+            e.printStackTrace();
         }
-        catch(IOException e)
-        {
-            Log.v("getResult", e.getMessage().toString());
-        }
-        result = sb.toString();
 
         return result;
     }
@@ -181,6 +158,7 @@ public class Functions extends AsyncTask<String, Void, String>
         try
         {
             command = (String) strings[0];
+            Log.v("Command", command);
             if (command == "insertReport")//Not acually being used, but preserve in case of failure
             {
                 connection = getConnection(link);
@@ -237,10 +215,18 @@ public class Functions extends AsyncTask<String, Void, String>
                 logs += "&user_name=" + URLEncoder.encode(ReportActivity.username, "UTF-8");
                 result = getResult(connection, logs);
             }
+            else if (command == "testConnection")
+            {
+                connection = getConnection(link);
+                String logs = "";
+                logs = "&command="+URLEncoder.encode("testConnection", "UTF-8");
+                result = getResult(connection, logs);
+            }
             return result;
         }
         catch(Exception e)
         {
+            result = "0";
             return result;
         }
     }
