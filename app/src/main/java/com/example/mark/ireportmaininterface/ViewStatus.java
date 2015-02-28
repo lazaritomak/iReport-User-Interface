@@ -68,6 +68,17 @@ public class ViewStatus extends Activity {
         }
         return super.onOptionsItemSelected(item);
     }
+    private void SimpleAlert(String title, String message, String buttonMessage) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle(title);
+        builder.setMessage(message);
+        builder.setPositiveButton(buttonMessage, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+            }
+        });
+        builder.show();
+    }
     private void initializeList()
     {
         ListView lv;
