@@ -4,16 +4,10 @@ package com.example.mark.ireportmaininterface;
  * Created by Mark on 11/1/2014.
  */
 
-import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.Context;
-import android.content.DialogInterface;
-import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.util.Log;
-import android.widget.ArrayAdapter;
-import android.widget.Button;
-import android.widget.Toast;
 
 import org.apache.http.NameValuePair;
 import org.apache.http.client.HttpClient;
@@ -27,14 +21,11 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.io.UnsupportedEncodingException;
-import java.net.ConnectException;
-import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
 import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
 
 
 public class Functions extends AsyncTask<String, Void, String>
@@ -44,8 +35,8 @@ public class Functions extends AsyncTask<String, Void, String>
     private ProgressDialog pd;
     String command;
     Context context;
-    static String ipadd = "192.168.15.10";
-    public static String serverIP = ipadd;
+    private static String ipadd = "192.168.15.10";
+    public static String ServerAddress = ipadd;
     public static String link = "http://"+ipadd+"/iReportDB/controller.php";//ip address/localhost
     public Functions (Context context)
     {
