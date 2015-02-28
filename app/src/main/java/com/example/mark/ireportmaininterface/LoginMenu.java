@@ -100,10 +100,19 @@ public class LoginMenu extends Activity {
                 startActivity(regstep);
             }
         });
-
-        //gets ip address
-//        ipAddDisp.setText(getIpAddress());
     }
+
+    private void SignIn() {
+        ReportActivity.username = txtUsername.getText().toString();
+        SharedPreferences mySession = getSharedPreferences(ReportActivity.PREFS_NAME, 0);
+        SharedPreferences.Editor sessionEditor = mySession.edit();
+        sessionEditor.putBoolean("sessionState", true);
+        sessionEditor.putString("sessionUser", txtUsername.getText().toString());
+        sessionEditor.commit();
+        Intent nextStep = new Intent(this, ReportActivity.class);
+        startActivity(nextStep);
+    }
+
     private void SimpleAlert(String title, String message, String buttonMessage) {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle(title);
