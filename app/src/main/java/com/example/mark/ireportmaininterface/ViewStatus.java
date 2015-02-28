@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -25,6 +26,7 @@ public class ViewStatus extends Activity {
     String[] reportid;
     String[] reportdate;
     String[] reportprogress;
+    String[] reportmediacaption;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -87,18 +89,20 @@ public class ViewStatus extends Activity {
             //Split each record with ;
             resultArr = result.split(";");
             //Create arrays for report id, date, and progress
-            reportid = new String[resultArr.length];
             reportdate = new String[resultArr.length];
             reportprogress = new String[resultArr.length];
+            reportmediacaption = new String[resultArr.length];
             //Initialize the results to each of the array
+            Log.v("Working", String.valueOf(resultArr.length));
             for (int i = 0; i < resultArr.length; i++)
             {
                 st = new StringTokenizer(resultArr[i].toString(), "/");
-                reportid[i] = st.nextToken();
                 reportdate[i] = st.nextToken();
                 reportprogress[i] = st.nextToken();
+                reportmediacaption[i] = st.nextToken();
+                Log.v("Values", reportdate[i] + reportprogress[i] + reportmediacaption[i]);
                 map = new HashMap<String, String>();
-                map.put("Reports", reportid[i].toString() + " / "+  reportdate[i].toString() + " / " + reportprogress[i].toString());
+                map.put("Reports", reportdate[i] + " / " + reportprogress[i]+ " / "+ reportmediacaption[i]);
                 feedList.add(map);
             }
             SimpleAdapter simpleAdapter = new SimpleAdapter(ViewStatus.this , feedList, R.layout.activity_view_status, new String[]{"Reports"}, new int[]
