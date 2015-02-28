@@ -61,16 +61,17 @@ public class LoginMenu extends Activity {
                 try
                 {
                     message = new Functions(LoginMenu.this).execute("getAccountData").get();
-                } catch (InterruptedException e)
-                {
-                    e.printStackTrace();
-                } catch (ExecutionException e)
-                {
-                    e.printStackTrace();
                 }
-                boolean yes = true;
-
-                if (!(txtUsername.getText().toString().equals(message)))
+                catch (InterruptedException e)
+                {
+                    e.printStackTrace();
+                    SimpleAlert("Error", "Cannot retrieve account", "OK");
+                }
+                catch (ExecutionException e)
+                {
+                    e.printStackTrace();
+                    SimpleAlert("Error", "Cannot retrieve account", "OK");
+                }
                 //if (!yes) //testing
                 {
                     SimpleAlert("Login Error", "Invalid Username/Password", "OK");
