@@ -3,7 +3,6 @@ package com.example.mark.ireportmaininterface;
 import android.app.Activity;
 import android.content.SharedPreferences;
 import android.database.Cursor;
-import android.media.ThumbnailUtils;
 import android.os.Bundle;
 import android.util.Base64;
 import android.view.Menu;
@@ -34,9 +33,6 @@ import java.util.ArrayList;
 //XML creation namespaces
 import java.util.Random;
 import java.util.concurrent.ExecutionException;
-
-import org.w3c.dom.Document;
-import org.w3c.dom.Element;
 
 public class ReportActivity extends Activity {
 
@@ -119,18 +115,16 @@ public class ReportActivity extends Activity {
         //catList = (Spinner) findViewById(R.id.selectCategory);
         captionText = (EditText) findViewById(R.id.captionText);
     }
-
+    final String[] agencyItems = {//add tag stuff here
+            "Crime",
+            "Health",
+            "Fire",
+            "Traffic",
+            "Infrastructure",
+            "Waste"
+    };
     private void ShowCategory() {//This one shows the category with alert dialog
         final AlertDialog.Builder builder;
-        final String[] agencyItems = {//add tag stuff here
-                "Crime",
-                "Health",
-                "Fire",
-                "Traffic",
-                "Infrastructure",
-                "Waste"
-        };
-        //final ArrayList selectedItems = new ArrayList();
         final ArrayList<String> selectedItems = new ArrayList<String>();
         selectItems = new ArrayList<String>();
         isSelectedArray = new boolean[agencyItems.length];
