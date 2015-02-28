@@ -260,7 +260,7 @@ public class ReportActivity extends Activity {
         }
         else if (captionText.length() <= 0)
         {
-            SimpleAlert("No Description Provided", "Please provide a description of the incident and kindly include the location", "OK");
+            SimpleAlert("No Description Provided", "Please provide a description of the incident and kindly include the location");
         }
         else
         {
@@ -278,7 +278,6 @@ public class ReportActivity extends Activity {
             }
         }
     }
-
     private void ShowNullCategoryAlert() {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle("No category selected");
@@ -336,11 +335,11 @@ public class ReportActivity extends Activity {
         builder.show();
     }
 
-    private void SimpleAlert(String title, String message, String buttonMessage) {
+    private void SimpleAlert(String title, String message) {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle(title);
         builder.setMessage(message);
-        builder.setPositiveButton(buttonMessage, new DialogInterface.OnClickListener() {
+        builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
             }
@@ -355,16 +354,16 @@ public class ReportActivity extends Activity {
     {
         try//success
         {
-            SimpleAlert("Success", new Functions(ReportActivity.this).execute("uploadData").get(), "OK");
+            SimpleAlert("Success", new Functions(ReportActivity.this).execute("uploadData").get());
         }
         //Exceptions
         catch (InterruptedException e)
         {
-            SimpleAlert("Unsuccessful", "Your Report did not send successfull", "Damn");
+            SimpleAlert("Unsuccessful", "Your Report did not send successfull");
         }
         catch (ExecutionException e)
         {
-            SimpleAlert("Unsuccessful", "Your report did not send successfully", "Damn");
+            SimpleAlert("Unsuccessful", "Your report did not send successfully");
         }
     }
     private String generateFileName()//generate file name with random shit
