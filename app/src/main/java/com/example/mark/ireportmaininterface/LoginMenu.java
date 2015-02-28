@@ -32,7 +32,7 @@ public class LoginMenu extends Activity {
     public static EditText txtPassword;
     Button btnLogin;
     Button btnRegister;
-    public static String message;
+    static String message;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
