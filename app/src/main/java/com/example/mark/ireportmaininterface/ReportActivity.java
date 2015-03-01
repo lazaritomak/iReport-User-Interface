@@ -95,12 +95,6 @@ public class ReportActivity extends Activity {
             }
         });
 
-        btnCategory.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                ShowCategory();
-            }
-        });
         latitude = gps.getLatitude();
         longitude = gps.getLongitude();
         Log.d("Lat", String.valueOf(latitude));
@@ -110,7 +104,6 @@ public class ReportActivity extends Activity {
     private void InitializeControls() {
         btnAction = (Button)findViewById(R.id.btnSelectPhoto);
         btnSubmit = (Button)findViewById(R.id.btnSubmit);
-        btnCategory = (Button)findViewById(R.id.selectCategory);
         viewImage = (ImageView) findViewById(R.id.viewImage);
         //catList = (Spinner) findViewById(R.id.selectCategory);
         captionText = (EditText) findViewById(R.id.captionText);
@@ -125,14 +118,14 @@ public class ReportActivity extends Activity {
     };
     private void ShowCategory() {//This one shows the category with alert dialog
         final AlertDialog.Builder builder;
-        final ArrayList<String> selectedItems = new ArrayList<String>();
+//        final ArrayList<String> selectedItems = new ArrayList<String>();
         selectItems = new ArrayList<String>();
-        isSelectedArray = new boolean[agencyItems.length];
-        int arraylength = isSelectedArray.length;
-        for (int i = 0; i < arraylength; i++)//initial all the lists inside agencyItems to be unchecked ( false)
-        {
-            isSelectedArray[i] = false;
-        }
+//        isSelectedArray = new boolean[agencyItems.length];
+//        int arraylength = isSelectedArray.length;
+//        for (int i = 0; i < arraylength; i++)//initialize all the lists inside agencyItems to be unchecked ( false)
+//        {
+//            isSelectedArray[i] = false;
+//        }
         builder = new AlertDialog.Builder(this);
         builder.setTitle("Select Category");
         //SetMultiChoiceItems(builder, agencyItems, selectedItems);
@@ -146,12 +139,22 @@ public class ReportActivity extends Activity {
         builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
-                try {
-                    ToastMessage(String.valueOf(agencyItems[sI]));
+                try
+                {
                     selectedAgency = String.valueOf(agencyItems[sI]);
-                } catch (Exception e) {
+                    sendReport();
+                }
+                catch (Exception e)
+                {
                     e.printStackTrace();
                 }
+            }
+        });
+        builder.setOnCancelListener(new DialogInterface.OnCancelListener()
+        {
+            @Override
+            public void onCancel(DialogInterface dialogInterface) {
+                ToastMessage("You have cancelled the submission");
             }
         });
         alertDialog = builder.create();
@@ -264,17 +267,13 @@ public class ReportActivity extends Activity {
         }
         else
         {
-            if (sI < 0)
-            {
-                ShowNullCategoryAlert();
-            }
-            else if (image_str.length() <= 0)
+            if (image_str.length() <= 0)
             {
                 ShowEmptyImageAlert();
             }
             else
             {
-                sendReport();
+                ShowCategory();
             }
         }
     }
@@ -319,7 +318,7 @@ public class ReportActivity extends Activity {
 
     private void ShowGPSAlert() {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setTitle("GPS / Network not enabled");
+        builder.setTitle("GPS not enabled");
         builder.setMessage("Your Phone cannot detect your GPS Location, Please include the exact location of the area of the incident");
         builder.setPositiveButton("Already Included", new DialogInterface.OnClickListener() {
             @Override
