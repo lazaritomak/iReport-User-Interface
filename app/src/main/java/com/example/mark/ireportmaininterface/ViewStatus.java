@@ -98,7 +98,7 @@ public class ViewStatus extends Activity {
             //get result from server
             result = new Functions(this).execute("viewStatus").get();
             //Split each record with ;
-            resultArr = result.split(";");
+            resultArr = result.split("~");
             //Create arrays for report id, date, and progress
             reportdate = new String[resultArr.length];
             reportprogress = new String[resultArr.length];
