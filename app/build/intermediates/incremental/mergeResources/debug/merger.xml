@@ -102,9 +102,9 @@
             <file
                 path="C:\Users\Mark\Documents\GitHub\iReport-User-Interface\app\src\main\res\values\strings.xml"
                 qualifiers="" >
-                <string name="email_add" >Email Address
-                </string>
                 <string name="title_activity_view_status" >ViewStatus
+                </string>
+                <string name="email_add" >Email Address
                 </string>
                 <string name="action_settings" >Settings
                 </string>
@@ -114,13 +114,13 @@
                 </string>
                 <string name="hello_world" >Hello world!
                 </string>
-                <string name="password" >Password
-                </string>
-                <string name="select_category" >Select Category
+                <string name="preferred_username" >Username: 
                 </string>
                 <string name="login" >Login
                 </string>
-                <string name="preferred_username" >Username: 
+                <string name="select_category" >Select Category
+                </string>
+                <string name="password" >Password
                 </string>
                 <string name="confirm_password" >Confirm:
                 </string>
