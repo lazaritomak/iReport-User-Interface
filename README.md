@@ -5,7 +5,7 @@ User interface for iReport
 
 **Don't forget to Change the Server's IP address in Functions.java.**
 
-**MAJOR UPDATE!: Removed the 'select category button' and placed the code to the submit button instead, where you get to choose a category first before your submit the report.**
+**MAJOR UPDATE!: Removed the 'select category button' and placed the code to the submit button instead, where you get to choose a category first before you submit the report.**
 
 
 
