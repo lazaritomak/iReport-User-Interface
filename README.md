@@ -5,6 +5,10 @@ User interface for iReport
 
 **Don't forget to Change the Server's IP address in Functions.java.**
 
+**MAJOR UPDATE!: Removed the 'select category button' and placed the code to the submit button instead, where you get to choose a category first before your submit the report.**
+
+
+
 TODO:
 =
 
@@ -35,11 +39,11 @@ Minor TODO list:
 2. Limit video duration ✘
 3. Validate text content ✔
 4. Change image storage to internal ✔
-5. Increase video thumbnail size.✔
-6. Change video thumbnail orientation ✔
+5. Increase video thumbnail size.✔ changed to ✘, due to removal of video feature
+6. Change video thumbnail orientation ✔ changed to ✘, due to removal of video feature
 7. Fixed orientation and formatting for Status Reports ✘
+8. UI is now configured to display properly when viewed in landscape mode ✔
 
-*(Minor TODO list can be done upon completion of main modules)*
 
 APK Location:
 =
