@@ -43,6 +43,7 @@ Minor TODO list:
 6. Change video thumbnail orientation ✔ changed to ✘, due to removal of video feature
 7. Fixed orientation and formatting for Status Reports ✘
 8. UI is now configured to display properly when viewed in landscape mode ✔
+9. Back Button now shows a sign out prompt ✔
 
 
 APK Location:
