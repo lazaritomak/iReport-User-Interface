@@ -32,7 +32,7 @@ public class LoginMenu extends Activity {
     public static EditText txtPassword;
     Button btnLogin;
     Button btnRegister;
-    public static String message;
+    static String message;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,6 +42,8 @@ public class LoginMenu extends Activity {
         ipAddDisp = (TextView) findViewById(R.id.infoDisplay);
         txtUsername = (EditText) findViewById(R.id.username);
         txtPassword = (EditText) findViewById(R.id.password);
+
+        ipAddDisp.setText(Functions.ServerAddress);
 
         SharedPreferences mySession = getSharedPreferences(ReportActivity.PREFS_NAME, 0);
         if (mySession.getBoolean("sessionState", false) == true)
@@ -59,36 +61,34 @@ public class LoginMenu extends Activity {
                 try
                 {
                     message = new Functions(LoginMenu.this).execute("getAccountData").get();
-                    ToastMessage(message);
-                } catch (InterruptedException e)
-                {
-                    e.printStackTrace();
-                } catch (ExecutionException e)
-                {
-                    e.printStackTrace();
                 }
-                boolean yes = true;
-
-                if (!(txtUsername.getText().toString().equals(message)))
-                //if (!yes) //testing
+                catch (InterruptedException e)
                 {
-                    //start
+                    e.printStackTrace();
+                    SimpleAlert("Error", "Cannot retrieve account", "OK");
+                }
+                catch (ExecutionException e)
+                {
+                    e.printStackTrace();
+                    SimpleAlert("Error", "Cannot retrieve account", "OK");
+                }
+                //boolean yes = true;
+                //if (!yes) //testing
+                if (!(txtUsername.getText().toString().equals(message)))
+                {
                     SimpleAlert("Login Error", "Invalid Username/Password", "OK");
                 }
                 else if (txtUsername.length() == 0 || txtPassword.length() == 0)
                 {
                     SimpleAlert("Login Error", "Enter Username and Password", "OK");
                 }
-                else//if successful
+                else if ((txtUsername.getText().toString().equals(message)))//if successful
                 {
-                    ReportActivity.username = txtUsername.getText().toString();
-                    SharedPreferences mySession = getSharedPreferences(ReportActivity.PREFS_NAME, 0);
-                    SharedPreferences.Editor sessionEditor = mySession.edit();
-                    sessionEditor.putBoolean("sessionState", true);
-                    sessionEditor.putString("sessionUser", txtUsername.getText().toString());
-                    sessionEditor.commit();
-                    Intent nextStep = new Intent(LoginMenu.this, ReportActivity.class);
-                    startActivity(nextStep);
+                    SignIn();
+                }
+                else//if some unknown error occurred because fuck this shit
+                {
+                    SimpleAlert("Login Error", "An unknown error occurred, Please try again", "OK");
                 }
                 Log.d("END", "END OF LINE LOGIN");
             }
@@ -100,10 +100,19 @@ public class LoginMenu extends Activity {
                 startActivity(regstep);
             }
         });
-
-        //gets ip address
-//        ipAddDisp.setText(getIpAddress());
     }
+
+    private void SignIn() {
+        ReportActivity.username = txtUsername.getText().toString();
+        SharedPreferences mySession = getSharedPreferences(ReportActivity.PREFS_NAME, 0);
+        SharedPreferences.Editor sessionEditor = mySession.edit();
+        sessionEditor.putBoolean("sessionState", true);
+        sessionEditor.putString("sessionUser", txtUsername.getText().toString());
+        sessionEditor.commit();
+        Intent nextStep = new Intent(this, ReportActivity.class);
+        startActivity(nextStep);
+    }
+
     private void SimpleAlert(String title, String message, String buttonMessage) {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle(title);

@@ -4,16 +4,10 @@ package com.example.mark.ireportmaininterface;
  * Created by Mark on 11/1/2014.
  */
 
-import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.Context;
-import android.content.DialogInterface;
-import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.util.Log;
-import android.widget.ArrayAdapter;
-import android.widget.Button;
-import android.widget.Toast;
 
 import org.apache.http.NameValuePair;
 import org.apache.http.client.HttpClient;
@@ -27,14 +21,11 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.io.UnsupportedEncodingException;
-import java.net.ConnectException;
-import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
 import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
 
 
 public class Functions extends AsyncTask<String, Void, String>
@@ -44,8 +35,8 @@ public class Functions extends AsyncTask<String, Void, String>
     private ProgressDialog pd;
     String command;
     Context context;
-    static String ipadd = "192.168.15.10";
-    public static String serverIP = ipadd;
+    private static String ipadd = "192.168.15.10";
+    public static String ServerAddress = ipadd;
     public static String link = "http://"+ipadd+"/iReportDB/controller.php";//ip address/localhost
     public Functions (Context context)
     {
@@ -98,7 +89,7 @@ public class Functions extends AsyncTask<String, Void, String>
         return result;
     }
 
-    public boolean generateHttpPostData()
+    public boolean GenerateHttpPostData()
     {
         String TAG = "ReportActivity.java";
         boolean successful;
@@ -110,12 +101,8 @@ public class Functions extends AsyncTask<String, Void, String>
             HttpClient httpClient = new DefaultHttpClient();
             HttpPost httpPost = new HttpPost(postReceiverUrl);
             List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>(2);
-            nameValuePairs.add(new BasicNameValuePair("rpt_username", ReportActivity.username));
-            nameValuePairs.add(new BasicNameValuePair("rpt_lat", String.valueOf(ReportActivity.latitude)));
-            nameValuePairs.add(new BasicNameValuePair("rpt_long", String.valueOf(ReportActivity.longitude)));
-            nameValuePairs.add(new BasicNameValuePair("rpt_desc", ReportActivity.captionText.getText().toString()));
-            nameValuePairs.add(new BasicNameValuePair("rpt_categ", ReportActivity.selectedAgency));
-            nameValuePairs.add(new BasicNameValuePair("rpt_image", ReportActivity.image_str));
+            //data needed
+            NameValuePairsData(nameValuePairs);
             httpPost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
             httpClient.execute(httpPost);
             successful = true;
@@ -125,6 +112,16 @@ public class Functions extends AsyncTask<String, Void, String>
             successful = false;
         }
         return successful;
+    }
+
+    private void NameValuePairsData(List<NameValuePair> nameValuePairs) {
+    //add new data here
+        nameValuePairs.add(new BasicNameValuePair("rpt_username", ReportActivity.username));
+        nameValuePairs.add(new BasicNameValuePair("rpt_lat", String.valueOf(ReportActivity.latitude)));
+        nameValuePairs.add(new BasicNameValuePair("rpt_long", String.valueOf(ReportActivity.longitude)));
+        nameValuePairs.add(new BasicNameValuePair("rpt_desc", ReportActivity.captionText.getText().toString()));
+        nameValuePairs.add(new BasicNameValuePair("rpt_categ", ReportActivity.selectedAgency));
+        nameValuePairs.add(new BasicNameValuePair("rpt_image", ReportActivity.image_str));
     }
 
     @Override
@@ -144,9 +141,6 @@ public class Functions extends AsyncTask<String, Void, String>
         {
             CreateAccount.errorlabel.setText(result);
         }
-        else if (command == "getAccountData")
-        {
-        }
         pd.dismiss();
     }
 
@@ -161,84 +155,95 @@ public class Functions extends AsyncTask<String, Void, String>
             Log.v("Command", command);
             if (command == "insertReport")//Not acually being used, but preserve in case of failure
             {
-                connection = getConnection(link);
-                String logs = "";
-                logs="&command=" + URLEncoder.encode("insertReport","UTF-8");
-                logs+="&report_id=" + URLEncoder.encode(generateReportID(),"UTF-8");
-                logs+="&report_username=" + URLEncoder.encode("user", "UTF-8");
-                logs+="$report_lat=" + String.valueOf(ReportActivity.latitude);
-                logs+="$report_long=" + String.valueOf(ReportActivity.longitude);
-//                logs+="&report_murl=" + URLEncoder.encode("url","UTF-8");
-                logs+="&report_capt=" + URLEncoder.encode(ReportActivity.captionText.getText().toString(),"UTF-8");
-                Log.v("Functions", "report_capt Successful");
-
-                result = getResult(connection, logs);
-                Log.v("Functions", "Report Insert Successful Successful");
+                result = InsertReport();
             }
             else if (command == "insertUser")
             {
-                connection = getConnection(link);
-                String logs = "";
-                logs="&command=" + URLEncoder.encode("insertUser","UTF-8");
-                logs+="&user_email=" + URLEncoder.encode(CreateAccount.txtemailadd.getText().toString(),"UTF-8");
-                logs+="&user_name=" + URLEncoder.encode(CreateAccount.txtusername.getText().toString(), "UTF-8");
-                logs+="&user_password=" + URLEncoder.encode(CreateAccount.txtpassword.getText().toString(),"UTF-8");
-                result = getResult(connection, logs);
-                Log.v("Functions", "User Insert Successful");
+                result = AddUser();
             }
             else if (command == "getAccountData")
             {
-                connection = getConnection(link);
-                String logs = "";
-                logs = "&command=" + URLEncoder.encode("getAccountData", "UTF-8");
-                logs += "&user_name=" + URLEncoder.encode(LoginMenu.txtUsername.getText().toString(), "UTF-8");
-                logs += "&user_password="+ URLEncoder.encode(LoginMenu.txtPassword.getText().toString(), "UTF-8");
-                result = getResult(connection, logs);
-                Log.d("Sql Result", result);
+                result = GetAccountData();
             }
             else if (command == "uploadData")
             {
-                if (generateHttpPostData())
-                {
-                    result = "Your Report has been sent to the cops";
-                }
-                else
-                {
-                    result = "Your report did not send successfully";
-                }
+                result = UploadData();
             }
             else if (command == "viewStatus")
             {
-                connection = getConnection(link);
-                String logs = "";
-                logs = "&command=" + URLEncoder.encode("viewStatus", "UTF-8");
-                logs += "&user_name=" + URLEncoder.encode(ReportActivity.username, "UTF-8");
-                result = getResult(connection, logs);
-            }
-            else if (command == "testConnection")
-            {
-                connection = getConnection(link);
-                String logs = "";
-                logs = "&command="+URLEncoder.encode("testConnection", "UTF-8");
-                result = getResult(connection, logs);
+                result = ViewStatus();
             }
             return result;
         }
         catch(Exception e)
         {
-            result = "0";
             return result;
         }
     }
-    public String generateReportID()//temp lng to
-    {
-        String genID = "";
-        char[] numArrays = {'1','2','3','4','5','6','7','8','9','0'};
-        Random rand = new Random();
-        for (int i = 0; i < 5; i++)
+
+    private String UploadData() {
+        String result = "";
+        if (GenerateHttpPostData())
         {
-            genID += numArrays[rand.nextInt(numArrays.length)];
+            result = "Your Report has been sent to the cops";
         }
-        return genID;
+        else
+        {
+            result = "Your report did not send successfully";
+        }
+        return result;
+    }
+
+    private String ViewStatus() throws UnsupportedEncodingException {
+        String result = "";
+        connection = getConnection(link);
+        String logs = "";
+        logs = "&command=" + URLEncoder.encode("viewStatus", "UTF-8");
+        logs += "&user_name=" + URLEncoder.encode(ReportActivity.username, "UTF-8");
+        result = getResult(connection, logs);
+        return result;
+    }
+
+    private String GetAccountData() throws UnsupportedEncodingException {
+        String result = "";
+        connection = getConnection(link);
+        String logs = "";
+        logs = "&command=" + URLEncoder.encode("getAccountData", "UTF-8");
+        logs += "&user_name=" + URLEncoder.encode(LoginMenu.txtUsername.getText().toString(), "UTF-8");
+        logs += "&user_password="+ URLEncoder.encode(LoginMenu.txtPassword.getText().toString(), "UTF-8");
+        result = getResult(connection, logs);
+        Log.d("Sql Result", result);
+        return result;
+    }
+
+    private String AddUser() throws UnsupportedEncodingException {
+        String result = "";
+        connection = getConnection(link);
+        String logs = "";
+        logs="&command=" + URLEncoder.encode("insertUser", "UTF-8");
+        logs+="&user_email=" + URLEncoder.encode(CreateAccount.txtemailadd.getText().toString(),"UTF-8");
+        logs+="&user_name=" + URLEncoder.encode(CreateAccount.txtusername.getText().toString(), "UTF-8");
+        logs+="&user_password=" + URLEncoder.encode(CreateAccount.txtpassword.getText().toString(),"UTF-8");
+        result = getResult(connection, logs);
+        Log.v("Functions", "User Insert Successful");
+        return result;
+    }
+
+    private String InsertReport() throws UnsupportedEncodingException {
+        String result = "";
+        connection = getConnection(link);
+        String logs = "";
+        logs="&command=" + URLEncoder.encode("insertReport", "UTF-8");
+        //logs+="&report_id=" + URLEncoder.encode(generateReportID(),"UTF-8");
+        logs+="&report_username=" + URLEncoder.encode("user", "UTF-8");
+        logs+="$report_lat=" + String.valueOf(ReportActivity.latitude);
+        logs+="$report_long=" + String.valueOf(ReportActivity.longitude);
+//                logs+="&report_murl=" + URLEncoder.encode("url","UTF-8");
+        logs+="&report_capt=" + URLEncoder.encode(ReportActivity.captionText.getText().toString(),"UTF-8");
+        Log.v("Functions", "report_capt Successful");
+
+        result = getResult(connection, logs);
+        Log.v("Functions", "Report Insert Successful Successful");
+        return result;
     }
 }
