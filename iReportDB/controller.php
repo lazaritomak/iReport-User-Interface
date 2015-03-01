@@ -29,9 +29,6 @@ mysql_select_db("ireportdb", $cons);//declaration of $cons and connection to the
 
 switch ($command)
 {
-	case 'insertReport';
-	InsertReport();
-	break;
 	case 'insertUser';
 	InsertUser();
 	break;
@@ -95,13 +92,6 @@ function setUserInsertVariables()//tbl_user insertion fields
 		$user_password = $_POST['user_password'];
 	}
 }
-function InsertReport()//obsolete, new insert method is found in filreceive.php
-{
-	$sql = "INSERT INTO tbl_reports VALUES('".$_POST['report-id']."' , '".$_POST['report_username']."' , '".$_POST['report_capt']."' , '".$_POST['report_lat']."' , '".$_POST['report_long']."');";
-	$q = mysql_query($sql);
-	echo $q;
-	echo "\n Report Inserted";
-}
 function InsertUser()
 {
 	include 'db_connect.php';
@@ -143,8 +133,25 @@ function viewStatus()
 	
 	while ($row = mysql_fetch_array($q))
 	{
-		echo $row['reportdate']." / ".$row['reportprogress']." / ".substr($row['reportmediacaption'], 0 , 30)."...".";";
+		// echo $row['reportdate']." / ".$row['reportprogress']." / ".substr($row['reportmediacaption'], 0 , 30)."...".";";
+		echo $row['reportdate']." / ".$row['reportprogress']." / ".GetCaption($row['reportmediacaption'])."~";
 	}
+}
+
+function GetCaption($string)
+{
+	$maxlength = 35;
+	$text = "";
+	if (strlen($string) > $maxlength)
+	{
+		$text = substr($string,0,$maxlength);
+		$text .= "...";
+	}
+	else
+	{
+		$text = $string;
+	}
+	return $text;
 }
 
 function testConnection()
