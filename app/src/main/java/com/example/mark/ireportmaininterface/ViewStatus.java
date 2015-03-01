@@ -3,9 +3,12 @@ package com.example.mark.ireportmaininterface;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
@@ -53,8 +56,9 @@ public class ViewStatus extends Activity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.view_status, menu);
-        return true;
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.main_activity_actions, menu);
+        return super.onCreateOptionsMenu(menu);
     }
 
     @Override
@@ -62,11 +66,16 @@ public class ViewStatus extends Activity {
         // Handle action bar item clicks here. The action bar will
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-        if (id == R.id.action_settings) {
-            return true;
+        switch (item.getItemId()) {
+            case R.id.action_settings:
+                ReportActivity.gps.openGPSSettings();
+                return true;
+            case R.id.sign_out:
+                ShowSignOutPrompt();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
         }
-        return super.onOptionsItemSelected(item);
     }
     private void SimpleAlert(String title, String message, String buttonMessage) {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
@@ -79,7 +88,36 @@ public class ViewStatus extends Activity {
         });
         builder.show();
     }
+    private void ShowSignOutPrompt() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("Sign Out?");
+        builder.setMessage("Do you want to sign out?");
+        builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                SignOut();
+            }
+        });
+        builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
 
+            }
+        });
+        builder.show();
+    }
+    private void SignOut()
+    {
+        //Load session states and current user who signed in previously, when not signed out.
+        SharedPreferences mySession = getSharedPreferences(ReportActivity.PREFS_NAME, 0);
+        SharedPreferences.Editor sessionEditor = mySession.edit();
+        sessionEditor.putBoolean("sessionState", false);
+        sessionEditor.putString("sessionUser", "");
+        sessionEditor.commit();
+        //Go to main
+        Intent mainMenu = new Intent(ViewStatus.this, LoginMenu.class);
+        startActivity(mainMenu);
+    }
 
     private void initializeList()
     {
