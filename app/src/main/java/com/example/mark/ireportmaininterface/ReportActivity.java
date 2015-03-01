@@ -116,6 +116,31 @@ public class ReportActivity extends Activity {
             "Infrastructure",
             "Waste"
     };
+
+    @Override
+    public void onBackPressed() {
+        //Nothing
+        ShowSignOutPrompt();
+    }
+
+    private void ShowSignOutPrompt() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("Sign Out?");
+        builder.setMessage("Do you want to sign out?");
+        builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                SignOut();
+            }
+        });
+        builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+            }
+        });
+        builder.show();
+    }
+
     private void ShowCategory() {//This one shows the category with alert dialog
         final AlertDialog.Builder builder;
 //        final ArrayList<String> selectedItems = new ArrayList<String>();

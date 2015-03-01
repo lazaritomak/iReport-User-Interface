@@ -79,6 +79,8 @@ public class ViewStatus extends Activity {
         });
         builder.show();
     }
+
+
     private void initializeList()
     {
         ListView lv;
