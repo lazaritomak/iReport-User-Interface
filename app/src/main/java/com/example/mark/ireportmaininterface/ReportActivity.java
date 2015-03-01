@@ -416,7 +416,7 @@ public class ReportActivity extends Activity {
                     bitmap = BitmapFactory.decodeFile(f.getAbsolutePath(), bitmapOptions);
                     ByteArrayOutputStream stream = new ByteArrayOutputStream();
                     //image compression
-                    bitmap.compress(Bitmap.CompressFormat.JPEG, 90, stream);
+                    bitmap.compress(Bitmap.CompressFormat.JPEG, 100, stream);
                     byte[] byte_arr = stream.toByteArray();
                     image_str = Base64.encodeToString(byte_arr, Base64.DEFAULT);
                     //view image
