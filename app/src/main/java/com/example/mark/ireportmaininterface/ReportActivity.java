@@ -508,7 +508,7 @@ public class ReportActivity extends Activity {
                 gps.openGPSSettings();
                 return true;
             case R.id.sign_out:
-                SignOut();
+                ShowSignOutPrompt();
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
