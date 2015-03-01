@@ -16,41 +16,17 @@
         android:padding="10dp"
         android:layout_alignParentBottom="true">
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:padding="5dp">
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical"
-            android:padding="10dp">
-
-            <ImageView
-            android:id="@+id/viewImage"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
-
-        </LinearLayout>
-
     </LinearLayout>
 
-    <EditText
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:inputType="textMultiLine"
-        android:gravity="bottom"
-        android:ems="10"
-        android:id="@+id/captionText"
-        android:layout_alignParentStart="true"
-        android:layout_centerVertical="true"
-        android:layout_above="@+id/btnSelectPhoto" />
+    <ImageView
+    android:id="@+id/viewImage"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+        android:layout_toEndOf="@+id/captionText"
+        android:layout_alignEnd="@+id/buttonlayout"
+        android:layout_alignParentStart="true" />
 
-<!--
+    <!--
     <Spinner
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -71,8 +47,8 @@
         android:textAlignment="center"
         android:text="@string/select_action"
         android:id="@+id/btnSelectPhoto"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentBottom="true"/>
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentStart="true" />
 
     <Button
         android:layout_width="wrap_content"
@@ -87,5 +63,18 @@
         android:layout_alignParentRight="true"
         android:layout_alignParentBottom="true"
         />
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:inputType="textMultiLine"
+        android:gravity="bottom"
+        android:ems="10"
+        android:id="@+id/captionText"
+        android:layout_gravity="right"
+        android:layout_toStartOf="@+id/btnSubmit"
+        android:layout_toEndOf="@+id/btnSelectPhoto"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true" />
 
 </RelativeLayout>
